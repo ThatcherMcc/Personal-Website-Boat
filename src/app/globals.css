@@ -33,6 +33,19 @@ body {
   color: var(--foreground); /* Text color from root variables */
 }
 
+body.weather-cloudy {
+  background-color: #afc2c2;
+  background-image: url('/assets/sky-cloudy.png');
+}
+body.weather-rainy {
+  background-color: #607070;
+  background-image: url('/assets/sky-rainy.png');
+}
+body.weather-stormy {
+  background-color: #303030;
+  background-image: url('/assets/sky-stormy.png');
+}
+
 /* New keyframes for horizontal scrolling */
 @keyframes wave-scroll-right {
   from {
@@ -60,9 +73,12 @@ body {
   left: 0;
   width: 200%;
   display: flex;
-
-  animation: var(--_scroll-direction) var(--_wave-duration) linear infinite alternate;
-
+  animation: 
+    var(--_scroll-direction) 
+    var(--_wave-duration) 
+    linear 
+    infinite 
+    alternate;
 }
 
 #back-wave-container {
