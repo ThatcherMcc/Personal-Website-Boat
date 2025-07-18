@@ -1,9 +1,9 @@
 // src/app/layout.tsx
-'use client'; // This layout itself needs to be a client component to use useState
+'use client';
 
-import { useState } from 'react'; // Import useState
 import './globals.css';
 import WaveBackground from 'rt/components/WeatherUpdater';
+import MyBoat from 'rt/components/Boat';
 
 export default function RootLayout({children,}: {children: React.ReactNode}) {
   return (
@@ -11,7 +11,7 @@ export default function RootLayout({children,}: {children: React.ReactNode}) {
       
       <body>
         <WaveBackground />
-
+        <MyBoat />
         {children}
       </body>
     </html>

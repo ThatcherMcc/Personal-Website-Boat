@@ -2,6 +2,7 @@
 
 @import "tailwindcss"; /* Import Tailwind CSS utilities */
 
+
 /* --- Root Variables for Colors --- */
 :root {
   --background: #ffffff; /* Default light background */
@@ -32,6 +33,25 @@ body {
   transition: background-image 2s ease-in-out, background-color 2s ease-in-out;
   color: var(--foreground); /* Text color from root variables */
 }
+
+.boat-container {
+  position: fixed;
+  bottom: 23svh;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 3;
+
+  outline: 3px solid red;
+}
+
+.boat-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transform-origin: 50% 90%;
+}
+
+
 
 body.weather-cloudy {
   background-color: #afc2c2;
@@ -73,6 +93,7 @@ body.weather-stormy {
   left: 0;
   width: 200%;
   display: flex;
+  pointer-events: none;
   animation: 
     var(--_scroll-direction) 
     var(--_wave-duration) 
@@ -82,21 +103,28 @@ body.weather-stormy {
 }
 
 #back-wave-container {
-  height: 45svh; /* Height for the back layer container */
+  height: 43svh; /* Height for the back layer container */
   z-index: 1;
   --_scroll-direction: wave-scroll-right;
   --_wave-duration: 40s; /* Base scroll speed for this layer */
 }
 
-#middle-wave-container {
+#middle-wave-container-back {
   height: 40svh;
   z-index: 2;
   --_scroll-direction: wave-scroll-left;
   --_wave-duration: 35s;
 }
 
+#middle-wave-container-front {
+  height: 38svh;
+  z-index: 2;
+  --_scroll-direction: wave-scroll-left;
+  --_wave-duration: 35s;
+}
+
 #front-wave-container {
-  height: 35svh;
+  height: 37svh;
   z-index: 3;
   --_scroll-direction: wave-scroll-right;
   --_wave-duration: 30s;
