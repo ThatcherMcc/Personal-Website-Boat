@@ -1,13 +1,19 @@
 import { motion, useAnimate} from "motion/react";
 import { useEffect } from "react";
+import { BoatAnimationOptions } from 'rt/configs/boatConfigs';
+import { useWeather } from 'rt/components/WeatherProvider'; // Import useWeather hook
+
+
+interface MyBoatProps {
+  boatConfig: BoatAnimationOptions; // MyBoat expects a boatConfig prop
+}
 
 export default function MyBoat() {
-
   const [scope, animate] = useAnimate();
+  const { currentBoatConfig } = useWeather();
 
-  async function boatAnimationSequence() {
-
-    const dropInAnimation = animate(
+  async function BoatAnimation() {
+    const dropIN = animate(
       scope.current,
       { y: 0, opacity: 1 },
       {
@@ -16,45 +22,44 @@ export default function MyBoat() {
         damping: 7,   // Adjust damping for how quickly it settles
         mass: 1,       // Adjust mass
       }
-    );
+    )
 
-    // 2. Initial Nose Tilt and Stabilization (Spring for Rotation)
-    const first = animate(
-        scope.current,
-        { rotate: 10 }, // Tilts down, overshoots, then settles at 0 degrees
-        {
-          type: "spring",
-          stiffness: 40, // Softer spring for rotation
-          damping: 5,
-          mass: 0.5,
-          delay: 0.2 // A slight delay for the rotation to start after drop-in for effect
-        }
-      );
-    
+    const stabilize = await animate(
+      scope.current,
+      { rotate: 0 }, // Tilts down, overshoots, then settles at 0 degrees
+      {
+        type: "spring",
+        stiffness: 40, // Softer spring for rotation
+        damping: 10,
+        mass: 0.5,
+        delay: 0.2,
+      }
+    )
 
-    // Wait for BOTH the drop-in and initial rotation to complete
-    await Promise.all([dropInAnimation, first]);
+    await Promise.all([dropIN, stabilize])
 
-    // 3. Continuous Bobbing (Y and Subtle Rotation)
-    // This starts ONLY after the initial animations have fully settled.
-    animate(
+    animate( // No 'await' here, as this is the final, continuous animation
       scope.current,
       {
-        y: [0, 15, 0], // Vertical bobbing (amplitude 15px)
-        rotate: [0, -2, 2, 0] // Subtle side-to-side rocking (e.g., -2 to +2 degrees)
+        /* 
+          1. Tilt down, drop a little
+          2. move forward and drop more, ease up on tilt
+          3.level tilt, less forward, come up a little
+        */
+        y: [0, currentBoatConfig.amplitude, currentBoatConfig.amplitude / 4, 0],
+        rotate: [0, currentBoatConfig.rotation, currentBoatConfig.rotation / -1, 0]
       },
       {
+        duration: currentBoatConfig.length,               // Increased duration for smoother movement
         repeat: Infinity,
-        repeatType: "mirror", // Smooth transition back and forth
-        ease: "easeInOut",   // Smooth acceleration/deceleration
-        duration: 4          // Duration of one full bob cycle
+        ease: "easeInOut"          // CRITICAL: Use easeInOut for fluid, natural motion
       }
     );
   }
 
   useEffect(() => {
-    boatAnimationSequence();
-  }, []);
+    BoatAnimation();
+  }, [currentBoatConfig, animate, scope]);
 
   return (
     <div className="boat-container" >

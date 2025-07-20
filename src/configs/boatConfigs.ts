@@ -10,4 +10,4 @@ export const BoatAnimationConfig: {[key in 'sunny' | 'cloudy' | 'rainy' | 'storm
   cloudy: {amplitude: 15, length: 8, distanceX: 10, rotation: 2},
   rainy: {amplitude: 20, length: 8, distanceX: 15, rotation: 3},
   stormy: {amplitude: 30, length: 6, distanceX: 20, rotation: 4},
-}
+} 

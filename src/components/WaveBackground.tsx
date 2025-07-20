@@ -4,38 +4,14 @@
 
 import { useEffect, useState } from 'react'; // Import useState too
 import Wave from 'react-wavify';
-import { WEATHER_WAVE_CONFIGS, AllWeatherWaveConfig, WeatherWaveConfig } from 'rt/configs/weatherWaveConfigs';
-import { updateWebsiteWeather, WEATHER_STATES } from 'rt/utils/weatherUtils';
-
+import { useWeather } from 'rt/components/WeatherProvider';
 
 
 // --- The WeatherUpdater React Component ---
 // This component now takes a prop (setWaveProps) to update the parent's state
 export default function WaveBackground() {
   
-  const [currentWaveConfig, setCurrentWaveConfig] = useState<WeatherWaveConfig>(
-    WEATHER_WAVE_CONFIGS.sunny // Initialize with sunny weather properties
-  );
-
-  useEffect(() => {
-
-    const initalCondition = WEATHER_STATES[0];
-    const initialConfig = updateWebsiteWeather(initalCondition);
-    setCurrentWaveConfig(initialConfig);
-
-    let currentIndex = 0; 
-
-    // Set up an interval to change weather every 5 seconds
-    const intervalId = setInterval(() => {
-      currentIndex = (currentIndex + 1) % WEATHER_STATES.length;
-      const nextCondition = WEATHER_STATES[currentIndex];
-      const nextConfig = updateWebsiteWeather(nextCondition);
-      setCurrentWaveConfig(nextConfig);
-    }, 5000); // Change every 5 seconds
-
-    // Cleanup function
-    return () => clearInterval(intervalId);
-  }, []); // Add setWaveProps to dependency array
+  const { currentWaveConfig } = useWeather();
 
   return (
     <>
@@ -52,7 +28,6 @@ export default function WaveBackground() {
 
       <div id='middle-wave-container-back' className='wave-layer-container' style={{ zIndex: 2}}>
         <Wave
-          id="middle-ocean-wave"
           className="ocean-wave"
           fill={currentWaveConfig.fill[1]}
           paused={false}
@@ -62,7 +37,6 @@ export default function WaveBackground() {
       </div>
       <div id='middle-wave-container-front' className='wave-layer-container' style={{ zIndex: 4}}>
         <Wave
-          id="middle-ocean-wave"
           className="ocean-wave"
           fill={currentWaveConfig.fill[1]}
           paused={false}
@@ -73,7 +47,6 @@ export default function WaveBackground() {
 
       <div id='front-wave-container' className='wave-layer-container' style={{ zIndex: 5}}>
         <Wave
-          id="front-ocean-wave"
           className="ocean-wave"
           fill={currentWaveConfig.fill[2]}
           paused={false}
