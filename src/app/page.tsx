@@ -1,12 +1,20 @@
 // src/app/page.tsx
 // This is your main homepage content. The weather/ocean visuals are handled by CSS on the <body>.
 
-export default function HomePage() {
+import MyBoat from "rt/components/Boat";
+import WaveBackground from "rt/components/WaveBackground";
+import WeatherURLManager from "rt/components/WeatherURLManager";
+
+export default async function HomePage({
+  searchParams 
+} : {
+  searchParams: { [key: string]: string | string[] | undefined };
+}) {
   return (
-    <main className="flex-col relative h-100 w-screen flex items-center justify-center overflow-hidden">
-      <h1 className="text-6xl font-bold text-white z-20 drop-shadow-lg">
-        Captain's Log
-      </h1>
-    </main>
+    <>
+      <WeatherURLManager />
+      <WaveBackground searchParams={await searchParams} />
+      <MyBoat searchParams={await searchParams}/>
+    </>
   );
 }

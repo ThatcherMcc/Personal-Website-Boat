@@ -1,18 +1,16 @@
-// src/components/WeatherUpdater.tsx
-
-'use client';
-
-import { useEffect, useState } from 'react'; // Import useState too
 import Wave from 'react-wavify';
-import { useWeather } from 'rt/components/WeatherProvider';
+import { WEATHER_WAVE_CONFIGS } from 'rt/configs/weatherWaveConfigs';
+import { WeatherCondition } from 'rt/utils/weatherUtils';
 
-
+type WaveBackgroundProps = {
+  searchParams: { [key: string]: string | string[] | undefined};
+}
 // --- The WeatherUpdater React Component ---
 // This component now takes a prop (setWaveProps) to update the parent's state
-export default function WaveBackground() {
+export default function WaveBackground({searchParams} : WaveBackgroundProps) {
+  const weatherParam = searchParams.weather as WeatherCondition;
+  const currentWaveConfig = WEATHER_WAVE_CONFIGS[weatherParam] || WEATHER_WAVE_CONFIGS.sunny;
   
-  const { currentWaveConfig } = useWeather();
-
   return (
     <>
       <div id='back-wave-container' className='wave-layer-container' style={{ zIndex: 1}}>

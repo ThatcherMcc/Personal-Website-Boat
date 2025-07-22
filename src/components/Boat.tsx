@@ -1,16 +1,23 @@
+'use client';
 import { motion, useAnimate} from "motion/react";
+import { useSearchParams } from "next/navigation";
 import { useEffect } from "react";
-import { BoatAnimationOptions } from 'rt/configs/boatConfigs';
-import { useWeather } from 'rt/components/WeatherProvider'; // Import useWeather hook
+import { BoatAnimationConfig} from "rt/configs/boatConfigs";
+import { WEATHER_STATES, WeatherCondition } from "rt/utils/weatherUtils";
 
-
-interface MyBoatProps {
-  boatConfig: BoatAnimationOptions; // MyBoat expects a boatConfig prop
+type MyBoatProps = {
+  searchParams: { [key: string]: string | string[] | undefined};
 }
 
-export default function MyBoat() {
+export default function MyBoat({ searchParams }: MyBoatProps) {
+
   const [scope, animate] = useAnimate();
-  const { currentBoatConfig } = useWeather();
+
+  const weatherParam = searchParams.weather as WeatherCondition || BoatAnimationConfig.sunny
+
+  
+  // Use the validated condition to get the config. No '||' needed here as validatedWeatherCondition is guaranteed valid.
+  const currentAnimationConfig = BoatAnimationConfig[weatherParam];
 
   async function BoatAnimation() {
     const dropIN = animate(
@@ -46,11 +53,11 @@ export default function MyBoat() {
           2. move forward and drop more, ease up on tilt
           3.level tilt, less forward, come up a little
         */
-        y: [0, currentBoatConfig.amplitude, currentBoatConfig.amplitude / 4, 0],
-        rotate: [0, currentBoatConfig.rotation, currentBoatConfig.rotation / -1, 0]
+        y: [0, currentAnimationConfig.amplitude, currentAnimationConfig.amplitude / 4, 0],
+        rotate: [0, currentAnimationConfig.rotation, currentAnimationConfig.rotation / -1, 0]
       },
       {
-        duration: currentBoatConfig.length,               // Increased duration for smoother movement
+        duration: currentAnimationConfig.length,               // Increased duration for smoother movement
         repeat: Infinity,
         ease: "easeInOut"          // CRITICAL: Use easeInOut for fluid, natural motion
       }
@@ -59,7 +66,7 @@ export default function MyBoat() {
 
   useEffect(() => {
     BoatAnimation();
-  }, [currentBoatConfig, animate, scope]);
+  }, [searchParams, animate, scope]);
 
   return (
     <div className="boat-container" >
