@@ -2,11 +2,7 @@
 
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect } from "react";
-import {
-  updateWebsiteWeather,
-  WEATHER_STATES,
-  WeatherCondition,
-} from "rt/utils/weather-utils";
+import { updateWebsiteWeather, WeatherCondition } from "rt/utils/weather-utils";
 
 /**
  * WeatherURLManager component is responsible for:
@@ -27,36 +23,31 @@ export default function WeatherURLManager() {
   // This effect runs on component mount and whenever 'router' or 'searchParams' dependencies change.
   useEffect(() => {
     // Determine the initial weather condition based on the URL or default to 'sunny'.
-    let currentURLWeather =
-      (searchParams.get("weather") as WeatherCondition) || WEATHER_STATES[0];
+    const locationDetails: LocationDetailsTuple = ["McKinney", "TX", "1"];
 
-    // Apply the initial weather condition to the website's body class.
-    updateWebsiteWeather(currentURLWeather);
+    const manageWeatherAndURL = async () => {
+      try {
+        const weatherID = await getCurrentWeatherID(locationDetails);
+        const nextWeatherCondition = getWeatherTypeByID(weatherID);
+        console.log(weatherID);
+        console.log(nextWeatherCondition);
+        // Apply the initial weather condition to the website's body class.
+        updateWebsiteWeather(nextWeatherCondition);
+        // Create a new URLSearchParams object based on the current URL's parameters.
+        const newSearchParams = new URLSearchParams(searchParams.toString());
+        // Set or update the 'weather' parameter with the next condition.
+        newSearchParams.set("weather", nextWeatherCondition);
+        router.push(`?${newSearchParams}`, { scroll: false });
+      } catch (error) {
+        console.error("Error managing weather and URL:", error);
+      }
+    };
 
-    // Find the starting index for the weather cycle.
-    // If the current URL weather isn't found in WEATHER_STATES (e.g., invalid param), default to index 0.
-    let currentIndex = WEATHER_STATES.indexOf(currentURLWeather);
-    if (currentIndex === -1) {
-      currentIndex = 0;
-    }
+    manageWeatherAndURL();
 
-    // Set up an interval to periodically change the weather condition.
     const intervalId = setInterval(() => {
-      currentIndex = (currentIndex + 1) % WEATHER_STATES.length;
-      const nextCondition = WEATHER_STATES[currentIndex];
-
-      // Update the website's body class for the new weather condition.
-      updateWebsiteWeather(nextCondition);
-
-      // Create a new URLSearchParams object based on the current URL's parameters.
-      const newSearchParams = new URLSearchParams(searchParams.toString());
-      // Set or update the 'weather' parameter with the next condition.
-      newSearchParams.set("weather", nextCondition);
-
-      // Update the browser's URL with the new search parameters.
-      // `scroll: false` prevents the page from jumping to the top on URL update.
-      router.push(`?${newSearchParams.toString()}`, { scroll: false });
-    }, 5000);
+      manageWeatherAndURL();
+    }, 600000); // Set to repeat every 10 minutes
 
     // Cleanup function: This runs when the component unmounts or before the
     // useEffect re-runs due to a dependency change.
@@ -65,4 +56,63 @@ export default function WeatherURLManager() {
 
   // This component does not render any visible UI elements.
   return null;
+}
+
+function isNumberBetween(num: number, low: number, high: number): boolean {
+  return low <= num && high >= num;
+}
+
+function getWeatherTypeByID(id: number): WeatherCondition {
+  if (isNumberBetween(id, 200, 232)) {
+    // Thunderstorm
+    return "stormy";
+  } else if (isNumberBetween(id, 300, 321)) {
+    // Drizzle
+    return "rainy";
+  } else if (isNumberBetween(id, 500, 531)) {
+    // Rain
+    return "rainy";
+  } else if (isNumberBetween(id, 600, 622)) {
+    // Snow (WIP Weather Condition)
+    return "rainy";
+  } else if (isNumberBetween(id, 701, 781)) {
+    // Atmosphere (e.g. Tornado, Sand, Mist)
+    // May add a mist weather condition but otherwise I hope my boat doesnt see a tornado lol.
+    return "sunny";
+  } else if (isNumberBetween(id, 803, 804)) {
+    // Clouds
+    return "cloudy";
+  } else {
+    // Sunny skies as default
+    return "sunny";
+  }
+}
+
+type LocationDetailsTuple = [string, string, string];
+
+async function getCurrentWeatherID(
+  locationDetails: LocationDetailsTuple
+): Promise<number> {
+  const apiKey = process.env.NEXT_PUBLIC_OPENWEATHER_API_KEY;
+  const baseURL = "https://api.openweathermap.org/data/2.5/weather?q=";
+  const [city, stateCode, countryCode] = locationDetails;
+
+  if (!apiKey) {
+    console.error(
+      "No API Key found. lease define NEXT_PUBLIC_OPENWEATHER_API_KEY in your .env.local file. "
+    );
+    return 800;
+  }
+
+  const response = await fetch(
+    `${baseURL}${city},${stateCode},${countryCode}&appid=${apiKey}`
+  );
+
+  if (!response.ok) {
+    console.error(`HTTP error! Status: ${response.status}`);
+    return 801;
+  }
+
+  const data = await response.json();
+  return data.weather[0].id;
 }
