@@ -101,9 +101,9 @@ export default function MyBoat({ searchParams }: MyBoatProps) {
       <motion.img
         ref={scope}
         className="boat-image"
-        src="/NewBoat.png"
+        src="/Boat.png"
         alt="Ship with all my treasure"
-        initial={{ y: -150, opacity: 0, rotate: -15 }} // Start from above and faded
+        initial={{ y: -150, opacity: 0, rotate: 15 }} // Start from above and faded
         whileHover={{ scale: 1.05 }}
       />
     </div>
