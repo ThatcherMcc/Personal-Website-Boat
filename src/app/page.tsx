@@ -2,7 +2,8 @@
 
 import MyBoat from "rt/components/Boat";
 import WaveBackground from "rt/components/WaveBackground";
-import WeatherURLManager from "rt/components/WeatherURLManager";
+import BoatStateURLManager from "rt/managers/BoatURLManager";
+import WeatherURLManager from "rt/managers/WeatherURLManager";
 
 /**
  * HomePage component serves as the main entry point for the root route.
@@ -27,7 +28,7 @@ export default async function HomePage({
         It needs to be a Client Component because it uses client-side hooks like useRouter and useEffect.
       */}
       <WeatherURLManager />
-
+      <BoatStateURLManager />
       {/*
         WaveBackground is configured as a Server Component.
         It receives "searchParams" as a prop from this Server Component (HomePage)

@@ -35,9 +35,18 @@ body {
 
 .boat-container {
   position: fixed;
-  width: 1300;
+  width: 800;
   height: auto;
-  bottom: 15svh;
+  bottom: 20svh;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 3;
+}
+.boat-inside-container {
+  position: fixed;
+  width: 900;
+  height: auto;
+  bottom: 20svh;
   left: 50%;
   transform: translateX(-50%);
   z-index: 3;

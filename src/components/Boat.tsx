@@ -4,6 +4,7 @@ import { motion, useAnimate } from "motion/react";
 import { useEffect } from "react";
 import { BOAT_ANIMATION_CONFIG } from "rt/configs/boat-configs";
 import { WeatherCondition } from "rt/utils/weather-utils";
+import { BoatState, BoatRoom } from "rt/managers/BoatURLManager";
 
 /**
  * @property {object} searchParams - The URL search parameters object from Next.js.
@@ -21,6 +22,8 @@ type MyBoatProps = {
 export default function MyBoat({ searchParams }: MyBoatProps) {
   const [scope, animate] = useAnimate();
 
+  const boatState = (searchParams.boatState as BoatState) || "exterior";
+  const boatRoom = searchParams.room as BoatRoom;
   // Retrieves the 'weather' parameter from the URl.
   const weatherParam = searchParams.weather as WeatherCondition;
 
@@ -29,13 +32,27 @@ export default function MyBoat({ searchParams }: MyBoatProps) {
   const currentAnimationConfig =
     BOAT_ANIMATION_CONFIG[weatherParam] || BOAT_ANIMATION_CONFIG.sunny;
 
+  const handleBoatClick = () => {
+    if (boatState == "exterior") {
+      window.dispatchEvent(new CustomEvent("boatClick"));
+    }
+  };
+
+  const handleRoomClick = (room: BoatRoom) => {
+    window.dispatchEvent(new CustomEvent("roomClick", { detail: { room } }));
+  };
+
+  const handleBackToSea = () => {
+    window.dispatchEvent(new CustomEvent("backToSea"));
+  };
+
   /**
    * Enacts the boat's animation sequence:
    * 1. Initial "dropIn"
    * 2. "Stabalize" the boat as if in real water
    * 3. A continuous bobbing and rotaion based on the weather configuration
    */
-  async function boatAnimation() {
+  async function boatExteriorAnimation() {
     // Initial drop-in animation: boat moves from above to its resting y-position and fades in.
     const dropIn = animate(
       scope.current,
@@ -51,13 +68,13 @@ export default function MyBoat({ searchParams }: MyBoatProps) {
     // Stabilization animation: boat tilts slightly then settles at 0 degrees.
     const stabilize = await animate(
       scope.current,
-      { rotate: 0 },
+      { x: 0, rotate: 0 },
       {
         type: "spring",
-        stiffness: 40,
+        stiffness: 50,
         damping: 10,
         mass: 0.5,
-        delay: 0.2,
+        delay: 0.14,
       }
     );
 
@@ -90,22 +107,81 @@ export default function MyBoat({ searchParams }: MyBoatProps) {
     );
   }
 
+  async function boatInteriorAnimation() {
+    animate(
+      scope.current,
+      {
+        y: [0, 4, 2, 0],
+        rotate: [0, 2, -1, 0],
+      },
+      {
+        duration: 10,
+        repeat: Infinity,
+        ease: "easeInOut",
+      }
+    );
+  }
+
   // useEffect hook to run the boat animation when relevant dependencies change.
   // This hook ensures the animation starts on mount and re-runs if searchParams change.
   useEffect(() => {
-    boatAnimation();
+    if (boatState == "exterior") {
+      boatExteriorAnimation();
+    } else if (boatState == "interior") {
+      boatExteriorAnimation();
+    }
   }, [searchParams, animate, scope]);
 
+  if (boatState === "exterior") {
+    return (
+      <div className="boat-container">
+        <motion.img
+          ref={scope}
+          className="boat-image cursor-pointer"
+          src="/boat.png"
+          alt="Ship with all my treasure"
+          initial={{ y: -125, opacity: 0, rotate: 15 }}
+          whileHover={{ scale: 1.05 }}
+          onClick={handleBoatClick}
+        />
+      </div>
+    );
+  }
+
   return (
-    <div className="boat-container">
-      <motion.img
+    <div className="boat-inside-container">
+      <motion.div
         ref={scope}
-        className="boat-image"
-        src="/Boat.png"
-        alt="Ship with all my treasure"
-        initial={{ y: -150, opacity: 0, rotate: 15 }} // Start from above and faded
-        whileHover={{ scale: 1.05 }}
-      />
+        initial={{ opacity: 0.8 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.3, ease: "easeOut" }}
+      >
+        {/* Interior boat layout */}
+        <div className="relative w-full h-full">
+          <motion.img
+            src="/boat-inside.png"
+            alt="Interior of the boat"
+            className="w-full h-auto object-contain"
+          />
+          {!boatRoom && (
+            <div className="absolute inset-0">
+              {/* Captains Quarters */}
+              <motion.div
+                className="absolute top-[75%] left-[5%] w-[18%] h-[6%] cursor-pointer rounded-lg bg-transparent hover:bg-blue-200 hover:bg-opacity-30 border-2 border-transparent hover:border-blue-300"
+                whileHover={{ scale: 1.05 }}
+                onClick={() => handleRoomClick("captains-quarters")}
+                title="Captains Quarters"
+              >
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <span className="bg-blue-600 text-white px-2 py-1 rounded text-sm font-semibold opacity-0 hover:opacity-100 transition-opacity">
+                    Captains Quarters
+                  </span>
+                </div>
+              </motion.div>
+            </div>
+          )}
+        </div>
+      </motion.div>
     </div>
   );
 }
