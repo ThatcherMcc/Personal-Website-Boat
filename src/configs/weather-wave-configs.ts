@@ -34,6 +34,7 @@ export type AllWeatherWaveConfig = {
   cloudy: WeatherWaveConfig;
   rainy: WeatherWaveConfig;
   stormy: WeatherWaveConfig;
+  zoomed: WeatherWaveConfig;
 };
 
 /**
@@ -84,6 +85,14 @@ export const WEATHER_WAVE_CONFIGS: AllWeatherWaveConfig = {
       { height: 85, amplitude: 25, speed: -0.3, points: 8 },
       { height: 95, amplitude: 30, speed: -0.33, points: 10 },
       { height: 100, amplitude: 25, speed: -0.35, points: 12 },
+    ],
+  },
+  zoomed: {
+    fill: [],
+    options: [
+      { height: 100, amplitude: 15, speed: 0.05, points: 3 },
+      { height: 100, amplitude: 20, speed: 0.05, points: 4 },
+      { height: 100, amplitude: 25, speed: 0.05, points: 5 },
     ],
   },
 };
