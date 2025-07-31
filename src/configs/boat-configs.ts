@@ -26,3 +26,8 @@ export const BOAT_ANIMATION_CONFIG: {
   rainy: { amplitude: 20, length: 8, rotation: 3 },
   stormy: { amplitude: 30, length: 6, rotation: 4 },
 };
+
+export const ROOM_ZOOM_CONFIG = {
+  "captains-quarters": { x: 1600, y: -1000 },
+  "treasure-room": { x: -150, y: 50 },
+};

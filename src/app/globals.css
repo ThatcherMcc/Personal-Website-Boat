@@ -137,29 +137,3 @@ body.weather-stormy {
   height: 100%;
   transition: fill 2s ease-in-out;
 }
-
-.wave-overlap {
-  margin-left: 0px;
-}
-
-/* Add these to your weather-specific styles to change speed or direction */
-body.weather-rainy #back-ocean-wave {
-  animation-duration: 30s; /* Faster scroll in stormy weather */
-}
-body.weather-rainy #middle-ocean-wave {
-  animation-duration: 25s;
-}
-body.weather-rainy #front-ocean-wave {
-  animation-duration: 20s;
-}
-
-/* Add these to your weather-specific styles to change speed or direction */
-body.weather-stormy #back-ocean-wave {
-  animation-duration: 25s; /* Faster scroll in stormy weather */
-}
-body.weather-stormy #middle-ocean-wave {
-  animation-duration: 20s;
-}
-body.weather-stormy #front-ocean-wave {
-  animation-duration: 15s;
-}

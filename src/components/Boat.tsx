@@ -1,8 +1,11 @@
 "use client";
 
-import { motion, useAnimate } from "motion/react";
+import { motion, useAnimate } from "framer-motion";
 import { useEffect } from "react";
-import { BOAT_ANIMATION_CONFIG } from "rt/configs/boat-configs";
+import {
+  BOAT_ANIMATION_CONFIG,
+  ROOM_ZOOM_CONFIG,
+} from "rt/configs/boat-configs";
 import { WeatherCondition } from "rt/utils/weather-utils";
 import { BoatState, BoatRoom } from "rt/managers/BoatURLManager";
 
@@ -24,6 +27,7 @@ export default function MyBoat({ searchParams }: MyBoatProps) {
 
   const boatState = (searchParams.boatState as BoatState) || "exterior";
   const boatRoom = searchParams.room as BoatRoom;
+  const currentRoomConfig = boatRoom ? ROOM_ZOOM_CONFIG[boatRoom] : null;
   // Retrieves the 'weather' parameter from the URl.
   const weatherParam = searchParams.weather as WeatherCondition;
 
@@ -107,12 +111,11 @@ export default function MyBoat({ searchParams }: MyBoatProps) {
     );
   }
 
-  async function boatInteriorAnimation() {
+  async function boatRoomAnimation() {
     animate(
       scope.current,
       {
-        y: [0, 4, 2, 0],
-        rotate: [0, 2, -1, 0],
+        rotate: [0, 0.25, -0.25, 0],
       },
       {
         duration: 10,
@@ -125,10 +128,10 @@ export default function MyBoat({ searchParams }: MyBoatProps) {
   // useEffect hook to run the boat animation when relevant dependencies change.
   // This hook ensures the animation starts on mount and re-runs if searchParams change.
   useEffect(() => {
-    if (boatState == "exterior") {
+    if (!boatRoom) {
       boatExteriorAnimation();
-    } else if (boatState == "interior") {
-      boatExteriorAnimation();
+    } else {
+      boatRoomAnimation();
     }
   }, [searchParams, animate, scope]);
 
@@ -153,8 +156,16 @@ export default function MyBoat({ searchParams }: MyBoatProps) {
       <motion.div
         ref={scope}
         initial={{ opacity: 0.8 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.3, ease: "easeOut" }}
+        animate={{
+          opacity: 1,
+          scale: boatRoom ? 5 : 1,
+          x: currentRoomConfig ? currentRoomConfig.x : 0,
+          y: currentRoomConfig ? currentRoomConfig.y : 0,
+        }}
+        transition={{
+          duration: boatRoom ? 1 : 0.3,
+          ease: boatRoom ? "easeInOut" : "easeOut",
+        }}
       >
         {/* Interior boat layout */}
         <div className="relative w-full h-full">
@@ -167,8 +178,24 @@ export default function MyBoat({ searchParams }: MyBoatProps) {
             <div className="absolute inset-0">
               {/* Captains Quarters */}
               <motion.div
-                className="absolute top-[75%] left-[5%] w-[18%] h-[6%] cursor-pointer rounded-lg bg-transparent hover:bg-blue-200 hover:bg-opacity-30 border-2 border-transparent hover:border-blue-300"
-                whileHover={{ scale: 1.05 }}
+                className="absolute top-[75%] left-[3%] w-[21%] h-[6%] cursor-pointer rounded-lg bg-transparent hover:bg-blue-200 hover:bg-opacity-30 border-2 border-transparent hover:border-blue-300"
+                onClick={() => handleRoomClick("captains-quarters")}
+                title="Captains Quarters"
+              >
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <span className="bg-blue-600 text-white px-2 py-1 rounded text-sm font-semibold opacity-0 hover:opacity-100 transition-opacity">
+                    Captains Quarters
+                  </span>
+                </div>
+              </motion.div>
+            </div>
+          )}
+
+          {boatRoom && (
+            <div className="absolute inset-0">
+              {/* Captains Quarters */}
+              <motion.div
+                className="absolute top-[75%] left-[3%] w-[21%] h-[6%] cursor-pointer rounded-lg bg-transparent hover:bg-blue-200 hover:bg-opacity-30 border-2 border-transparent hover:border-blue-300"
                 onClick={() => handleRoomClick("captains-quarters")}
                 title="Captains Quarters"
               >
