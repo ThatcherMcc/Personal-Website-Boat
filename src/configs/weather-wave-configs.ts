@@ -91,8 +91,8 @@ export const WEATHER_WAVE_CONFIGS: AllWeatherWaveConfig = {
     fill: [],
     options: [
       { height: 100, amplitude: 15, speed: 0.05, points: 3 },
-      { height: 100, amplitude: 20, speed: 0.05, points: 4 },
-      { height: 100, amplitude: 25, speed: 0.05, points: 5 },
+      { height: 100, amplitude: 16, speed: 0.05, points: 4 },
+      { height: 100, amplitude: 17, speed: 0.05, points: 5 },
     ],
   },
 };

@@ -42,6 +42,7 @@ body {
   transform: translateX(-50%);
   z-index: 3;
 }
+
 .boat-inside-container {
   position: fixed;
   width: 900;
@@ -75,28 +76,27 @@ body.weather-stormy {
 /* New keyframes for horizontal scrolling */
 @keyframes wave-scroll-right {
   from {
-    transform: translateX(0%);
+    transform: translateX(-50%);
   }
   to {
-    transform: translate(-50%);
+    transform: translateX(0%);
   }
 }
 
 @keyframes wave-scroll-left {
   from {
-    transform: translateX(-50%);
+    transform: translateX(0%);
   }
   to {
-    transform: translate(0%);
+    transform: translateX(-50%);
   }
 }
 
 /* Apply animation to Wave components based on their IDs (or a common class) */
 /* This will go in your CSS, not inline in JSX styles */
 .wave-layer-container {
-  position: fixed;
-  bottom: 0;
-  left: 0;
+  position: absolute;
+  bottom: var(--wave-bottom, 0);
   width: 200%;
   display: flex;
   pointer-events: none;
@@ -130,10 +130,4 @@ body.weather-stormy {
   z-index: 3;
   --_scroll-direction: wave-scroll-right;
   --_wave-duration: 30s;
-}
-
-.ocean-wave {
-  width: 200%;
-  height: 100%;
-  transition: fill 2s ease-in-out;
 }

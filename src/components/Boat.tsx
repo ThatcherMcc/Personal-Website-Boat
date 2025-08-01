@@ -111,6 +111,47 @@ export default function MyBoat({ searchParams }: MyBoatProps) {
     );
   }
 
+  async function boatInteriorAnimation() {
+    const simpleTransition = animate(
+      scope.current,
+      {
+        scale: boatRoom ? 5 : 1,
+        x: currentRoomConfig ? currentRoomConfig.x : 0,
+        y: currentRoomConfig ? currentRoomConfig.y : 0,
+      },
+      {
+        duration: 1, // This is your zoom-in/out transition duration
+        ease: "easeInOut",
+      }
+    );
+
+    await Promise.all([simpleTransition]);
+
+    animate(
+      scope.current,
+      {
+        y: [
+          0,
+          currentAnimationConfig.amplitude,
+          currentAnimationConfig.amplitude / 4,
+          0,
+        ],
+        rotate: [
+          0,
+          currentAnimationConfig.rotation,
+          currentAnimationConfig.rotation / -1,
+          0,
+        ],
+      },
+      {
+        duration: currentAnimationConfig.length,
+        repeat: Infinity,
+        ease: "easeInOut",
+        delay: 2,
+      }
+    );
+  }
+
   async function boatRoomAnimation() {
     animate(
       scope.current,
@@ -128,8 +169,10 @@ export default function MyBoat({ searchParams }: MyBoatProps) {
   // useEffect hook to run the boat animation when relevant dependencies change.
   // This hook ensures the animation starts on mount and re-runs if searchParams change.
   useEffect(() => {
-    if (!boatRoom) {
+    if (boatState == "exterior") {
       boatExteriorAnimation();
+    } else if (!boatRoom) {
+      boatInteriorAnimation();
     } else {
       boatRoomAnimation();
     }
@@ -155,16 +198,14 @@ export default function MyBoat({ searchParams }: MyBoatProps) {
     <div className="boat-inside-container">
       <motion.div
         ref={scope}
-        initial={{ opacity: 0.8 }}
         animate={{
-          opacity: 1,
           scale: boatRoom ? 5 : 1,
           x: currentRoomConfig ? currentRoomConfig.x : 0,
           y: currentRoomConfig ? currentRoomConfig.y : 0,
         }}
         transition={{
-          duration: boatRoom ? 1 : 0.3,
-          ease: boatRoom ? "easeInOut" : "easeOut",
+          duration: 2,
+          ease: "easeInOut",
         }}
       >
         {/* Interior boat layout */}
@@ -193,18 +234,7 @@ export default function MyBoat({ searchParams }: MyBoatProps) {
 
           {boatRoom && (
             <div className="absolute inset-0">
-              {/* Captains Quarters */}
-              <motion.div
-                className="absolute top-[75%] left-[3%] w-[21%] h-[6%] cursor-pointer rounded-lg bg-transparent hover:bg-blue-200 hover:bg-opacity-30 border-2 border-transparent hover:border-blue-300"
-                onClick={() => handleRoomClick("captains-quarters")}
-                title="Captains Quarters"
-              >
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <span className="bg-blue-600 text-white px-2 py-1 rounded text-sm font-semibold opacity-0 hover:opacity-100 transition-opacity">
-                    Captains Quarters
-                  </span>
-                </div>
-              </motion.div>
+              <button className="absolute top-[78.7%] left-[6.2%] w-[2.1%] h-[2.1%] cursor-pointer rounded-sm bg-transparent hover:bg-gray-200 hover: opacity-50"></button>
             </div>
           )}
         </div>

@@ -1,4 +1,7 @@
+"use client";
+
 import Wave from "react-wavify";
+import { motion } from "framer-motion";
 import { WEATHER_WAVE_CONFIGS } from "rt/configs/weather-wave-configs";
 import { BoatRoom } from "rt/managers/BoatURLManager";
 import { WeatherCondition } from "rt/utils/weather-utils";
@@ -29,87 +32,26 @@ export default function WaveBackground({ searchParams }: WaveBackgroundProps) {
   const currentWaveConfig =
     WEATHER_WAVE_CONFIGS[weatherParam] || WEATHER_WAVE_CONFIGS.sunny;
 
-  if (!boatRoom) {
-    return (
-      <>
-        {/* Backmost layer of the ocean waves (lowest z-index) */}
-        <div
-          id="back-wave-container"
-          className="wave-layer-container"
-          style={{ zIndex: 1 }}
-        >
-          <Wave
-            id="back-ocean-wave"
-            className="ocean-wave"
-            fill={currentWaveConfig.fill[0]}
-            paused={false}
-            style={{}}
-            options={currentWaveConfig.options[0]}
-          />
-        </div>
-
-        {/* Middle layer of the ocean waves (behind boat) */}
-        <div
-          id="middle-wave-container-back"
-          className="wave-layer-container"
-          style={{ zIndex: 2 }}
-        >
-          <Wave
-            className="ocean-wave"
-            fill={currentWaveConfig.fill[1]}
-            paused={false}
-            style={{}}
-            options={currentWaveConfig.options[1]}
-          />
-        </div>
-        {/* Middle layer of the ocean waves (in-front of boat) */}
-        <div
-          id="middle-wave-container-front"
-          className="wave-layer-container"
-          style={{ zIndex: 4 }}
-        >
-          <Wave
-            className="ocean-wave"
-            fill={currentWaveConfig.fill[1]}
-            paused={false}
-            style={{}}
-            options={currentWaveConfig.options[1]}
-          />
-        </div>
-
-        {/* Frontmost layer of the ocean waves (highest z-index, closest to viewer) */}
-        <div
-          id="front-wave-container"
-          className="wave-layer-container"
-          style={{ zIndex: 5 }}
-        >
-          <Wave
-            className="ocean-wave"
-            fill={currentWaveConfig.fill[2]}
-            paused={false}
-            style={{}}
-            options={currentWaveConfig.options[2]}
-          />
-        </div>
-      </>
-    );
-  }
-
   return (
-    <>
+    <motion.div
+      animate={{ "--wave-bottom": boatRoom ? "-175px" : "0px" }}
+      transition={{ duration: 1.3, ease: "easeInOut" }}
+    >
       {/* Backmost layer of the ocean waves (lowest z-index) */}
       <div
         id="back-wave-container"
         className="wave-layer-container"
-        style={{ scale: 3, bottom: -320, zIndex: 1 }}
+        style={{ zIndex: 1 }}
       >
         <Wave
-          id="back-ocean-wave"
-          className="ocean-wave"
           fill={currentWaveConfig.fill[0]}
           paused={false}
           style={{}}
-          options={WEATHER_WAVE_CONFIGS.zoomed.options[0]}
+          options={
+            boatRoom
+              ? WEATHER_WAVE_CONFIGS.zoomed.options[0]
+              : currentWaveConfig.options[0]
+          }
         />
       </div>
 
@@ -117,28 +59,35 @@ export default function WaveBackground({ searchParams }: WaveBackgroundProps) {
       <div
         id="middle-wave-container-back"
         className="wave-layer-container"
-        style={{ scale: 3, bottom: -300, zIndex: 2 }}
+        style={{ zIndex: 2 }}
       >
         <Wave
-          className="ocean-wave"
           fill={currentWaveConfig.fill[1]}
           paused={false}
           style={{}}
-          options={WEATHER_WAVE_CONFIGS.zoomed.options[1]}
+          options={
+            boatRoom
+              ? WEATHER_WAVE_CONFIGS.zoomed.options[1]
+              : currentWaveConfig.options[1]
+          }
         />
       </div>
+
       {/* Middle layer of the ocean waves (in-front of boat) */}
       <div
         id="middle-wave-container-front"
         className="wave-layer-container"
-        style={{ scale: 3, bottom: -300, zIndex: 4 }}
+        style={{ zIndex: 4 }}
       >
         <Wave
-          className="ocean-wave"
           fill={currentWaveConfig.fill[1]}
           paused={false}
           style={{}}
-          options={WEATHER_WAVE_CONFIGS.zoomed.options[1]}
+          options={
+            boatRoom
+              ? WEATHER_WAVE_CONFIGS.zoomed.options[1]
+              : currentWaveConfig.options[1]
+          }
         />
       </div>
 
@@ -146,16 +95,19 @@ export default function WaveBackground({ searchParams }: WaveBackgroundProps) {
       <div
         id="front-wave-container"
         className="wave-layer-container"
-        style={{ scale: 3, bottom: -280, zIndex: 5 }}
+        style={{ zIndex: 5 }}
       >
         <Wave
-          className="ocean-wave"
           fill={currentWaveConfig.fill[2]}
           paused={false}
           style={{}}
-          options={WEATHER_WAVE_CONFIGS.zoomed.options[2]}
+          options={
+            boatRoom
+              ? WEATHER_WAVE_CONFIGS.zoomed.options[2]
+              : currentWaveConfig.options[2]
+          }
         />
       </div>
-    </>
+    </motion.div>
   );
 }
