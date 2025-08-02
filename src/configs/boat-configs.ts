@@ -10,6 +10,7 @@
  */
 export type BoatAnimationOptions = {
   amplitude: number;
+  distance: number;
   length: number;
   rotation: number;
 };
@@ -21,10 +22,10 @@ export type BoatAnimationOptions = {
 export const BOAT_ANIMATION_CONFIG: {
   [key in "sunny" | "cloudy" | "rainy" | "stormy"]: BoatAnimationOptions;
 } = {
-  sunny: { amplitude: 15, length: 10, rotation: 2 },
-  cloudy: { amplitude: 15, length: 8, rotation: 2 },
-  rainy: { amplitude: 20, length: 8, rotation: 3 },
-  stormy: { amplitude: 30, length: 6, rotation: 4 },
+  sunny: { amplitude: 15, distance: 10, length: 10, rotation: 2 },
+  cloudy: { amplitude: 15, distance: 10, length: 8, rotation: 2 },
+  rainy: { amplitude: 20, distance: 10, length: 8, rotation: 3 },
+  stormy: { amplitude: 30, distance: 10, length: 6, rotation: 4 },
 };
 
 export const ROOM_ZOOM_CONFIG = {

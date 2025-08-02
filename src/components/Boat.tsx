@@ -130,16 +130,17 @@ export default function MyBoat({ searchParams }: MyBoatProps) {
     animate(
       scope.current,
       {
-        y: [
+        y: [0, currentAnimationConfig.amplitude, 0],
+        x: [
           0,
-          currentAnimationConfig.amplitude,
-          currentAnimationConfig.amplitude / 4,
+          currentAnimationConfig.distance,
+          currentAnimationConfig.distance / -2,
           0,
         ],
         rotate: [
           0,
           currentAnimationConfig.rotation,
-          currentAnimationConfig.rotation / -1,
+          currentAnimationConfig.rotation / -2,
           0,
         ],
       },
