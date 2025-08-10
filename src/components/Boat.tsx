@@ -55,8 +55,18 @@ export default function MyBoat({ searchParams }: MyBoatProps) {
    * 1. Initial "dropIn"
    * 2. "Stabalize" the boat as if in real water
    * 3. A continuous bobbing and rotaion based on the weather configuration
+   *
+   * a. if a room is selected change the scale and position to the room config.
    */
   async function boatExteriorAnimation() {
+    await boatDropInAnimation();
+    boatIdleAnimation();
+  }
+  async function boatInteriorAnimation() {
+    await boatZoomOutAnimation();
+    boatIdleAnimation();
+  }
+  async function boatDropInAnimation() {
     // Initial drop-in animation: boat moves from above to its resting y-position and fades in.
     const dropIn = animate(
       scope.current,
@@ -84,49 +94,9 @@ export default function MyBoat({ searchParams }: MyBoatProps) {
 
     // Wait for both initial animations (drop-in and stabilize) to complete.
     await Promise.all([dropIn, stabilize]);
-
-    // Continuous bobbing and rotating animation.
-    // This animation runs indefinitely (`repeat: Infinity`).
-    animate(
-      scope.current,
-      {
-        y: [
-          0,
-          currentAnimationConfig.amplitude,
-          currentAnimationConfig.amplitude / 4,
-          0,
-        ],
-        rotate: [
-          0,
-          currentAnimationConfig.rotation,
-          currentAnimationConfig.rotation / -1,
-          0,
-        ],
-      },
-      {
-        duration: currentAnimationConfig.length,
-        repeat: Infinity,
-        ease: "easeInOut",
-      }
-    );
   }
 
-  async function boatInteriorAnimation() {
-    const simpleTransition = animate(
-      scope.current,
-      {
-        scale: boatRoom ? 5 : 1,
-        x: currentRoomConfig ? currentRoomConfig.x : 0,
-        y: currentRoomConfig ? currentRoomConfig.y : 0,
-      },
-      {
-        duration: 1, // This is your zoom-in/out transition duration
-        ease: "easeInOut",
-      }
-    );
-
-    await Promise.all([simpleTransition]);
-
+  async function boatIdleAnimation() {
     animate(
       scope.current,
       {
@@ -148,9 +118,25 @@ export default function MyBoat({ searchParams }: MyBoatProps) {
         duration: currentAnimationConfig.length,
         repeat: Infinity,
         ease: "easeInOut",
-        delay: 2,
       }
     );
+  }
+
+  async function boatZoomOutAnimation() {
+    const simpleTransition = animate(
+      scope.current,
+      {
+        scale: boatRoom ? 5 : 1,
+        x: currentRoomConfig ? currentRoomConfig.x : 0,
+        y: currentRoomConfig ? currentRoomConfig.y : 0,
+      },
+      {
+        duration: 1, // This is your zoom-in/out transition duration
+        ease: "easeInOut",
+      }
+    );
+
+    await Promise.all([simpleTransition]);
   }
 
   async function boatRoomAnimation() {
@@ -170,11 +156,11 @@ export default function MyBoat({ searchParams }: MyBoatProps) {
   // useEffect hook to run the boat animation when relevant dependencies change.
   // This hook ensures the animation starts on mount and re-runs if searchParams change.
   useEffect(() => {
-    if (boatState == "exterior") {
+    if (boatState === "exterior") {
       boatExteriorAnimation();
-    } else if (!boatRoom) {
+    } else if (boatState === "interior" && !boatRoom) {
       boatInteriorAnimation();
-    } else {
+    } else if (boatState === "interior" && boatRoom) {
       boatRoomAnimation();
     }
   }, [searchParams, animate, scope]);

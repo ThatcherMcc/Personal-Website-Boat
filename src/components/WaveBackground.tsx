@@ -34,7 +34,7 @@ export default function WaveBackground({ searchParams }: WaveBackgroundProps) {
 
   return (
     <motion.div
-      animate={{ "--wave-bottom": boatRoom ? "-175px" : "0px" }}
+      animate={{ "--wave-bottom": boatRoom ? "-100px" : "0px" }}
       transition={{ duration: 1.3, ease: "easeInOut" }}
     >
       {/* Backmost layer of the ocean waves (lowest z-index) */}
