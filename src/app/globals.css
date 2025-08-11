@@ -37,7 +37,7 @@ body {
   position: fixed;
   width: 850;
   height: auto;
-  bottom: 20svh;
+  bottom: 13svh;
   left: 50%;
   transform: translateX(-50%);
   z-index: 3;
@@ -47,7 +47,6 @@ body {
   position: fixed;
   width: 900;
   height: auto;
-  bottom: 20svh;
   left: 50%;
   transform: translateX(-50%);
   z-index: 3;
@@ -105,29 +104,37 @@ body.weather-stormy {
 }
 
 #back-wave-container {
-  height: 43svh; /* Height for the back layer container */
+  height: 35svh; /* Height for the back layer container */
   z-index: 1;
   --_scroll-direction: wave-scroll-right;
   --_wave-duration: 40s; /* Base scroll speed for this layer */
 }
 
 #middle-wave-container-back {
-  height: 40svh;
+  height: 32svh;
   z-index: 2;
   --_scroll-direction: wave-scroll-left;
   --_wave-duration: 35s;
 }
 
 #middle-wave-container-front {
-  height: 38svh;
+  height: 31svh;
   z-index: 2;
   --_scroll-direction: wave-scroll-left;
   --_wave-duration: 35s;
 }
 
 #front-wave-container {
-  height: 37svh;
+  height: 29svh;
   z-index: 3;
   --_scroll-direction: wave-scroll-right;
   --_wave-duration: 30s;
+}
+
+.weather-info-button {
+  position: absolute;
+  height: auto;
+  top: 1.5rem;
+  left: 2rem;
+  z-index: 5;
 }
