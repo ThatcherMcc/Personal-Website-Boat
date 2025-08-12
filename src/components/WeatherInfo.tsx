@@ -13,6 +13,7 @@ type WeatherInfoProps = {
 };
 export default function WeatherInfo({ searchParams }: WeatherInfoProps) {
   const existsBoatRoom = !!searchParams.room;
+  const weatherType = searchParams.weather;
   const [weatherData, setWeatherData] = useState<WeatherDataTuple | undefined>(
     undefined
   );
@@ -59,7 +60,7 @@ export default function WeatherInfo({ searchParams }: WeatherInfoProps) {
   return (
     <>
       <div className="weather-info-container">
-        <img src={"/button-sun.svg"} />
+        <img src={`/weather-icons/${weatherType}.svg`} />
         <span className="text-lg">
           {city}, {state}
         </span>
