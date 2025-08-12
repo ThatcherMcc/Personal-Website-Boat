@@ -2,6 +2,7 @@
 
 import MyBoat from "rt/components/Boat";
 import WaveBackground from "rt/components/WaveBackground";
+import WeatherInfo from "rt/components/WeatherInfo";
 import BoatStateURLManager from "rt/managers/BoatURLManager";
 import WeatherURLManager from "rt/managers/WeatherURLManager";
 
@@ -29,6 +30,7 @@ export default async function HomePage({
       */}
       <WeatherURLManager />
       <BoatStateURLManager />
+      <WeatherInfo searchParams={await searchParams} />
       {/*
         WaveBackground is configured as a Server Component.
         It receives "searchParams" as a prop from this Server Component (HomePage)

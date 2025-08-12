@@ -131,10 +131,38 @@ body.weather-stormy {
   --_wave-duration: 30s;
 }
 
-.weather-info-button {
+.weather-info-container {
   position: absolute;
   height: auto;
   top: 1.5rem;
   left: 2rem;
   z-index: 5;
+}
+
+.weather-info-screen {
+  position: fixed;
+  top: 1rem;
+  left: 1rem;
+  width: 20vw;
+  height: 19vh;
+  background: rgb(0, 0, 0);
+  display: flex;
+  flex: auto;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: center;
+  color: white;
+  font-size: 18px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+  z-index: 4;
+  padding: 2rem;
+  gap: 1rem;
+  border-radius: 20px;
+}
+
+.weather-info-container:hover + .weather-info-screen {
+  opacity: 60%;
+  visibility: visible;
 }

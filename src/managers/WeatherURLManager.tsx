@@ -5,6 +5,14 @@ import { useEffect } from "react";
 import { updateWebsiteWeather, WeatherCondition } from "rt/utils/weather-utils";
 
 /**
+ * Tuple holding the City code, State code, and Country code
+ * for the location to be used.
+ */
+type LocationDetailsTuple = [string, string, string];
+export const locationDetails: LocationDetailsTuple = ["McKinney", "TX", "1"];
+
+export type WeatherDataTuple = [string, number, number, number];
+/**
  * WeatherURLManager component is responsible for:
  * 1. Reading the initial weather condition from the URL.
  * 2. Updating the website's body class based on the current weather.
@@ -22,15 +30,15 @@ export default function WeatherURLManager() {
   // useEffect hook to manage the weather cycling interval and URL updates.
   // This effect runs on component mount and whenever 'router' or 'searchParams' dependencies change.
   useEffect(() => {
-    // Determine the initial weather condition based on the URL or default to 'sunny'.
-    const locationDetails: LocationDetailsTuple = ["McKinney", "TX", "1"];
-
+    // Determine the initial weather condition based on the URL or default to 'sunny'
     const manageWeatherAndURL = async () => {
       try {
-        const weatherID = await getCurrentWeatherID(locationDetails);
-        const nextWeatherCondition = getWeatherTypeByID(weatherID);
-        console.log(weatherID);
+        const weather = await getCurrentWeather(locationDetails);
+        const nextWeatherCondition = getWeatherTypeByID(weather.id);
+
+        console.log(weather.id);
         console.log(nextWeatherCondition);
+
         // Apply the initial weather condition to the website's body class.
         updateWebsiteWeather(nextWeatherCondition);
         // Create a new URLSearchParams object based on the current URL's parameters.
@@ -38,6 +46,17 @@ export default function WeatherURLManager() {
         // Set or update the 'weather' parameter with the next condition.
         newSearchParams.set("weather", nextWeatherCondition);
         router.push(`?${newSearchParams}`, { scroll: false });
+
+        const weatherDataTuple: WeatherDataTuple = [
+          weather.description,
+          weather.temp,
+          weather.temp_min,
+          weather.temp_max,
+        ];
+
+        window.dispatchEvent(
+          new CustomEvent("weatherUpdated", { detail: weatherDataTuple })
+        );
       } catch (error) {
         console.error("Error managing weather and URL:", error);
       }
@@ -88,11 +107,17 @@ function getWeatherTypeByID(id: number): WeatherCondition {
   }
 }
 
-type LocationDetailsTuple = [string, string, string];
+type WeatherAPIResponse = {
+  id: number;
+  description: string;
+  temp: number;
+  temp_min: number;
+  temp_max: number;
+};
 
-async function getCurrentWeatherID(
+async function getCurrentWeather(
   locationDetails: LocationDetailsTuple
-): Promise<number> {
+): Promise<WeatherAPIResponse> {
   const apiKey = process.env.NEXT_PUBLIC_OPENWEATHER_API_KEY;
   const baseURL = "https://api.openweathermap.org/data/2.5/weather?q=";
   const [city, stateCode, countryCode] = locationDetails;
@@ -101,18 +126,36 @@ async function getCurrentWeatherID(
     console.error(
       "No API Key found. lease define NEXT_PUBLIC_OPENWEATHER_API_KEY in your .env.local file. "
     );
-    return 800;
+    return {
+      id: 800,
+      description: "clear sky",
+      temp: 75,
+      temp_min: 70,
+      temp_max: 80,
+    };
   }
 
   const response = await fetch(
-    `${baseURL}${city},${stateCode},${countryCode}&appid=${apiKey}`
+    `${baseURL}${city},${stateCode},${countryCode}&appid=${apiKey}&units=imperial`
   );
 
   if (!response.ok) {
     console.error(`HTTP error! Status: ${response.status}`);
-    return 801;
+    return {
+      id: 800,
+      description: "clear sky",
+      temp: 75,
+      temp_min: 70,
+      temp_max: 80,
+    };
   }
 
   const data = await response.json();
-  return data.weather[0].id;
+  return {
+    id: data.weather[0].id,
+    description: data.weather[0].description,
+    temp: Math.round(data.main.temp),
+    temp_min: Math.round(data.main.temp_min),
+    temp_max: Math.round(data.main.temp_max),
+  };
 }
