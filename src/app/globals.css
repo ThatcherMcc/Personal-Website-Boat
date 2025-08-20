@@ -47,6 +47,7 @@ body {
   position: fixed;
   width: 900;
   height: auto;
+  bottom: 13svh;
   left: 50%;
   transform: translateX(-50%);
   z-index: 3;
@@ -165,4 +166,12 @@ body.weather-stormy {
 .weather-info-container:hover + .weather-info-screen {
   opacity: 60%;
   visibility: visible;
+}
+
+.back-to-sea-container {
+  position: absolute;
+  height: auto;
+  top: 2rem;
+  left: 2rem;
+  z-index: 5;
 }
