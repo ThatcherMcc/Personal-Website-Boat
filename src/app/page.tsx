@@ -1,5 +1,6 @@
 // This is your main homepage content for the root route ("/").
 
+import BackToSeaButton from "rt/components/BackToSeaButton";
 import MyBoat from "rt/components/Boat";
 import WaveBackground from "rt/components/WaveBackground";
 import WeatherInfo from "rt/components/WeatherInfo";
@@ -31,6 +32,7 @@ export default async function HomePage({
       <WeatherURLManager />
       <BoatStateURLManager />
       <WeatherInfo searchParams={await searchParams} />
+      <BackToSeaButton searchParams={await searchParams} />
       {/*
         WaveBackground is configured as a Server Component.
         It receives "searchParams" as a prop from this Server Component (HomePage)
