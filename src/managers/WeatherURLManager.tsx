@@ -9,7 +9,7 @@ import { updateWebsiteWeather, WeatherCondition } from "rt/utils/weather-utils";
  * for the location to be used.
  */
 type LocationDetailsTuple = [string, string, string];
-export const locationDetails: LocationDetailsTuple = ["McKinney", "TX", "1"];
+export const locationDetails: LocationDetailsTuple = ["Wichita", "KS", "1"];
 
 export type WeatherDataTuple = [string, number, number, number];
 /**
