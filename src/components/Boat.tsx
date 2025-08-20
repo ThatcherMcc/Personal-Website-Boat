@@ -171,7 +171,7 @@ export default function MyBoat({ searchParams }: MyBoatProps) {
         <motion.img
           ref={scope}
           className="boat-image cursor-pointer"
-          src="/boat.png"
+          src="/boat/boat.png"
           alt="Ship with all my treasure"
           initial={{ y: -125, opacity: 0, rotate: 15 }}
           whileHover={{ scale: 1.05 }}
@@ -198,7 +198,7 @@ export default function MyBoat({ searchParams }: MyBoatProps) {
         {/* Interior boat layout */}
         <div className="relative w-full h-full">
           <motion.img
-            src="/boat-inside.png"
+            src="/boat/boat-inside.png"
             alt="Interior of the boat"
             className="w-full h-auto object-contain"
           />
@@ -206,12 +206,12 @@ export default function MyBoat({ searchParams }: MyBoatProps) {
             <div className="absolute inset-0">
               {/* Captains Quarters */}
               <motion.div
-                className="absolute top-[75%] left-[3%] w-[21%] h-[6%] cursor-pointer rounded-lg bg-transparent hover:bg-blue-200 hover:bg-opacity-30 border-2 border-transparent hover:border-blue-300"
+                className="absolute top-[75%] left-[3%] w-[21%] h-[6%] cursor-pointer rounded-lg bg-transparent hover:bg-amber-800 hover:bg-opacity-30 border-2 border-transparent hover:border-amber-300"
                 onClick={() => handleRoomClick("captains-quarters")}
                 title="Captains Quarters"
               >
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <span className="bg-blue-600 text-white px-2 py-1 rounded text-sm font-semibold opacity-0 hover:opacity-100 transition-opacity">
+                <div className="absolute inset-0 flex items-center justify-center transition-opacity opacity-0 hover:opacity-100">
+                  <span className="bg-amber-800 text-white px-2 py-1 rounded text-sm font-semibold">
                     Captains Quarters
                   </span>
                 </div>
@@ -221,7 +221,10 @@ export default function MyBoat({ searchParams }: MyBoatProps) {
 
           {boatRoom && (
             <div className="absolute inset-0">
-              <button className="absolute top-[78.7%] left-[6.2%] w-[2.1%] h-[2.1%] cursor-pointer rounded-sm bg-transparent hover:bg-gray-200 hover: opacity-50"></button>
+              <a
+                className="absolute top-[78.7%] left-[6.2%] w-[2.1%] h-[2.1%] cursor-pointer rounded-sm bg-transparent hover:bg-gray-200 hover: opacity-50"
+                href="/captains-quarters"
+              ></a>
             </div>
           )}
         </div>
