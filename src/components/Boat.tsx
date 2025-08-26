@@ -222,7 +222,7 @@ export default function MyBoat({ searchParams }: MyBoatProps) {
           {boatRoom && (
             <div className="absolute inset-0">
               <a
-                className="absolute top-[78.7%] left-[6.2%] w-[2.1%] h-[2.1%] cursor-pointer rounded-sm bg-transparent hover:bg-gray-200 hover: opacity-50"
+                className="absolute top-[76.1%] left-[10.1%] w-[3.6%] h-[2.6%] cursor-pointer rounded-sm hover:bg-gray-200 hover:opacity-50 duration-300"
                 href="/captains-quarters"
               ></a>
             </div>
