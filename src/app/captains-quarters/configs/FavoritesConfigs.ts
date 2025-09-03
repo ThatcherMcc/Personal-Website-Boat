@@ -1,13 +1,9 @@
-export type Favorite = {
+type Favorite = {
   imageSrc: string;
   altText: string | undefined;
   category: string;
   title: string;
   description: string;
-};
-
-export type FavoritesSectionProps = {
-  items: Favorite[];
 };
 
 export const FavoritesList: Favorite[] = [
