@@ -50,17 +50,17 @@ export const WEATHER_WAVE_CONFIGS: AllWeatherWaveConfig = {
       "rgba(0, 110, 200, 1)",
     ],
     options: [
-      { height: 100, amplitude: 15, speed: -0.05, points: 3 },
-      { height: 100, amplitude: 20, speed: -0.1, points: 4 },
-      { height: 100, amplitude: 25, speed: -0.15, points: 5 },
+      { height: 100, amplitude: 15, speed: -0.05, points: 5 },
+      { height: 100, amplitude: 20, speed: -0.1, points: 6 },
+      { height: 100, amplitude: 25, speed: -0.15, points: 7 },
     ],
   },
   cloudy: {
     fill: ["rgba(0, 40, 80, 1)", "rgba(0, 60, 120, 1)", "rgba(0, 90, 160, 1)"],
     options: [
-      { height: 100, amplitude: 15, speed: -0.1, points: 4 },
-      { height: 100, amplitude: 20, speed: -0.12, points: 5 },
-      { height: 100, amplitude: 25, speed: -0.18, points: 5 },
+      { height: 100, amplitude: 15, speed: -0.1, points: 6 },
+      { height: 100, amplitude: 20, speed: -0.12, points: 7 },
+      { height: 100, amplitude: 25, speed: -0.18, points: 7 },
     ],
   },
   rainy: {

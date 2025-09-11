@@ -42,7 +42,7 @@ body {
   position: fixed;
   width: 850;
   height: auto;
-  bottom: 13svh;
+  bottom: 130px;
   left: 50%;
   transform: translateX(-50%);
   z-index: 3;
@@ -52,10 +52,38 @@ body {
   position: fixed;
   width: 900;
   height: auto;
-  bottom: 13svh;
+  bottom: 130px;
   left: 50%;
   transform: translateX(-50%);
   z-index: 3;
+}
+
+@media screen and (max-width: 1024px) {
+  .boat-container {
+    width: 650; /* Make it wider on smaller screens */
+    bottom: 200px; /* Adjust the bottom position to account for the smaller boat size */
+    z-index: 3;
+  }
+
+  .boat-inside-container {
+    width: 700;
+    bottom: 200px;
+    z-index: 3;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .boat-container {
+    width: 500;
+    bottom: 270px; /* A smaller pixel value for smaller screens */
+    z-index: 3;
+  }
+
+  .boat-inside-container {
+    width: 500;
+    bottom: 270px;
+    z-index: 3;
+  }
 }
 
 .boat-image {
@@ -110,31 +138,67 @@ body.weather-stormy {
 }
 
 #back-wave-container {
-  height: 35svh; /* Height for the back layer container */
+  height: 345; /* Height for the back layer container */
   z-index: 1;
   --_scroll-direction: wave-scroll-right;
   --_wave-duration: 40s; /* Base scroll speed for this layer */
 }
 
 #middle-wave-container-back {
-  height: 32svh;
+  height: 310;
   z-index: 2;
   --_scroll-direction: wave-scroll-left;
   --_wave-duration: 35s;
 }
 
 #middle-wave-container-front {
-  height: 31svh;
+  height: 300;
   z-index: 2;
   --_scroll-direction: wave-scroll-left;
   --_wave-duration: 35s;
 }
 
 #front-wave-container {
-  height: 29svh;
+  height: 280;
   z-index: 3;
   --_scroll-direction: wave-scroll-right;
   --_wave-duration: 30s;
+}
+
+@media screen and (max-width: 1024px) {
+  #back-wave-container {
+    height: 370;
+  }
+
+  #middle-wave-container-back {
+    height: 345;
+  }
+
+  #middle-wave-container-front {
+    height: 335;
+  }
+
+  #front-wave-container {
+    height: 315;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  #back-wave-container {
+    height: 430;
+  }
+
+  #middle-wave-container-back {
+    height: 415;
+  }
+
+  #middle-wave-container-front {
+    height: 405;
+  }
+
+  #front-wave-container {
+    height: 380;
+  }
 }
 
 .weather-info-container {
@@ -151,8 +215,8 @@ body.weather-stormy {
   position: fixed;
   top: 1rem;
   left: 1rem;
-  width: 18vw;
-  height: 17vh;
+  width: 350;
+  height: 160;
   background: rgb(0, 0, 0);
   display: flex;
   flex: auto;
@@ -168,6 +232,18 @@ body.weather-stormy {
   padding: 2rem;
   gap: 1rem;
   border-radius: 20px;
+}
+
+@media screen and (max-width: 1024px) {
+  .weather-info-screen {
+    width: 300;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .weather-info-screen {
+    width: 300;
+  }
 }
 
 .weather-info-container:hover + .weather-info-screen {

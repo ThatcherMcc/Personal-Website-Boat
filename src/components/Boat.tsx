@@ -27,7 +27,23 @@ export default function MyBoat({ searchParams }: MyBoatProps) {
 
   const boatState = (searchParams.boatState as BoatState) || "exterior";
   const boatRoom = searchParams.room as BoatRoom;
-  const currentRoomConfig = boatRoom ? ROOM_ZOOM_CONFIG[boatRoom] : null;
+
+  const getScreenSize = () => {
+    if (typeof window === "undefined") {
+      return "desktop"; // Default to desktop on the server
+    }
+    if (window.innerWidth <= 768) {
+      return "mobile";
+    }
+    if (window.innerWidth <= 1024) {
+      return "tablet";
+    }
+    return "desktop";
+  };
+
+  const currentRoomConfig = boatRoom
+    ? ROOM_ZOOM_CONFIG[getScreenSize()][boatRoom]
+    : null;
   // Retrieves the 'weather' parameter from the URl.
   const weatherParam = searchParams.weather as WeatherCondition;
 

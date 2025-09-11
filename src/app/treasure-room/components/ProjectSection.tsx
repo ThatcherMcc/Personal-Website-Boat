@@ -11,7 +11,7 @@ export default function ProjectsSection() {
         Project Timeline
         <span className="absolute bottom-[-4px] left-0 w-full h-1 bg-gradient-to-r from-yellow-300 to-amber-600"></span>
       </h1>
-      {/* The vertical line */}
+      {/* The vertical line - only visible on desktop */}
       <div className="absolute left-1/2 transform -translate-x-1/2 bg-stone-900 h-full w-8 hidden md:block"></div>
 
       {/* The timeline items */}

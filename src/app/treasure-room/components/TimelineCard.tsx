@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { useState } from "react";
 import { Project } from "../configs/ProjectsConfig";
 
 const TimelineCard = ({
@@ -8,7 +9,12 @@ const TimelineCard = ({
   project: Project;
   position: "left" | "right";
 }) => {
+  const [isExpanded, setIsExpanded] = useState(false);
   const cardClasses = position === "left" ? "" : "translate-x-full";
+
+  const handleClick = () => {
+    setIsExpanded(!isExpanded);
+  };
 
   const getStatusText = (status: number | undefined) => {
     switch (status) {
@@ -24,10 +30,15 @@ const TimelineCard = ({
   };
 
   return (
-    <div className={`group relative w-1/2 ${cardClasses}`}>
+    <div
+      className={`group relative w-full md:w-1/2 ${
+        position === "right" ? "md:translate-x-full" : ""
+      }`}
+    >
       <div
         className="relative bg-yellow-600 p-6 rounded-md shadow-xl
-                  transition-all duration-300 hover:shadow-2xl overflow-visible"
+                  transition-all duration-300 hover:shadow-2xl overflow-visible cursor-pointer"
+        onClick={handleClick}
       >
         <div className="flex gap-6 items-center">
           {/* Main content, with image and title first */}
@@ -35,7 +46,7 @@ const TimelineCard = ({
             <img
               src={project.imageUrl}
               alt={`${project.alt}`}
-              className="rounded-lg w-1/4"
+              className="rounded-lg w-24 h-24 object-cover flex-shrink-0"
             />
           )}
           <h3 className="text-2xl font-bold text-white flex flex-col">
@@ -58,11 +69,18 @@ const TimelineCard = ({
           className={`
             absolute left-0 right-0 top-8/9 mt-0 
             bg-gradient-to-b from-yellow-600 to-stone-900 
-            rounded-lg shadow-xl z-10
+            rounded-lg shadow-xl
             transition-all duration-300 ease-in-out 
-            group-hover:opacity-100 group-hover:transform group-hover:scale-100
-            opacity-0 transform origin-top
             p-6
+            /* Desktop hover effects */
+            md:opacity-0 md:transform md:origin-top
+            md:group-hover:opacity-100 md:group-hover:transform md:group-hover:scale-100
+            /* Mobile click effects */
+            ${
+              isExpanded
+                ? "opacity-100 transform scale-100"
+                : "opacity-0 transform origin-top md:opacity-0"
+            }
           `}
         >
           <p className="text-white text-md mb-4">{project.description}</p>
@@ -80,6 +98,7 @@ const TimelineCard = ({
               href={project.github}
               className="inline-block text-sm text-green-300 hover:underline"
               target="_blank"
+              onClick={(e) => e.stopPropagation()}
             >
               GitHub Repo &rarr;
             </Link>
@@ -88,6 +107,7 @@ const TimelineCard = ({
                 href={project.demoUrl}
                 className="inline-block text-sm text-green-300 hover:underline"
                 target="_blank"
+                onClick={(e) => e.stopPropagation()}
               >
                 Short Demo Video &rarr;
               </Link>

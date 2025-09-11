@@ -29,6 +29,16 @@ export const BOAT_ANIMATION_CONFIG: {
 };
 
 export const ROOM_ZOOM_CONFIG = {
-  "captains-quarters": { x: 1600, y: -1000 },
-  "treasure-room": { x: 1500, y: -1250 },
+  desktop: {
+    "captains-quarters": { x: 1600, y: -1000 },
+    "treasure-room": { x: 1500, y: -1250 },
+  },
+  tablet: {
+    "captains-quarters": { x: 1270, y: -800 },
+    "treasure-room": { x: 1200, y: -950 },
+  },
+  mobile: {
+    "captains-quarters": { x: 920, y: -600 },
+    "treasure-room": { x: 880, y: -750 },
+  },
 };

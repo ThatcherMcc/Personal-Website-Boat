@@ -24,7 +24,7 @@ export default function NavTabs() {
         {isMenuOpen ? (
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            className="h-8 w-8"
+            className="h-16 w-16"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
@@ -39,7 +39,7 @@ export default function NavTabs() {
         ) : (
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            className="h-8 w-8"
+            className="h-16 w-16"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
@@ -62,14 +62,17 @@ export default function NavTabs() {
             : "opacity-0 pointer-events-none"
         }`}
       >
-        <ul className="flex flex-col justify-center items-center h-full space-y-8 text-cloud text-2xl font-DM font-bold">
+        <ul className="flex flex-col justify-center items-center h-full space-y-8 text-cloud text-4xl font-DM font-bold">
           <li>
             <Link
-              href="#home"
+              href="/"
               className="hover:text-gray-400"
-              onClick={toggleMenu}
+              onClick={() => {
+                toggleMenu();
+                handleExteriorClick();
+              }}
             >
-              Home
+              Sea
             </Link>
           </li>
           <li>
