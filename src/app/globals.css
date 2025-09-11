@@ -151,8 +151,8 @@ body.weather-stormy {
   position: fixed;
   top: 1rem;
   left: 1rem;
-  width: 20vw;
-  height: 16vh;
+  width: 18vw;
+  height: 17vh;
   background: rgb(0, 0, 0);
   display: flex;
   flex: auto;
