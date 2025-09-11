@@ -37,9 +37,7 @@ export default function MyBoat({ searchParams }: MyBoatProps) {
     BOAT_ANIMATION_CONFIG[weatherParam] || BOAT_ANIMATION_CONFIG.sunny;
 
   const handleBoatClick = () => {
-    if (boatState == "exterior") {
-      window.dispatchEvent(new CustomEvent("boatClick"));
-    }
+    window.dispatchEvent(new CustomEvent("boatClick"));
   };
 
   const handleRoomClick = (room: BoatRoom) => {
@@ -216,14 +214,34 @@ export default function MyBoat({ searchParams }: MyBoatProps) {
                   </span>
                 </div>
               </motion.div>
+              {/* Treasure Room */}
+              <motion.div
+                className="absolute top-[82.5%] left-[7%] w-[15.5%] h-[7%] cursor-pointer rounded-lg bg-transparent hover:bg-amber-800 hover:bg-opacity-30 border-2 border-transparent hover:border-amber-300"
+                onClick={() => handleRoomClick("treasure-room")}
+                title="Treasure Room"
+              >
+                <div className="absolute inset-0 flex items-center justify-center transition-opacity opacity-0 hover:opacity-100">
+                  <span className="bg-amber-800 text-white px-2 py-1 rounded text-sm font-semibold">
+                    Treasure Room
+                  </span>
+                </div>
+              </motion.div>
             </div>
           )}
 
-          {boatRoom && (
+          {boatRoom == "captains-quarters" && (
             <div className="absolute inset-0">
               <a
-                className="absolute top-[76.1%] left-[10.1%] w-[3.6%] h-[2.6%] cursor-pointer rounded-sm hover:bg-gray-200 hover:opacity-50 duration-300"
+                className="absolute top-[76.2%] left-[10.1%] w-[3.5%] h-[2.4%] cursor-pointer rounded-sm hover:bg-gray-200 hover:opacity-50 duration-300"
                 href="/captains-quarters"
+              ></a>
+            </div>
+          )}
+          {boatRoom == "treasure-room" && (
+            <div className="absolute inset-0">
+              <a
+                className="absolute top-[83.8%] left-[14%] w-[3.4%] h-[2.4%] cursor-pointer rounded-sm hover:bg-gray-200 hover:opacity-50 duration-300"
+                href="/treasure-room"
               ></a>
             </div>
           )}

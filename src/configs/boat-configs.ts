@@ -30,5 +30,5 @@ export const BOAT_ANIMATION_CONFIG: {
 
 export const ROOM_ZOOM_CONFIG = {
   "captains-quarters": { x: 1600, y: -1000 },
-  "treasure-room": { x: -150, y: 50 },
+  "treasure-room": { x: 1500, y: -1250 },
 };

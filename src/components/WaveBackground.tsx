@@ -32,9 +32,20 @@ export default function WaveBackground({ searchParams }: WaveBackgroundProps) {
   const currentWaveConfig =
     WEATHER_WAVE_CONFIGS[weatherParam] || WEATHER_WAVE_CONFIGS.sunny;
 
+  const getWaveBottomValue = () => {
+    switch (boatRoom) {
+      case "captains-quarters":
+        return "-100px";
+      case "treasure-room":
+        return "-50px";
+      default:
+        return "0px";
+    }
+  };
+
   return (
     <motion.div
-      animate={{ "--wave-bottom": boatRoom ? "-100px" : "0px" }}
+      animate={{ "--wave-bottom": getWaveBottomValue() }}
       transition={{ duration: 1.3, ease: "easeInOut" }}
     >
       {/* Backmost layer of the ocean waves (lowest z-index) */}

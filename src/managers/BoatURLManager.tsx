@@ -39,6 +39,12 @@ export default function BoatStateURLManager() {
       return;
     }
 
+    const handleExteriorClick = () => {
+      if (boatState != "exterior") {
+        updateBoatState("exterior");
+      }
+    };
+
     const handleBoatClick = () => {
       if (boatState != "interior") {
         updateBoatState("interior");
@@ -53,11 +59,13 @@ export default function BoatStateURLManager() {
       updateBoatState("exterior");
     };
 
+    window.addEventListener("exteriorClick", handleExteriorClick);
     window.addEventListener("boatClick", handleBoatClick);
     window.addEventListener("roomClick", handleRoomClick as EventListener);
     window.addEventListener("backToSea", handleBackToSea);
 
     return () => {
+      window.addEventListener("exteriorClick", handleExteriorClick);
       window.removeEventListener("boatClick", handleBoatClick);
       window.removeEventListener("roomClick", handleRoomClick as EventListener);
       window.removeEventListener("backToSea", handleBackToSea);
