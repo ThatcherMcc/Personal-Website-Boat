@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import {
   locationDetails,
   WeatherDataTuple,
@@ -46,7 +47,13 @@ export default function WeatherInfo({ searchParams }: WeatherInfoProps) {
     return (
       <>
         <div className="weather-info-container">
-          <img src={"/weather-icons/sunny.svg"} alt="Weather icon" />
+          <Image
+            src={"/weather-icons/sunny.svg"}
+            alt="Weather icon"
+            width={110}
+            height={110}
+            priority={true}
+          />
           <span className="text-xl font-semibold">Loading...</span>
         </div>
       </>
@@ -58,9 +65,12 @@ export default function WeatherInfo({ searchParams }: WeatherInfoProps) {
   return (
     <>
       <div className="weather-info-container">
-        <img
+        <Image
           src={`/weather-icons/${weatherType}.svg`}
           alt="Current Weather Icon"
+          width={110}
+          height={110}
+          priority={true}
         />
         <span className="text-xl font-semibold text-white">
           {city}, {state}

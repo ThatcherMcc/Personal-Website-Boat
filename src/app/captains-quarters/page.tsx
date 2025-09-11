@@ -48,14 +48,15 @@ export default function CaptainsQuartersPage() {
             </h1>
             <div className="flex flex-col gap-4 md:gap-8 lg:gap-4">
               <p className="text-base md:text-lg text-center md:text-left font-serif leading-relaxed">
-                Hi, I'm <strong className="text-green-600">Thatcher</strong>, a
-                creator at heart who finds his fulfillment and escape from
+                Hi, I&apos;m{" "}
+                <strong className="text-green-600">Thatcher</strong>, a creator
+                at heart who finds his fulfillment and escape from
                 overconsumption in the act of building for myself and others. I
-                think creation has many forms, whether it's a solution to a
+                think creation has many forms, whether it&apos;s a solution to a
                 problem, providing a new experience that leads to a fresh
                 perspective, or even an impactful thought (pick your poison),
                 each can be equally valuable. <br />
-                I'm pretty big on creation if you couldn't tell.
+                I&apos;m pretty big on creation if you couldn&apos;t tell.
               </p>
               <div className="flex flex-col space-y-6 md:flex-row md:space-x-12 md:space-y-0">
                 <div className="flex-1 text-center md:text-left">
@@ -72,7 +73,7 @@ export default function CaptainsQuartersPage() {
                 </div>
                 <div className="flex-1 text-center md:text-left">
                   <h2 className="text-xl md:text-2xl font-semibold font-serif mb-2">
-                    New Things I'm Learning
+                    New Things I&apos;m Learning
                   </h2>
                   <ul className="list-disc list-inside text-base md:text-lg font-serif text-left">
                     <li>How to Play the Guitar 🎸</li>
@@ -98,8 +99,9 @@ export default function CaptainsQuartersPage() {
             <Image
               src="/captains-quarters/bonfire.png"
               alt="A lit bonfire, a place of rest"
-              layout="fill"
-              objectFit="contain"
+              fill
+              sizes="10vw"
+              style={{ objectFit: "contain" }}
               className="transition-transform duration-300 scale-125 group-hover:scale-150"
             />
             <span className="absolute top-10/9 mt-1 md:top-8 left-1/2 -translate-x-1/2 bg-stone-800 text-stone-200 px-2 md:px-3 py-1 rounded-full text-xs font-semibold opacity-100 md:opacity-0 transition-opacity duration-300 md:group-hover:opacity-100 whitespace-nowrap">

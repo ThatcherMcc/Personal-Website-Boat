@@ -24,7 +24,6 @@ body {
 
   /* Default sky: Sunny (will be overridden by JS for other weather) */
   background-color: #87ceeb; /* Light blue sky color */
-  background-image: url("/public/assets/sky-sunny.png"); /* Placeholder sunny sky image */
   background-size: cover;
   background-position: center;
 
@@ -93,6 +92,7 @@ body {
   transform-origin: 50% 90%;
 }
 
+/* Will use for weather later
 body.weather-cloudy {
   background-color: #afc2c2;
   background-image: url("/assets/sky-cloudy.png");
@@ -104,7 +104,7 @@ body.weather-rainy {
 body.weather-stormy {
   background-color: #303030;
   background-image: url("/assets/sky-stormy.png");
-}
+}*/
 
 /* New keyframes for horizontal scrolling */
 @keyframes wave-scroll-right {

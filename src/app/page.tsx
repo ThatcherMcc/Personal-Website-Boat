@@ -1,7 +1,7 @@
 // This is your main homepage content for the root route ("/").
 
 import BackToSeaButton from "rt/components/BackToSeaButton";
-import MyBoat from "rt/components/Boat";
+import MyBoat from "rt/components/MyBoat";
 import NavTabs from "rt/components/NavTabs";
 import WaveBackground from "rt/components/WaveBackground";
 import WeatherInfo from "rt/components/WeatherInfo";
@@ -21,7 +21,7 @@ import WeatherURLManager from "rt/managers/WeatherURLManager";
 export default async function HomePage({
   searchParams,
 }: {
-  searchParams: { [key: string]: string | string[] | undefined };
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }) {
   return (
     <>

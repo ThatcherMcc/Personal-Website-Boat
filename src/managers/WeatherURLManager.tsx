@@ -36,9 +36,6 @@ export default function WeatherURLManager() {
         const weather = await getCurrentWeather(locationDetails);
         const nextWeatherCondition = getWeatherTypeByID(weather.id);
 
-        console.log(weather.id);
-        console.log(nextWeatherCondition);
-
         // Apply the initial weather condition to the website's body class.
         updateWebsiteWeather(nextWeatherCondition);
         // Create a new URLSearchParams object based on the current URL's parameters.

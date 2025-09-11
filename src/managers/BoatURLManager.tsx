@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
 
 export type BoatState = "exterior" | "interior";
 export type BoatRoom = "captains-quarters" | "treasure-room" | null;
@@ -10,29 +10,34 @@ export default function BoatStateURLManager() {
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  const updateBoatState = (newState: BoatState) => {
-    const newSearchParams = new URLSearchParams(searchParams.toString());
-    newSearchParams.set("boatState", newState);
-    if (newState == "exterior") {
-      newSearchParams.delete("room");
-    }
-    router.push(`?${newSearchParams}`, { scroll: false });
-  };
+  const updateBoatState = useCallback(
+    (newState: BoatState) => {
+      const newSearchParams = new URLSearchParams(searchParams.toString());
+      newSearchParams.set("boatState", newState);
+      if (newState == "exterior") {
+        newSearchParams.delete("room");
+      }
+      router.push(`?${newSearchParams}`, { scroll: false });
+    },
+    [router, searchParams]
+  );
 
-  const updateRoom = (newRoom: BoatRoom) => {
-    const newSearchParams = new URLSearchParams(searchParams.toString());
-    if (newRoom) {
-      newSearchParams.set("room", newRoom);
-    } else {
-      newSearchParams.delete("room");
-    }
-    router.push(`?${newSearchParams}`, { scroll: false });
-  };
+  const updateRoom = useCallback(
+    (newRoom: BoatRoom) => {
+      const newSearchParams = new URLSearchParams(searchParams.toString());
+      if (newRoom) {
+        newSearchParams.set("room", newRoom);
+      } else {
+        newSearchParams.delete("room");
+      }
+      router.push(`?${newSearchParams}`, { scroll: false });
+    },
+    [router, searchParams]
+  );
 
   useEffect(() => {
     const boatState =
       (searchParams.get("boatState") as BoatState) || "exterior";
-    console.log(boatState);
 
     if (!boatState) {
       updateBoatState("exterior");
@@ -65,12 +70,13 @@ export default function BoatStateURLManager() {
     window.addEventListener("backToSea", handleBackToSea);
 
     return () => {
-      window.addEventListener("exteriorClick", handleExteriorClick);
+      // Fixed: changed addEventListener to removeEventListener for cleanup
+      window.removeEventListener("exteriorClick", handleExteriorClick);
       window.removeEventListener("boatClick", handleBoatClick);
       window.removeEventListener("roomClick", handleRoomClick as EventListener);
       window.removeEventListener("backToSea", handleBackToSea);
     };
-  }, [router, searchParams]);
+  }, [router, searchParams, updateBoatState, updateRoom]);
 
   return null;
 }

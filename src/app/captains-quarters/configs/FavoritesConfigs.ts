@@ -1,6 +1,6 @@
 type Favorite = {
   imageSrc: string;
-  altText: string | undefined;
+  altText: string | "";
   category: string;
   title: string;
   description: string;

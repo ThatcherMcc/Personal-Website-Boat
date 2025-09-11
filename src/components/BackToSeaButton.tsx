@@ -1,6 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 /**
  * @property {object} searchParams - The URL search parameters object from Next.js.
@@ -22,7 +23,12 @@ export default function BackToSeaButton({ searchParams }: BackToSeaProps) {
       className="back-to-sea-container hover:scale-110 duration-300"
       onClick={() => router.back()}
     >
-      <img src={"/weather-icons/sea-water.svg"} alt="Back to Sea button" />
+      <Image
+        src="/weather-icons/sea-water.svg"
+        alt="Back to Sea button"
+        width={120}
+        height={120}
+      />
       <span className="text-xl font-semibold text-white">Back To Sea</span>
     </button>
   );

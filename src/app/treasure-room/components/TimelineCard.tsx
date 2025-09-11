@@ -10,7 +10,6 @@ const TimelineCard = ({
   position: "left" | "right";
 }) => {
   const [isExpanded, setIsExpanded] = useState(false);
-  const cardClasses = position === "left" ? "" : "translate-x-full";
 
   const handleClick = () => {
     setIsExpanded(!isExpanded);

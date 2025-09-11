@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, useAnimate } from "framer-motion";
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
 import {
   BOAT_ANIMATION_CONFIG,
   ROOM_ZOOM_CONFIG,
@@ -60,27 +60,7 @@ export default function MyBoat({ searchParams }: MyBoatProps) {
     window.dispatchEvent(new CustomEvent("roomClick", { detail: { room } }));
   };
 
-  const handleBackToSea = () => {
-    window.dispatchEvent(new CustomEvent("backToSea"));
-  };
-
-  /**
-   * Enacts the boat's animation sequence:
-   * 1. Initial "dropIn"
-   * 2. "Stabalize" the boat as if in real water
-   * 3. A continuous bobbing and rotaion based on the weather configuration
-   *
-   * a. if a room is selected change the scale and position to the room config.
-   */
-  async function boatExteriorAnimation() {
-    await boatDropInAnimation();
-    boatIdleAnimation();
-  }
-  async function boatInteriorAnimation() {
-    await boatZoomOutAnimation();
-    boatIdleAnimation();
-  }
-  async function boatDropInAnimation() {
+  const boatDropInAnimation = useCallback(async () => {
     // Initial drop-in animation: boat moves from above to its resting y-position and fades in.
     const dropIn = animate(
       scope.current,
@@ -108,9 +88,9 @@ export default function MyBoat({ searchParams }: MyBoatProps) {
 
     // Wait for both initial animations (drop-in and stabilize) to complete.
     await Promise.all([dropIn, stabilize]);
-  }
+  }, [animate, scope]);
 
-  async function boatIdleAnimation() {
+  const boatIdleAnimation = useCallback(async () => {
     animate(
       scope.current,
       {
@@ -134,9 +114,9 @@ export default function MyBoat({ searchParams }: MyBoatProps) {
         ease: "easeInOut",
       }
     );
-  }
+  }, [animate, scope, currentAnimationConfig]);
 
-  async function boatZoomOutAnimation() {
+  const boatZoomOutAnimation = useCallback(async () => {
     const simpleTransition = animate(
       scope.current,
       {
@@ -151,9 +131,9 @@ export default function MyBoat({ searchParams }: MyBoatProps) {
     );
 
     await Promise.all([simpleTransition]);
-  }
+  }, [animate, scope, boatRoom, currentRoomConfig]);
 
-  async function boatRoomAnimation() {
+  const boatRoomAnimation = useCallback(async () => {
     animate(
       scope.current,
       {
@@ -165,7 +145,25 @@ export default function MyBoat({ searchParams }: MyBoatProps) {
         ease: "easeInOut",
       }
     );
-  }
+  }, [animate, scope]);
+
+  /**
+   * Enacts the boat's animation sequence:
+   * 1. Initial "dropIn"
+   * 2. "Stabalize" the boat as if in real water
+   * 3. A continuous bobbing and rotaion based on the weather configuration
+   *
+   * a. if a room is selected change the scale and position to the room config.
+   */
+  const boatExteriorAnimation = useCallback(async () => {
+    await boatDropInAnimation();
+    boatIdleAnimation();
+  }, [boatDropInAnimation, boatIdleAnimation]);
+
+  const boatInteriorAnimation = useCallback(async () => {
+    await boatZoomOutAnimation();
+    boatIdleAnimation();
+  }, [boatZoomOutAnimation, boatIdleAnimation]);
 
   // useEffect hook to run the boat animation when relevant dependencies change.
   // This hook ensures the animation starts on mount and re-runs if searchParams change.
@@ -177,7 +175,13 @@ export default function MyBoat({ searchParams }: MyBoatProps) {
     } else if (boatState === "interior" && boatRoom) {
       boatRoomAnimation();
     }
-  }, [searchParams, animate, scope]);
+  }, [
+    boatState,
+    boatRoom,
+    boatExteriorAnimation,
+    boatInteriorAnimation,
+    boatRoomAnimation,
+  ]);
 
   if (boatState === "exterior") {
     return (
