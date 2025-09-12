@@ -33,7 +33,7 @@ body {
 }
 
 .allow-scroll {
-  overflow-y: auto !important;
+  overflow: auto !important;
   -webkit-overflow-scrolling: touch; /* For smoother scrolling on iOS */
 }
 

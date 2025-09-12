@@ -21,7 +21,6 @@ export default function TreasureRoomPage() {
           className="fixed inset-0 w-full h-full z-0 bg-cover bg-center"
           style={{
             backgroundImage: "url(/treasure-room/treasure-planet-bg.png)",
-            backgroundAttachment: "fixed",
           }}
         >
           <div className="absolute inset-0 w-full h-full backdrop-blur-sm"></div>
