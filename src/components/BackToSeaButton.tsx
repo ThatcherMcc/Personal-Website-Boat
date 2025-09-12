@@ -20,16 +20,19 @@ export default function BackToSeaButton({ searchParams }: BackToSeaProps) {
 
   return (
     <button
-      className="back-to-sea-container hover:scale-110 duration-300"
+      className="weather-info-container hover:scale-110 duration-300"
       onClick={() => router.back()}
     >
-      <Image
-        src="/weather-icons/sea-water.svg"
-        alt="Back to Sea button"
-        width={120}
-        height={120}
-      />
-      <span className="text-xl font-semibold text-white">Back To Sea</span>
+      <div className="relative h-16 md:h-24 lg:h-36">
+        <Image
+          src="/weather-icons/sea-water.svg"
+          alt="Back to Sea button"
+          fill
+        />
+      </div>
+      <span className="text-sm md:text-md lg:text-xl font-semibold text-white">
+        Back To Sea
+      </span>
     </button>
   );
 }

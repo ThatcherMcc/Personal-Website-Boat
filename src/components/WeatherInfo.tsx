@@ -5,6 +5,7 @@ import {
   locationDetails,
   WeatherDataTuple,
 } from "rt/managers/WeatherURLManager";
+import { vw } from "motion";
 
 /**
  * @property {object} searchParams - The URL search parameters object from Next.js.
@@ -47,14 +48,17 @@ export default function WeatherInfo({ searchParams }: WeatherInfoProps) {
     return (
       <>
         <div className="weather-info-container">
-          <Image
-            src={"/weather-icons/sunny.svg"}
-            alt="Weather icon"
-            width={110}
-            height={110}
-            priority={true}
-          />
-          <span className="text-xl font-semibold">Loading...</span>
+          <div className="relative h-16 md:h-24 lg:h-36">
+            <Image
+              src={"/weather-icons/sunny.svg"}
+              alt="Weather icon"
+              fill={true}
+              priority={true}
+            />
+          </div>
+          <span className="text-sm md:text-md lg:text-xl font-semibold">
+            Loading...
+          </span>
         </div>
       </>
     );
@@ -65,14 +69,15 @@ export default function WeatherInfo({ searchParams }: WeatherInfoProps) {
   return (
     <>
       <div className="weather-info-container">
-        <Image
-          src={`/weather-icons/${weatherType}.svg`}
-          alt="Current Weather Icon"
-          width={110}
-          height={110}
-          priority={true}
-        />
-        <span className="text-xl font-semibold text-white">
+        <div className="relative h-16 md:h-24 lg:h-36">
+          <Image
+            src={`/weather-icons/${weatherType}.svg`}
+            alt="Current Weather Icon"
+            fill={true}
+            priority={true}
+          />
+        </div>
+        <span className="text-sm md:text-md lg:text-xl font-semibold text-white">
           {city}, {state}
         </span>
       </div>

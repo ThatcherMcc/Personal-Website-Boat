@@ -34,11 +34,11 @@ export const ROOM_ZOOM_CONFIG = {
     "treasure-room": { x: 1500, y: -1250 },
   },
   tablet: {
-    "captains-quarters": { x: 1270, y: -800 },
+    "captains-quarters": { x: 1270, y: -750 },
     "treasure-room": { x: 1200, y: -950 },
   },
   mobile: {
-    "captains-quarters": { x: 920, y: -600 },
-    "treasure-room": { x: 880, y: -750 },
+    "captains-quarters": { x: 920, y: -500 },
+    "treasure-room": { x: 870, y: -680 },
   },
 };

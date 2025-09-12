@@ -168,12 +168,12 @@ export default function MyBoat({ searchParams }: MyBoatProps) {
   // useEffect hook to run the boat animation when relevant dependencies change.
   // This hook ensures the animation starts on mount and re-runs if searchParams change.
   useEffect(() => {
-    if (boatState === "exterior") {
-      boatExteriorAnimation();
-    } else if (boatState === "interior" && !boatRoom) {
+    if (boatState === "interior" && !boatRoom) {
       boatInteriorAnimation();
     } else if (boatState === "interior" && boatRoom) {
       boatRoomAnimation();
+    } else {
+      boatExteriorAnimation();
     }
   }, [
     boatState,
