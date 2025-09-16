@@ -5,7 +5,6 @@ import {
   locationDetails,
   WeatherDataTuple,
 } from "rt/managers/WeatherURLManager";
-import { vw } from "motion";
 
 /**
  * @property {object} searchParams - The URL search parameters object from Next.js.
