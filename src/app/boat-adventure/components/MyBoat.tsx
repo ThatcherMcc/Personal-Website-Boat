@@ -5,9 +5,9 @@ import { useCallback, useEffect } from "react";
 import {
   BOAT_ANIMATION_CONFIG,
   ROOM_ZOOM_CONFIG,
-} from "rt/configs/boat-configs";
-import { WeatherCondition } from "rt/utils/weather-utils";
-import { BoatState, BoatRoom } from "rt/managers/BoatURLManager";
+} from "rt/app/boat-adventure/configs/boat-configs";
+import { WeatherCondition } from "rt/app/boat-adventure/utils/weather-utils";
+import { BoatState, BoatRoom } from "rt/app/boat-adventure/managers/BoatURLManager";
 
 /**
  * @property {object} searchParams - The URL search parameters object from Next.js.
@@ -253,7 +253,7 @@ export default function MyBoat({ searchParams }: MyBoatProps) {
             <div className="absolute inset-0">
               <a
                 className="absolute top-[76.2%] left-[10.1%] w-[3.5%] h-[2.4%] cursor-pointer rounded-sm hover:bg-gray-200 hover:opacity-50 duration-300"
-                href="/captains-quarters"
+                href="/boat-adventure/captains-quarters"
               ></a>
             </div>
           )}
@@ -261,7 +261,7 @@ export default function MyBoat({ searchParams }: MyBoatProps) {
             <div className="absolute inset-0">
               <a
                 className="absolute top-[83.8%] left-[14%] w-[3.4%] h-[2.4%] cursor-pointer rounded-sm hover:bg-gray-200 hover:opacity-50 duration-300"
-                href="/treasure-room"
+                href="/boat-adventure/treasure-room"
               ></a>
             </div>
           )}

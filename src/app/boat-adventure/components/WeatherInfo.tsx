@@ -4,7 +4,7 @@ import Image from "next/image";
 import {
   locationDetails,
   WeatherDataTuple,
-} from "rt/managers/WeatherURLManager";
+} from "rt/app/boat-adventure/managers/WeatherURLManager";
 
 /**
  * @property {object} searchParams - The URL search parameters object from Next.js.

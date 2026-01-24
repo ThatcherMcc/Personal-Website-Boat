@@ -2,9 +2,9 @@
 
 import Wave from "react-wavify";
 import { motion } from "framer-motion";
-import { WEATHER_WAVE_CONFIGS } from "rt/configs/weather-wave-configs";
-import { BoatRoom } from "rt/managers/BoatURLManager";
-import { WeatherCondition } from "rt/utils/weather-utils";
+import { WEATHER_WAVE_CONFIGS } from "rt/app/boat-adventure/configs/weather-wave-configs";
+import { BoatRoom } from "rt/app/boat-adventure/managers/BoatURLManager";
+import { WeatherCondition } from "rt/app/boat-adventure/utils/weather-utils";
 
 /**
  * @typedef {object} WaveBackgroundProps

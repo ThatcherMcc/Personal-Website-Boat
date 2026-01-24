@@ -2,7 +2,7 @@
 
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect } from "react";
-import { updateWebsiteWeather, WeatherCondition } from "rt/utils/weather-utils";
+import { updateWebsiteWeather, WeatherCondition } from "rt/app/boat-adventure/utils/weather-utils";
 
 /**
  * Tuple holding the City code, State code, and Country code

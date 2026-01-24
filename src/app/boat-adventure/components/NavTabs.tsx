@@ -65,7 +65,7 @@ export default function NavTabs() {
         <ul className="flex flex-col justify-center items-center h-full space-y-8 text-cloud text-2xl md:text-4xl font-DM font-bold">
           <li>
             <Link
-              href="/"
+              href="/boat-adventure"
               className="hover:text-gray-400"
               onClick={() => {
                 toggleMenu();
@@ -77,7 +77,7 @@ export default function NavTabs() {
           </li>
           <li>
             <Link
-              href="/captains-quarters"
+              href="/boat-adventure/captains-quarters"
               className="hover:text-gray-400"
               onClick={toggleMenu}
             >
@@ -86,7 +86,7 @@ export default function NavTabs() {
           </li>
           <li>
             <Link
-              href="/treasure-room"
+              href="/boat-adventure/treasure-room"
               className="hover:text-gray-400"
               onClick={toggleMenu}
             >
@@ -95,7 +95,7 @@ export default function NavTabs() {
           </li>
           <li>
             <Link
-              href="/boat/resume.pdf"
+              href="/boat-adventure/resume.pdf"
               rel="noopener noreferrer"
               target="_blank"
               className="hover:text-gray-400"
@@ -113,19 +113,27 @@ export default function NavTabs() {
           <Link
             href="/"
             className="hover:text-gray-400"
+          >
+            Home
+          </Link>
+        </li>
+        <li>
+          <Link
+            href="/boat-adventure"
+            className="hover:text-gray-400"
             onClick={handleExteriorClick}
           >
             Ship
           </Link>
         </li>
         <li>
-          <Link href="/captains-quarters" className="hover:text-gray-400">
+          <Link href="/boat-adventure/captains-quarters" className="hover:text-gray-400">
             About Me
           </Link>
         </li>
         <li>
           <Link
-            href="/treasure-room"
+            href="/boat-adventure/treasure-room"
             className="hover:text-gray-400 transition-transform duration-200"
           >
             Projects
@@ -133,7 +141,7 @@ export default function NavTabs() {
         </li>
         <li>
           <Link
-            href="/boat/resume.pdf"
+            href="/boat-adventure/resume.pdf"
             rel="noopener noreferrer"
             target="_blank"
             className="hover:text-gray-400"

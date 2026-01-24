@@ -92,7 +92,7 @@ export default function CaptainsQuartersPage() {
 
         {/* Interactive Element: Bonfire to return to the gallery */}
         <Link
-          href="/?boatState=interior"
+          href="/boat-adventure?boatState=interior"
           className="fixed bottom-12 md:right-8 md:top-12"
         >
           <div className="relative w-16 h-16 md:w-24 md:h-24 cursor-pointer group">

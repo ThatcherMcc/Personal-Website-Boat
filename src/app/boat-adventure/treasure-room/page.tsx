@@ -37,7 +37,7 @@ export default function TreasureRoomPage() {
         </div>
 
         <Link
-          href="/?boatState=interior"
+          href="/boat-adventure?boatState=interior"
           className="fixed bottom-8 left-1/2 transform -translate-x-1/2 md:top-8 md:right-2 md:left-auto z-10"
           onClick={handleClick}
         >
