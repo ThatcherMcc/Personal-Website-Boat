@@ -47,17 +47,13 @@ export default function WeatherInfo({ searchParams }: WeatherInfoProps) {
     return (
       <>
         <div className="weather-info-container">
-          <div className="relative h-16 md:h-24 lg:h-36">
-            <Image
-              src={"/weather-icons/sunny.svg"}
-              alt="Weather icon"
-              fill={true}
-              priority={true}
-            />
-          </div>
-          <span className="text-sm md:text-md lg:text-xl font-semibold">
-            Loading...
-          </span>
+          <div className="h-16 md:h-24 lg:h-36 w-16 md:w-24 lg:w-36 rounded-full bg-white/30 animate-pulse" />
+          <div className="h-3 md:h-4 w-20 md:w-28 bg-white/30 rounded-full animate-pulse mt-1" />
+        </div>
+        <div className="weather-info-screen">
+          <div className="h-4 w-28 bg-white/20 rounded animate-pulse" />
+          <div className="h-7 w-16 bg-white/20 rounded animate-pulse" />
+          <div className="h-4 w-24 bg-white/20 rounded animate-pulse" />
         </div>
       </>
     );

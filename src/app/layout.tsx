@@ -1,4 +1,26 @@
 import "./globals.css";
+import { Inter, Cormorant_Garamond, Syne } from "next/font/google";
+
+const inter = Inter({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-inter",
+});
+
+const cormorant = Cormorant_Garamond({
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
+  style: ["normal", "italic"],
+  display: "swap",
+  variable: "--font-cormorant",
+});
+
+const syne = Syne({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700", "800"],
+  display: "swap",
+  variable: "--font-syne",
+});
 
 /**
  * rootLayout component provides the HTML structure for all pages.
@@ -15,8 +37,8 @@ export default function rootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body>
+    <html lang="en" className={`${inter.variable} ${cormorant.variable} ${syne.variable}`}>
+      <body className={inter.className}>
         {children}
       </body>
     </html>

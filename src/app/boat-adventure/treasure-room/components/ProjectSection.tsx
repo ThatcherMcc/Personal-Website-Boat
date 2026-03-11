@@ -1,29 +1,62 @@
+"use client";
+
 import { projects } from "../configs/ProjectsConfig";
-import TimelineCard from "./TimelineCard";
+import ProjectCard from "./TimelineCard";
 import React from "react";
+import { motion } from "framer-motion";
+
+function WaypointMarker() {
+  return (
+    <div className="hidden md:flex items-center justify-center py-4">
+      {/* Horizontal line left */}
+      <div
+        className="flex-1 h-px max-w-24"
+        style={{ background: "linear-gradient(to right, transparent, rgba(212, 160, 74, 0.25))" }}
+      />
+      {/* 4-pointed star */}
+      <div className="mx-4 relative w-3 h-3" style={{ opacity: 0.25 }}>
+        <div
+          className="absolute inset-0"
+          style={{
+            background: "#d4a04a",
+            clipPath: "polygon(50% 0%, 60% 40%, 100% 50%, 60% 60%, 50% 100%, 40% 60%, 0% 50%, 40% 40%)",
+          }}
+        />
+      </div>
+      {/* Horizontal line right */}
+      <div
+        className="flex-1 h-px max-w-24"
+        style={{ background: "linear-gradient(to left, transparent, rgba(212, 160, 74, 0.25))" }}
+      />
+    </div>
+  );
+}
 
 export default function ProjectsSection() {
-  const items = projects;
-
   return (
-    <div className="relative p-8 max-w-7xl mx-auto">
-      <h1 className="relative text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 to-amber-600 drop-shadow-lg drop-shadow-yellow-500/50 text-center mb-6">
-        Project Timeline
-        <span className="absolute bottom-[-4px] left-0 w-full h-1 bg-gradient-to-r from-yellow-300 to-amber-600"></span>
-      </h1>
-      {/* The vertical line - only visible on desktop */}
-      <div className="absolute left-1/2 transform -translate-x-1/2 bg-stone-900 h-full w-8 hidden md:block"></div>
+    <div className="relative max-w-4xl mx-auto px-4 md:px-8">
+      {projects.map((project, index) => (
+        <React.Fragment key={project.id}>
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, ease: "easeOut" }}
+            viewport={{ once: true, margin: "-60px" }}
+          >
+            <ProjectCard project={project} />
+          </motion.div>
 
-      {/* The timeline items */}
-      <div className="flex flex-col gap-35 mb-15">
-        {items.map((project, index) => (
-          <TimelineCard
-            key={project.id}
-            project={project}
-            position={index % 2 == 0 ? "left" : "right"}
-          />
-        ))}
-      </div>
+          {/* Waypoint marker between cards (not after last) */}
+          {index < projects.length - 1 && (
+            <div className="my-16 md:my-24">
+              <WaypointMarker />
+            </div>
+          )}
+        </React.Fragment>
+      ))}
+
+      {/* Bottom spacing before green planet */}
+      <div className="h-16 md:h-24" />
     </div>
   );
 }
