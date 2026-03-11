@@ -1,6 +1,7 @@
 "use client";
 
 import { motion, useAnimate } from "framer-motion";
+import Image from "next/image";
 import { useCallback, useEffect } from "react";
 import {
   BOAT_ANIMATION_CONFIG,
@@ -8,6 +9,8 @@ import {
 } from "rt/app/boat-adventure/configs/boat-configs";
 import { WeatherCondition } from "rt/app/boat-adventure/utils/weather-utils";
 import { BoatState, BoatRoom } from "rt/app/boat-adventure/managers/BoatURLManager";
+
+const MotionImage = motion(Image);
 
 /**
  * @property {object} searchParams - The URL search parameters object from Next.js.
@@ -130,7 +133,7 @@ export default function MyBoat({ searchParams }: MyBoatProps) {
       }
     );
 
-    await Promise.all([simpleTransition]);
+    await simpleTransition;
   }, [animate, scope, boatRoom, currentRoomConfig]);
 
   const boatRoomAnimation = useCallback(async () => {
@@ -186,14 +189,18 @@ export default function MyBoat({ searchParams }: MyBoatProps) {
   if (boatState === "exterior") {
     return (
       <div className="boat-container">
-        <motion.img
+        <MotionImage
           ref={scope}
           className="boat-image cursor-pointer"
-          src="/boat/boat.png"
+          src="/boat/boat.webp"
           alt="Ship with all my treasure"
+          width={1180}
+          height={998}
+          quality={90}
           initial={{ y: -125, opacity: 0, rotate: 15 }}
           whileHover={{ scale: 1.05 }}
           onClick={handleBoatClick}
+          priority
         />
       </div>
     );
@@ -215,33 +222,42 @@ export default function MyBoat({ searchParams }: MyBoatProps) {
       >
         {/* Interior boat layout */}
         <div className="relative w-full h-full">
-          <motion.img
-            src="/boat/boat-inside.png"
+          <MotionImage
+            src="/boat/boat-inside.webp"
             alt="Interior of the boat"
+            width={1200}
+            height={999}
+            quality={90}
             className="w-full h-auto object-contain"
           />
           {!boatRoom && (
             <div className="absolute inset-0">
               {/* Captains Quarters */}
               <motion.div
-                className="absolute top-[75%] left-[3%] w-[21%] h-[6%] cursor-pointer rounded-lg bg-transparent hover:bg-amber-800 hover:bg-opacity-30 border-2 border-transparent hover:border-amber-300"
+                className="absolute top-[75%] left-[3%] w-[21%] h-[6%] cursor-pointer rounded-lg border-2 border-amber-400/30 group/room"
                 onClick={() => handleRoomClick("captains-quarters")}
-                title="Captains Quarters"
+                animate={{ boxShadow: ["0 0 0 0 rgba(251,191,36,0)", "0 0 6px 2px rgba(251,191,36,0.35)", "0 0 0 0 rgba(251,191,36,0)"] }}
+                transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
+                whileHover={{ backgroundColor: "rgba(180,83,9,0.3)", borderColor: "rgba(251,191,36,0.8)", scale: 1.04 }}
+                whileTap={{ scale: 0.96 }}
               >
-                <div className="absolute inset-0 flex items-center justify-center transition-opacity opacity-0 hover:opacity-100">
-                  <span className="bg-amber-800 text-white px-2 py-1 rounded text-sm font-semibold">
-                    Captains Quarters
+                <div className="absolute -top-8 left-1/2 -translate-x-1/2 whitespace-nowrap opacity-0 group-hover/room:opacity-100 transition-opacity duration-200 pointer-events-none">
+                  <span className="bg-amber-800/90 text-amber-100 px-2 py-0.5 rounded text-xs font-semibold shadow-lg">
+                    Captain&apos;s Quarters
                   </span>
                 </div>
               </motion.div>
               {/* Treasure Room */}
               <motion.div
-                className="absolute top-[82.5%] left-[7%] w-[15.5%] h-[7%] cursor-pointer rounded-lg bg-transparent hover:bg-amber-800 hover:bg-opacity-30 border-2 border-transparent hover:border-amber-300"
+                className="absolute top-[82.5%] left-[7%] w-[15.5%] h-[7%] cursor-pointer rounded-lg border-2 border-amber-400/30 group/room2"
                 onClick={() => handleRoomClick("treasure-room")}
-                title="Treasure Room"
+                animate={{ boxShadow: ["0 0 0 0 rgba(251,191,36,0)", "0 0 6px 2px rgba(251,191,36,0.35)", "0 0 0 0 rgba(251,191,36,0)"] }}
+                transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut", delay: 1.25 }}
+                whileHover={{ backgroundColor: "rgba(180,83,9,0.3)", borderColor: "rgba(251,191,36,0.8)", scale: 1.04 }}
+                whileTap={{ scale: 0.96 }}
               >
-                <div className="absolute inset-0 flex items-center justify-center transition-opacity opacity-0 hover:opacity-100">
-                  <span className="bg-amber-800 text-white px-2 py-1 rounded text-sm font-semibold">
+                <div className="absolute -top-8 left-1/2 -translate-x-1/2 whitespace-nowrap opacity-0 group-hover/room2:opacity-100 transition-opacity duration-200 pointer-events-none">
+                  <span className="bg-amber-800/90 text-amber-100 px-2 py-0.5 rounded text-xs font-semibold shadow-lg">
                     Treasure Room
                   </span>
                 </div>
@@ -251,18 +267,26 @@ export default function MyBoat({ searchParams }: MyBoatProps) {
 
           {boatRoom == "captains-quarters" && (
             <div className="absolute inset-0">
-              <a
-                className="absolute top-[76.2%] left-[10.1%] w-[3.5%] h-[2.4%] cursor-pointer rounded-sm hover:bg-gray-200 hover:opacity-50 duration-300"
+              <motion.a
+                className="absolute top-[76.2%] left-[10.1%] w-[3.5%] h-[2.4%] cursor-pointer rounded-sm border border-amber-300/50"
                 href="/boat-adventure/captains-quarters"
-              ></a>
+                animate={{ boxShadow: ["0 0 0 0 rgba(251,191,36,0)", "0 0 4px 2px rgba(251,191,36,0.5)", "0 0 0 0 rgba(251,191,36,0)"] }}
+                transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
+                whileHover={{ backgroundColor: "rgba(251,191,36,0.25)", borderColor: "rgba(251,191,36,0.9)" }}
+                whileTap={{ scale: 0.95 }}
+              />
             </div>
           )}
           {boatRoom == "treasure-room" && (
             <div className="absolute inset-0">
-              <a
-                className="absolute top-[83.8%] left-[14%] w-[3.4%] h-[2.4%] cursor-pointer rounded-sm hover:bg-gray-200 hover:opacity-50 duration-300"
+              <motion.a
+                className="absolute top-[83.8%] left-[14%] w-[3.4%] h-[2.4%] cursor-pointer rounded-sm border border-amber-300/50"
                 href="/boat-adventure/treasure-room"
-              ></a>
+                animate={{ boxShadow: ["0 0 0 0 rgba(251,191,36,0)", "0 0 4px 2px rgba(251,191,36,0.5)", "0 0 0 0 rgba(251,191,36,0)"] }}
+                transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
+                whileHover={{ backgroundColor: "rgba(251,191,36,0.25)", borderColor: "rgba(251,191,36,0.9)" }}
+                whileTap={{ scale: 0.95 }}
+              />
             </div>
           )}
         </div>

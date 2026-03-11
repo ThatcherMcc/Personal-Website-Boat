@@ -54,6 +54,11 @@ export default function WeatherURLManager() {
         window.dispatchEvent(
           new CustomEvent("weatherUpdated", { detail: weatherDataTuple })
         );
+        window.dispatchEvent(
+          new CustomEvent("weatherConditionChanged", {
+            detail: nextWeatherCondition,
+          })
+        );
       } catch (error) {
         console.error("Error managing weather and URL:", error);
       }

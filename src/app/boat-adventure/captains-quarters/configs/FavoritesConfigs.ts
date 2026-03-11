@@ -1,14 +1,19 @@
 type Favorite = {
   imageSrc: string;
-  altText: string | "";
+  altText: string;
   category: string;
   title: string;
   description: string;
 };
 
+export type FavoriteCategory = {
+  name: string;
+  items: Favorite[];
+};
+
 export const FavoritesList: Favorite[] = [
   {
-    imageSrc: "/favorites/whiplash.jpg",
+    imageSrc: "/favorites/whiplash.webp",
     altText:
       "Myles Teller drumming on movie cover of whiplash released in 2014",
     category: "Movie",
@@ -18,7 +23,7 @@ export const FavoritesList: Favorite[] = [
       The question is answered through two incredible performanced, paired with an unforgettable jazz soundtrack.",
   },
   {
-    imageSrc: "/favorites/transformers.jpg",
+    imageSrc: "/favorites/transformers.webp",
     altText:
       "Optimus Prime opening the all-spark on the movie cover of transformers the movie released in 1986 20th anniversary special edition",
     category: "Movie Series",
@@ -29,7 +34,7 @@ export const FavoritesList: Favorite[] = [
       What more can I say?",
   },
   {
-    imageSrc: "/favorites/kung-fu-panda.jpg",
+    imageSrc: "/favorites/kung-fu-panda.webp",
     altText: "Po on the Kung Fu panda movie cover kicking",
     category: "Movie Trilogy",
     title: "Kung Fu Panda",
@@ -38,7 +43,7 @@ export const FavoritesList: Favorite[] = [
       I especially love three antagonists, each offering a unique challenge for Po to overcome: Physical, Mental/Emotional, and Spiritual",
   },
   {
-    imageSrc: "/favorites/mr-fox.jpg",
+    imageSrc: "/favorites/mr-fox.webp",
     altText: "Mr. Fox from Fantastic Mr. Fox with spiral eyes",
     category: "Movie Character",
     title: "Mr. Fox",
@@ -47,7 +52,7 @@ export const FavoritesList: Favorite[] = [
       The weight of needing to be perceived as perfect was something I deeply related to when I watched this.",
   },
   {
-    imageSrc: "/favorites/dark-souls.jpg",
+    imageSrc: "/favorites/dark-souls.webp",
     altText: "dark souls 3 video game cover with unkindled knight on front",
     category: "All-Time Video Game",
     title: "Dark Souls 3",
@@ -57,7 +62,7 @@ export const FavoritesList: Favorite[] = [
       This game forced me to be a more complete person",
   },
   {
-    imageSrc: "/favorites/hearthstone-bg.jpg",
+    imageSrc: "/favorites/hearthstone-bg.webp",
     altText:
       "Hearthstone Battlegrounds wallpaper with a dwarf and elf looking at the camera",
     category: "Current Video Game",
@@ -68,7 +73,7 @@ export const FavoritesList: Favorite[] = [
   },
 
   {
-    imageSrc: "/favorites/silver-surfer.jpg",
+    imageSrc: "/favorites/silver-surfer.webp",
     altText: "Silver Surfer alone in space squating on surfboard",
     category: "Superhero",
     title: "Silver Surfer",
@@ -79,7 +84,7 @@ export const FavoritesList: Favorite[] = [
     to choose the greater good of the universe over his own happiness.",
   },
   {
-    imageSrc: "/favorites/magneto.jpg",
+    imageSrc: "/favorites/magneto.webp",
     altText: "Magneto from X-men using his powers",
     category: "Supervillian",
     title: "Magneto",
@@ -89,7 +94,7 @@ export const FavoritesList: Favorite[] = [
       driven by a conviction to prevent them from suffering the same fate he did.",
   },
   {
-    imageSrc: "/favorites/jojos.jpg",
+    imageSrc: "/favorites/jojos.webp",
     altText:
       "Five Jojo's characters together, jonathan, joseph, jotaro, josuke, and giorno",
     category: "Anime",
@@ -99,7 +104,7 @@ export const FavoritesList: Favorite[] = [
     It doesn't take itself too seriously, delivering an interesting power system with a fun cast of characters",
   },
   {
-    imageSrc: "/favorites/vinland-saga.jpg",
+    imageSrc: "/favorites/vinland-saga.webp",
     altText: "Thorfinn sitting on a rock saying I want to be a stronger person",
     category: "Manga",
     title: "Vinland Saga",
@@ -108,7 +113,7 @@ export const FavoritesList: Favorite[] = [
       Thorfinn's journey from a boy consumed by hatred and revenge to a man who wishes to atone for his past through creating a free world for others is beautiful.",
   },
   {
-    imageSrc: "/favorites/jordan-ward.jpg",
+    imageSrc: "/favorites/jordan-ward.webp",
     altText: "Jordan Ward smiling on his album cover",
     category: "All-Time Artist",
     title: "Jordan Ward",
@@ -117,7 +122,7 @@ export const FavoritesList: Favorite[] = [
       Great vocalist as well. Can't wait for his next album.",
   },
   {
-    imageSrc: "/favorites/girlfriends.jpg",
+    imageSrc: "/favorites/girlfriends.webp",
     altText: "Jerry Joiner performing on the drums",
     category: "Current Artist",
     title: "Girlfriends",
@@ -126,7 +131,7 @@ export const FavoritesList: Favorite[] = [
     He's almost a mystery of sorts but I think he was well ahead of his time being a one man band.",
   },
   {
-    imageSrc: "/favorites/sushi.jpg",
+    imageSrc: "/favorites/sushi.webp",
     altText: "Sushi roll on plate",
     category: "Food",
     title: "Sushi",
@@ -134,11 +139,51 @@ export const FavoritesList: Favorite[] = [
       "Specifically fried sushi rolls but I like most rolls, just not a wasabi or ginger type of guy.",
   },
   {
-    imageSrc: "/favorites/green.jpg",
+    imageSrc: "/favorites/green.webp",
     altText: "The Color Green",
     category: "Color",
     title: "Green",
     description:
       "Mostly because it's the color of nature, but it's such a nice color. Like CMONNN",
+  },
+];
+
+/** Grouped favorites by editorial category for the redesigned Captain's Quarters */
+export const FavoritesGrouped: FavoriteCategory[] = [
+  {
+    name: "Film",
+    items: FavoritesList.filter((f) =>
+      ["Movie", "Movie Series", "Movie Trilogy", "Movie Character"].includes(f.category)
+    ),
+  },
+  {
+    name: "Games",
+    items: FavoritesList.filter((f) =>
+      ["All-Time Video Game", "Current Video Game"].includes(f.category)
+    ),
+  },
+  {
+    name: "Characters",
+    items: FavoritesList.filter((f) =>
+      ["Superhero", "Supervillian"].includes(f.category)
+    ),
+  },
+  {
+    name: "Anime & Manga",
+    items: FavoritesList.filter((f) =>
+      ["Anime", "Manga"].includes(f.category)
+    ),
+  },
+  {
+    name: "Music",
+    items: FavoritesList.filter((f) =>
+      ["All-Time Artist", "Current Artist"].includes(f.category)
+    ),
+  },
+  {
+    name: "Other",
+    items: FavoritesList.filter((f) =>
+      ["Food", "Color"].includes(f.category)
+    ),
   },
 ];

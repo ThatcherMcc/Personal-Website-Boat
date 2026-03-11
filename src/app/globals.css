@@ -2,6 +2,16 @@
 
 @import "tailwindcss"; /* Import Tailwind CSS utilities */
 
+/* --- Portfolio custom font utilities --- */
+@layer utilities {
+  .font-cormorant {
+    font-family: var(--font-cormorant), Georgia, serif;
+  }
+  .font-syne {
+    font-family: var(--font-syne), system-ui, sans-serif;
+  }
+}
+
 /* --- Root Variables for Colors --- */
 :root {
   --background: #ffffff; /* Default light background */
@@ -19,7 +29,7 @@
 /* --- Base Body Styles (Default Sky) --- */
 body {
   margin: 0;
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-inter), Arial, Helvetica, sans-serif;
   overflow: hidden;
 
   /* Default sky: Sunny (will be overridden by JS for other weather) */
@@ -39,7 +49,7 @@ body {
 
 .boat-container {
   position: fixed;
-  width: 850;
+  width: 850px;
   height: auto;
   bottom: 130px;
   left: 50%;
@@ -49,7 +59,7 @@ body {
 
 .boat-inside-container {
   position: fixed;
-  width: 900;
+  width: 900px;
   height: auto;
   bottom: 130px;
   left: 50%;
@@ -59,13 +69,13 @@ body {
 
 @media screen and (max-width: 1024px) {
   .boat-container {
-    width: 650; /* Make it wider on smaller screens */
-    bottom: 130px; /* Adjust the bottom position to account for the smaller boat size */
+    width: 650px;
+    bottom: 130px;
     z-index: 3;
   }
 
   .boat-inside-container {
-    width: 700;
+    width: 700px;
     bottom: 130px;
     z-index: 3;
   }
@@ -73,13 +83,13 @@ body {
 
 @media screen and (max-width: 768px) {
   .boat-container {
-    width: 500;
-    bottom: 220px; /* A smaller pixel value for smaller screens */
+    width: 500px;
+    bottom: 220px;
     z-index: 3;
   }
 
   .boat-inside-container {
-    width: 500;
+    width: 500px;
     bottom: 220px;
     z-index: 3;
   }
@@ -138,28 +148,28 @@ body.weather-stormy {
 }
 
 #back-wave-container {
-  height: 345; /* Height for the back layer container */
+  height: 345px;
   z-index: 1;
   --_scroll-direction: wave-scroll-right;
-  --_wave-duration: 40s; /* Base scroll speed for this layer */
+  --_wave-duration: 40s;
 }
 
 #middle-wave-container-back {
-  height: 310;
+  height: 310px;
   z-index: 2;
   --_scroll-direction: wave-scroll-left;
   --_wave-duration: 35s;
 }
 
 #middle-wave-container-front {
-  height: 300;
+  height: 300px;
   z-index: 2;
   --_scroll-direction: wave-scroll-left;
   --_wave-duration: 35s;
 }
 
 #front-wave-container {
-  height: 280;
+  height: 280px;
   z-index: 3;
   --_scroll-direction: wave-scroll-right;
   --_wave-duration: 30s;
@@ -167,37 +177,37 @@ body.weather-stormy {
 
 @media screen and (max-width: 1024px) {
   #back-wave-container {
-    height: 300;
+    height: 300px;
   }
 
   #middle-wave-container-back {
-    height: 280;
+    height: 280px;
   }
 
   #middle-wave-container-front {
-    height: 275;
+    height: 275px;
   }
 
   #front-wave-container {
-    height: 250;
+    height: 250px;
   }
 }
 
 @media screen and (max-width: 768px) {
   #back-wave-container {
-    height: 380;
+    height: 380px;
   }
 
   #middle-wave-container-back {
-    height: 365;
+    height: 365px;
   }
 
   #middle-wave-container-front {
-    height: 355;
+    height: 355px;
   }
 
   #front-wave-container {
-    height: 330;
+    height: 330px;
   }
 }
 
@@ -215,8 +225,8 @@ body.weather-stormy {
   position: fixed;
   top: 1rem;
   left: 1rem;
-  width: 400;
-  height: 200;
+  width: 400px;
+  height: 200px;
   background: rgb(0, 0, 0);
   display: flex;
   flex: auto;
@@ -236,9 +246,9 @@ body.weather-stormy {
 
 @media screen and (max-width: 1024px) {
   .weather-info-screen {
-    width: 300;
-    height: 140;
-    gap: 12;
+    width: 300px;
+    height: 140px;
+    gap: 12px;
     font-size: 16px;
     padding: 1rem;
   }
@@ -246,10 +256,10 @@ body.weather-stormy {
 
 @media screen and (max-width: 768px) {
   .weather-info-screen {
-    width: 250;
-    height: 100;
+    width: 250px;
+    height: 100px;
     font-size: 14px;
-    gap: 3;
+    gap: 3px;
     padding: 1rem;
   }
 }
@@ -257,4 +267,43 @@ body.weather-stormy {
 .weather-info-container:hover + .weather-info-screen {
   opacity: 60%;
   visibility: visible;
+}
+
+/* ─── Captain's Quarters: Bonfire & Ember Animations ─── */
+@keyframes bonfire-glow {
+  0%, 100% { opacity: 0.6; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.08); }
+}
+
+@keyframes ember-rise {
+  0% { opacity: 0.9; transform: translateY(0) translateX(0); }
+  50% { opacity: 0.6; transform: translateY(-30px) translateX(4px); }
+  100% { opacity: 0; transform: translateY(-60px) translateX(-3px); }
+}
+
+.animate-bonfire-glow {
+  animation: bonfire-glow 3.5s ease-in-out infinite;
+}
+
+.animate-ember {
+  animation: ember-rise 2.5s ease-out infinite;
+}
+
+/* ─── Treasure Room: Planet Glow & Orbit Animations ─── */
+@keyframes planet-glow {
+  0%, 100% { opacity: 0.6; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.06); }
+}
+
+@keyframes orbit {
+  0% { transform: translate(-50%, -50%) rotate(0deg) translateX(var(--orbit-radius, 40px)) rotate(0deg); }
+  100% { transform: translate(-50%, -50%) rotate(360deg) translateX(var(--orbit-radius, 40px)) rotate(-360deg); }
+}
+
+.animate-planet-glow {
+  animation: planet-glow 4s ease-in-out infinite;
+}
+
+.animate-orbit {
+  animation: orbit 6s linear infinite;
 }

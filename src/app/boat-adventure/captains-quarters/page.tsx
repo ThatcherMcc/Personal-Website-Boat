@@ -1,115 +1,309 @@
-// app/painted-world/undead-settlement/page.tsx
-import Image from "next/image";
+"use client";
+
 import Link from "next/link";
-import AllowScroll from "./components/AllowScroll";
+import Image from "next/image";
+import { useRef } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
+import RoomLayout from "rt/app/boat-adventure/components/RoomLayout";
 import FavoritesSection from "./components/FavoritesSection";
 
 export default function CaptainsQuartersPage() {
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({ container: scrollRef });
+
+  // Darken overlay from 0% to 75% as user scrolls past hero
+  const overlayOpacity = useTransform(scrollYProgress, [0, 0.15], [0, 0.75]);
+
   return (
-    <>
-      <AllowScroll />
-      {/* This is the new container for the background image and blur.
-        It sits behind everything else.
-      */}
-      <div
-        className="fixed inset-0 w-full h-full z-0 bg-cover bg-center"
+    <RoomLayout
+      backgroundSrc="/captains-quarters/painted-world-bg.webp"
+      blurClass=""
+    >
+      {/* Scroll-linked dark overlay */}
+      <motion.div
+        className="fixed inset-0 z-[1] pointer-events-none"
         style={{
-          backgroundImage: "url(/captains-quarters/painted-world-bg.jpg)",
-          backgroundAttachment: "fixed",
+          backgroundColor: "rgba(12, 8, 4, 1)",
+          opacity: overlayOpacity,
         }}
+      />
+
+      {/* Scrollable content container */}
+      <div
+        ref={scrollRef}
+        className="relative z-10 overflow-y-auto h-screen"
+        style={{ scrollBehavior: "smooth" }}
       >
-        {/* This is the dedicated blur layer. 
-          It sits directly on top of the background image. 
-        */}
-        <div className="absolute inset-0 w-full h-full backdrop-blur-md"></div>
-      </div>
+        {/* ─── Hero Section ─── */}
+        <section className="flex flex-col items-center justify-center min-h-screen px-4 text-center">
+          <motion.h1
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            className="font-cormorant font-semibold text-5xl md:text-6xl lg:text-7xl tracking-[0.02em]"
+            style={{
+              color: "#e8dcc8",
+              textShadow: "0 0 40px rgba(180, 120, 40, 0.15)",
+            }}
+          >
+            Captain&apos;s Quarters
+          </motion.h1>
 
-      {/* Main Content Container */}
-      <div className="relative z-10 p-4 md:p-8 flex flex-col items-center justify-center min-h-screen text-white">
-        {/* Room Title */}
-        <h1 className="text-4xl xl:text-5xl font-bold font-serif text-stone-200 drop-shadow-[0_0_8px_rgba(0,0,0,0.8)] mb-4 text-center">
-          About Me
-        </h1>
+          {/* Ornamental divider */}
+          <motion.div
+            initial={{ scaleX: 0 }}
+            animate={{ scaleX: 1 }}
+            transition={{ duration: 0.6, delay: 0.4 }}
+            className="w-32 md:w-48 h-px mt-4 mb-6"
+            style={{ background: "rgba(160, 120, 40, 0.5)" }}
+          />
 
-        {/* Section 1: Introduction */}
-        <section className="w-full max-w-none xl:max-w-9/10 flex flex-col xl:flex-row gap-4 md:gap-8 text-center bg-stone-900 bg-opacity-70 p-4 xl:p-8 rounded-lg shadow-2xl mb-6 md:mb-10 mx-4 md:mx-0">
-          <div className="flex justify-center xl:justify-start">
-            <Image
-              src="/thatcher-pics/thatch-woods.jpeg"
-              alt="Thatcher McClure Headshot"
-              width={300}
-              height={300}
-              className="rounded-full border-4 md:border-8 border-stone-600 w-60 h-60 md:w-80 md:h-80 object-cover"
-            />
-          </div>
-          <div className="flex-1">
-            <h1 className="font-semibold font-serif text-3xl md:text-4xl text-stone-300 mb-4 border-b-2 border-stone-400 pb-2">
-              Who I am
-            </h1>
-            <div className="flex flex-col gap-4 md:gap-8 lg:gap-4">
-              <p className="text-base md:text-lg text-center md:text-left font-serif leading-relaxed">
+          {/* Scroll cue */}
+          <motion.span
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.6, delay: 0.8 }}
+            className="font-cormorant text-sm tracking-[0.15em] uppercase"
+            style={{ color: "#9a8e7e" }}
+          >
+            Explore
+          </motion.span>
+          <motion.div
+            animate={{ y: [0, 8, 0] }}
+            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+            className="mt-3"
+          >
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 20 20"
+              fill="none"
+              stroke="#9a8e7e"
+              strokeWidth="1.5"
+            >
+              <path d="M4 7l6 6 6-6" />
+            </svg>
+          </motion.div>
+        </section>
+
+        {/* ─── Introduction Panel ─── */}
+        <motion.section
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, ease: "easeOut" }}
+          viewport={{ once: true, margin: "-60px" }}
+          className="max-w-5xl mx-auto px-4 md:px-8 mb-16 md:mb-24"
+        >
+          <div
+            className="flex flex-col md:flex-row gap-6 md:gap-10 p-6 md:p-8 rounded-xl"
+            style={{
+              background: "rgba(12, 8, 4, 0.82)",
+              border: "1px solid rgba(160, 120, 40, 0.2)",
+            }}
+          >
+            {/* Profile Image — stone-framed */}
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6 }}
+              viewport={{ once: true }}
+              className="flex justify-center md:justify-start flex-shrink-0"
+            >
+              <div
+                className="relative w-52 h-52 md:w-64 md:h-64 rounded-lg overflow-hidden"
+                style={{
+                  border: "3px solid rgba(140, 130, 110, 0.5)",
+                  boxShadow: "inset 0 2px 12px rgba(0,0,0,0.4)",
+                }}
+              >
+                <Image
+                  src="/thatcher-pics/thatch-woods.webp"
+                  alt="Thatcher McClure"
+                  fill
+                  priority
+                  sizes="(max-width: 768px) 208px, 256px"
+                  style={{ objectFit: "cover" }}
+                />
+              </div>
+            </motion.div>
+
+            {/* Bio Text — Dark Souls item description style */}
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              viewport={{ once: true }}
+              className="flex-1"
+            >
+              <h2
+                className="font-cormorant font-semibold text-3xl md:text-4xl tracking-[0.08em] pb-3 mb-4"
+                style={{
+                  color: "#e8dcc8",
+                  borderBottom: "1px solid rgba(160, 120, 40, 0.35)",
+                }}
+              >
+                Who I am
+              </h2>
+              <p
+                className="font-cormorant text-base md:text-lg leading-relaxed md:leading-[1.8] mb-6"
+                style={{ color: "#9a8e7e" }}
+              >
                 Hi, I&apos;m{" "}
-                <strong className="text-green-600">Thatcher</strong>, a creator
-                at heart who finds his fulfillment and escape from
+                <strong style={{ color: "#5a9a3a" }}>Thatcher</strong>, a
+                creator at heart who finds his fulfillment and escape from
                 overconsumption in the act of building for myself and others. I
                 think creation has many forms, whether it&apos;s a solution to a
                 problem, providing a new experience that leads to a fresh
                 perspective, or even an impactful thought (pick your poison),
-                each can be equally valuable. <br />
+                each can be equally valuable.
+                <br />
                 I&apos;m pretty big on creation if you couldn&apos;t tell.
               </p>
-              <div className="flex flex-col space-y-6 md:flex-row md:space-x-12 md:space-y-0">
-                <div className="flex-1 text-center md:text-left">
-                  <h2 className="text-xl md:text-2xl font-semibold font-serif mb-2">
+
+              <div className="flex flex-col md:flex-row gap-6 md:gap-10">
+                <div className="flex-1">
+                  <h3
+                    className="font-cormorant font-semibold text-xl md:text-2xl mb-3"
+                    style={{ color: "#e8dcc8" }}
+                  >
                     Free Time Spending
-                  </h2>
-                  <ul className="list-disc list-inside text-base md:text-lg font-serif text-left">
-                    <li>Girlfriend of almost 5 years now 💗</li>
-                    <li>Siblings and Parents 👨‍👩‍👧‍👦</li>
-                    <li>Watching and Ranking Movies 🎥</li>
-                    <li>Playing Games with Friends 🎮</li>
-                    <li>Finding New Music 🎵</li>
+                  </h3>
+                  <ul className="space-y-1.5">
+                    {[
+                      "Girlfriend of almost 5 years now",
+                      "Siblings and Parents",
+                      "Watching and Ranking Movies",
+                      "Playing Games with Friends",
+                      "Finding New Music",
+                    ].map((item) => (
+                      <li
+                        key={item}
+                        className="font-cormorant text-base md:text-lg flex items-start gap-2"
+                        style={{ color: "#9a8e7e" }}
+                      >
+                        <span
+                          className="mt-2 w-1.5 h-1.5 rounded-full flex-shrink-0"
+                          style={{ background: "#c4973a" }}
+                        />
+                        {item}
+                      </li>
+                    ))}
                   </ul>
                 </div>
-                <div className="flex-1 text-center md:text-left">
-                  <h2 className="text-xl md:text-2xl font-semibold font-serif mb-2">
+                <div className="flex-1">
+                  <h3
+                    className="font-cormorant font-semibold text-xl md:text-2xl mb-3"
+                    style={{ color: "#e8dcc8" }}
+                  >
                     New Things I&apos;m Learning
-                  </h2>
-                  <ul className="list-disc list-inside text-base md:text-lg font-serif text-left">
-                    <li>How to Play the Guitar 🎸</li>
-                    <li>Speaking Chinese (mandarin) 🗣️</li>
-                    <li>Altering Clothes 🪡</li>
-                    <li>Holding a Handstand 🤸</li>
+                  </h3>
+                  <ul className="space-y-1.5">
+                    {[
+                      "How to Play the Guitar",
+                      "Speaking Chinese (Mandarin)",
+                      "Altering Clothes",
+                      "Holding a Handstand",
+                    ].map((item) => (
+                      <li
+                        key={item}
+                        className="font-cormorant text-base md:text-lg flex items-start gap-2"
+                        style={{ color: "#9a8e7e" }}
+                      >
+                        <span
+                          className="mt-2 w-1.5 h-1.5 rounded-full flex-shrink-0"
+                          style={{ background: "#c4973a" }}
+                        />
+                        {item}
+                      </li>
+                    ))}
                   </ul>
                 </div>
               </div>
+            </motion.div>
+          </div>
+        </motion.section>
+
+        {/* ─── Favorites Collection ─── */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          transition={{ duration: 0.5 }}
+          viewport={{ once: true }}
+          className="mb-16 md:mb-24"
+        >
+          <h2
+            className="font-cormorant font-semibold text-3xl md:text-4xl text-center tracking-[0.04em] mb-10 md:mb-14"
+            style={{ color: "#e8dcc8" }}
+          >
+            Some of My Favorite Things
+          </h2>
+          <FavoritesSection />
+        </motion.div>
+
+        {/* ─── Bonfire Rest Point ─── */}
+        <section className="flex flex-col items-center justify-center py-20 md:py-28 px-4">
+          {/* Slightly less dark area around bonfire */}
+          <Link
+            href="/boat-adventure?boatState=interior"
+            className="group flex flex-col items-center gap-4"
+          >
+            <div className="relative">
+              {/* Pulsing ember glow behind bonfire */}
+              <div
+                className="absolute inset-0 rounded-full animate-bonfire-glow"
+                style={{
+                  background:
+                    "radial-gradient(circle, rgba(200, 120, 30, 0.25) 0%, transparent 70%)",
+                  width: "200%",
+                  height: "200%",
+                  top: "-50%",
+                  left: "-50%",
+                }}
+              />
+              <div className="relative w-28 h-28 md:w-36 md:h-36 transition-transform duration-300 group-hover:scale-110">
+                <Image
+                  src="/captains-quarters/bonfire.webp"
+                  alt="A lit bonfire, a place of rest"
+                  fill
+                  sizes="144px"
+                  style={{ objectFit: "contain" }}
+                />
+              </div>
             </div>
+            <span
+              className="font-cormorant text-sm md:text-base tracking-[0.1em] transition-colors duration-300"
+              style={{ color: "#c4973a" }}
+              onMouseEnter={(e) =>
+                (e.currentTarget.style.color = "#daa520")
+              }
+              onMouseLeave={(e) =>
+                (e.currentTarget.style.color = "#c4973a")
+              }
+            >
+              ← Return to Firelink
+            </span>
+          </Link>
+
+          {/* Ember particles */}
+          <div className="relative w-36 h-24 -mt-16 pointer-events-none hidden md:block">
+            {[...Array(5)].map((_, i) => (
+              <div
+                key={i}
+                className="absolute rounded-full animate-ember"
+                style={{
+                  width: `${2 + Math.random() * 2}px`,
+                  height: `${2 + Math.random() * 2}px`,
+                  background: i % 2 === 0 ? "#e8943a" : "#d4a04a",
+                  left: `${20 + i * 15}%`,
+                  bottom: 0,
+                  animationDelay: `${i * 0.7}s`,
+                  animationDuration: `${2 + i * 0.5}s`,
+                }}
+              />
+            ))}
           </div>
         </section>
-
-        {/* Section 2: Skills/Attributes */}
-        <FavoritesSection />
-
-        {/* Interactive Element: Bonfire to return to the gallery */}
-        <Link
-          href="/boat-adventure?boatState=interior"
-          className="fixed bottom-12 md:right-8 md:top-12"
-        >
-          <div className="relative w-16 h-16 md:w-24 md:h-24 cursor-pointer group">
-            <Image
-              src="/captains-quarters/bonfire.png"
-              alt="A lit bonfire, a place of rest"
-              fill
-              sizes="10vw"
-              style={{ objectFit: "contain" }}
-              className="transition-transform duration-300 scale-125 group-hover:scale-150"
-            />
-            <span className="absolute top-10/9 mt-1 md:top-8 left-1/2 -translate-x-1/2 bg-stone-800 text-stone-200 px-2 md:px-3 py-1 rounded-full text-xs font-semibold opacity-100 md:opacity-0 transition-opacity duration-300 md:group-hover:opacity-100 whitespace-nowrap">
-              Return to Firelink
-            </span>
-          </div>
-        </Link>
       </div>
-    </>
+    </RoomLayout>
   );
 }
