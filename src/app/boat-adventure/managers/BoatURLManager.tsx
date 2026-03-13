@@ -12,7 +12,7 @@ export default function BoatStateURLManager() {
 
   const updateBoatState = useCallback(
     (newState: BoatState) => {
-      const newSearchParams = new URLSearchParams(searchParams.toString());
+      const newSearchParams = new URLSearchParams(searchParams?.toString() ?? "");
       newSearchParams.set("boatState", newState);
       if (newState == "exterior") {
         newSearchParams.delete("room");
@@ -24,7 +24,7 @@ export default function BoatStateURLManager() {
 
   const updateRoom = useCallback(
     (newRoom: BoatRoom) => {
-      const newSearchParams = new URLSearchParams(searchParams.toString());
+      const newSearchParams = new URLSearchParams(searchParams?.toString() ?? "");
       if (newRoom) {
         newSearchParams.set("room", newRoom);
       } else {
@@ -37,7 +37,7 @@ export default function BoatStateURLManager() {
 
   useEffect(() => {
     const boatState =
-      (searchParams.get("boatState") as BoatState) || "exterior";
+      (searchParams?.get("boatState") as BoatState) || "exterior";
 
     if (!boatState) {
       updateBoatState("exterior");

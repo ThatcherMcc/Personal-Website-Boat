@@ -39,7 +39,7 @@ export default function WeatherURLManager() {
         // Apply the initial weather condition to the website's body class.
         updateWebsiteWeather(nextWeatherCondition);
         // Create a new URLSearchParams object based on the current URL's parameters.
-        const newSearchParams = new URLSearchParams(searchParams.toString());
+        const newSearchParams = new URLSearchParams(searchParams?.toString() ?? "");
         // Set or update the 'weather' parameter with the next condition.
         newSearchParams.set("weather", nextWeatherCondition);
         router.push(`?${newSearchParams}`, { scroll: false });
