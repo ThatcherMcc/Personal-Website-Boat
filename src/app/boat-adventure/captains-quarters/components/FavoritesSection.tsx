@@ -1,12 +1,119 @@
 "use client";
 
-import Image from "next/image";
-import { motion } from "framer-motion";
-import { FavoritesGrouped } from "../configs/FavoritesConfigs";
+import { useState, useEffect, useCallback } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { FavoritesGrouped, FavoritesList } from "../configs/FavoritesConfigs";
+import FlippableCard from "./FlippableCard";
+
+const STORAGE_KEY = "captains-quarters-revealed";
 
 export default function FavoritesSection() {
+  const totalCards = FavoritesList.length;
+  const [revealedTitles, setRevealedTitles] = useState<Set<string>>(new Set());
+  const [hydrated, setHydrated] = useState(false);
+
+  // Load persisted state from localStorage on mount
+  useEffect(() => {
+    try {
+      const stored = localStorage.getItem(STORAGE_KEY);
+      if (stored) {
+        const parsed: string[] = JSON.parse(stored);
+        setRevealedTitles(new Set(parsed));
+      }
+    } catch {
+      // Ignore invalid data
+    }
+    setHydrated(true);
+  }, []);
+
+  // Persist to localStorage whenever revealedTitles changes (after hydration)
+  useEffect(() => {
+    if (!hydrated) return;
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify([...revealedTitles]));
+    } catch {
+      // Storage full or unavailable — fail silently
+    }
+  }, [revealedTitles, hydrated]);
+
+  const revealCard = useCallback((title: string) => {
+    setRevealedTitles((prev) => {
+      const next = new Set(prev);
+      next.add(title);
+      return next;
+    });
+  }, []);
+
+  const revealAll = useCallback(() => {
+    setRevealedTitles(new Set(FavoritesList.map((f) => f.title)));
+  }, []);
+
+  const discoveredCount = revealedTitles.size;
+  const allRevealed = discoveredCount >= totalCards;
+
+  // Don't render flip state until hydrated to avoid mismatch
+  if (!hydrated) return null;
+
   return (
     <section className="w-full max-w-5xl mx-auto flex flex-col gap-12 md:gap-16 px-4">
+      {/* ── Discovery Header ── */}
+      <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+        {/* Progress counter */}
+        <motion.div
+          className="flex items-center gap-2"
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+        >
+          <span
+            className="font-cormorant text-sm md:text-base font-semibold tracking-wide"
+            style={{ color: "#c4973a" }}
+          >
+            {discoveredCount}/{totalCards} discovered
+          </span>
+          {allRevealed && (
+            <motion.span
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              className="font-cormorant text-xs tracking-wider uppercase ml-2"
+              style={{ color: "#7acc6a" }}
+            >
+              — All revealed
+            </motion.span>
+          )}
+        </motion.div>
+
+        {/* Reveal All button */}
+        <AnimatePresence>
+          {!allRevealed && (
+            <motion.button
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.9 }}
+              transition={{ duration: 0.3 }}
+              onClick={revealAll}
+              className="font-cormorant text-[11px] md:text-xs font-semibold tracking-[0.15em] uppercase px-4 py-2 rounded-lg transition-colors duration-300 cursor-pointer"
+              style={{
+                color: "#c4973a",
+                background: "rgba(175,115,28,0.1)",
+                border: "1px solid rgba(175,115,28,0.25)",
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.background = "rgba(175,115,28,0.2)";
+                e.currentTarget.style.borderColor = "rgba(200,150,50,0.45)";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.background = "rgba(175,115,28,0.1)";
+                e.currentTarget.style.borderColor = "rgba(175,115,28,0.25)";
+              }}
+            >
+              Reveal All
+            </motion.button>
+          )}
+        </AnimatePresence>
+      </div>
+
+      {/* ── Category Groups ── */}
       {FavoritesGrouped.map((group, groupIdx) => (
         <div key={group.name} className="flex flex-col gap-5">
           {/* Category Header — Dark Souls UI divider style */}
@@ -30,90 +137,18 @@ export default function FavoritesSection() {
           {/* Cards Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-5">
             {group.items.map((item, idx) => (
-              <motion.div
+              <FlippableCard
                 key={item.title}
-                initial={{ opacity: 0, y: 24 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{
-                  duration: 0.5,
-                  delay: idx * 0.07,
-                  ease: "easeOut",
-                }}
-                viewport={{ once: true, margin: "-40px" }}
-                className="group flex flex-col md:flex-row items-stretch gap-0 rounded-xl overflow-hidden cursor-default transition-all duration-300"
-                style={{
-                  background: "rgba(22, 12, 4, 0.75)",
-                  border: "1px solid rgba(140, 100, 30, 0.18)",
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.borderColor =
-                    "rgba(200, 150, 50, 0.40)";
-                  e.currentTarget.style.boxShadow =
-                    "0 8px 32px rgba(120, 60, 0, 0.15)";
-                  e.currentTarget.style.transform = "translateY(-4px)";
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.borderColor =
-                    "rgba(140, 100, 30, 0.18)";
-                  e.currentTarget.style.boxShadow = "";
-                  e.currentTarget.style.transform = "";
-                }}
-              >
-                {/* Image */}
-                <div className="relative w-full md:w-44 h-48 md:h-auto flex-shrink-0 overflow-hidden">
-                  <Image
-                    src={item.imageSrc}
-                    alt={item.altText}
-                    fill
-                    loading="lazy"
-                    sizes="(max-width: 768px) 100vw, 176px"
-                    style={{ objectFit: "cover" }}
-                    className="transition-transform duration-500 group-hover:scale-[1.03]"
-                  />
-                  {/* Warm gradient overlay on hover */}
-                  <div
-                    className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
-                    style={{
-                      background:
-                        "linear-gradient(to top, rgba(180, 90, 20, 0.15), transparent 60%)",
-                    }}
-                  />
-                  {/* Bottom depth gradient */}
-                  <div
-                    className="absolute bottom-0 inset-x-0 h-10 pointer-events-none"
-                    style={{
-                      background:
-                        "linear-gradient(transparent, rgba(18,8,2,0.6))",
-                    }}
-                  />
-                </div>
-
-                {/* Text Content */}
-                <div className="flex flex-col justify-center p-4 md:p-5 gap-1.5 text-center md:text-left">
-                  <span
-                    className="inline-block self-center md:self-start font-cormorant text-[10px] md:text-[11px] font-semibold tracking-[0.2em] uppercase px-2 py-0.5 rounded"
-                    style={{
-                      color: "#d4a04a",
-                      background: "rgba(175,115,28,0.14)",
-                      border: "1px solid rgba(175,115,28,0.25)",
-                    }}
-                  >
-                    {item.category}
-                  </span>
-                  <h4
-                    className="text-xl md:text-2xl font-bold font-cormorant leading-tight mt-1"
-                    style={{ color: "#e8dcc8" }}
-                  >
-                    {item.title}
-                  </h4>
-                  <p
-                    className="font-cormorant text-sm md:text-base leading-relaxed mt-1"
-                    style={{ color: "#9a8e7e" }}
-                  >
-                    {item.description}
-                  </p>
-                </div>
-              </motion.div>
+                imageSrc={item.imageSrc}
+                altText={item.altText}
+                category={item.category}
+                title={item.title}
+                description={item.description}
+                categoryGroup={group.name}
+                isRevealed={revealedTitles.has(item.title)}
+                onReveal={() => revealCard(item.title)}
+                index={idx}
+              />
             ))}
           </div>
         </div>
