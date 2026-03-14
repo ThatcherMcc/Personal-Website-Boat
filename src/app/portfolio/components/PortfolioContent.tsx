@@ -45,8 +45,8 @@ export default function PortfolioContent() {
     <>
       <AllowScroll />
       <motion.div
-        className="min-h-screen font-syne"
-        style={{ background: '#070b13' }}
+        className="font-syne"
+        style={{ background: '#070b13', minHeight: '100dvh' }}
         initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4, ease: [0.23, 1, 0.32, 1] }}
@@ -57,6 +57,7 @@ export default function PortfolioContent() {
           style={{
             background: 'rgba(7,11,19,0.88)',
             borderBottom: '1px solid rgba(255,255,255,0.06)',
+            paddingTop: 'env(safe-area-inset-top, 0px)',
           }}
         >
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
