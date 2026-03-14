@@ -65,12 +65,14 @@ export default function WeatherInfo({ searchParams }: WeatherInfoProps) {
     <>
       <div className="weather-info-container">
         <div className="relative h-16 md:h-24 lg:h-36">
-          <Image
-            src={`/weather-icons/${weatherType}.svg`}
-            alt="Current Weather Icon"
-            fill={true}
-            priority={true}
-          />
+          {weatherType && typeof weatherType === 'string' && (
+            <Image
+              src={`/weather-icons/${weatherType}.svg`}
+              alt="Current Weather Icon"
+              fill={true}
+              priority={true}
+            />
+          )}
         </div>
         <span className="text-sm md:text-md lg:text-xl font-semibold text-white">
           {city}, {state}

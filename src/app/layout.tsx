@@ -1,4 +1,5 @@
 import "./globals.css";
+import type { Metadata } from "next";
 import { Inter, Cormorant_Garamond, Syne } from "next/font/google";
 
 const inter = Inter({
@@ -22,15 +23,26 @@ const syne = Syne({
   variable: "--font-syne",
 });
 
-/**
- * rootLayout component provides the HTML structure for all pages.
- * It acts as a shared UI wrapper that persists across different routes.
- *
- * @param {object} props - The component props.
- * @param {React.ReactNode} props.children - The content of the current page or nested layout.
- * This will typically be your "page.tsx" component.
- * @returns {JSX.Element} The root HTML structure for the application.
- */
+export const metadata: Metadata = {
+  title: "Thatcher McClure",
+  description:
+    "Personal website of Thatcher McClure — software engineer, sailor, and builder. Explore my portfolio or embark on the boat adventure.",
+  openGraph: {
+    title: "Thatcher McClure",
+    description:
+      "Personal website of Thatcher McClure — software engineer, sailor, and builder.",
+    url: "https://thatchermcc.com",
+    siteName: "Thatcher McClure",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Thatcher McClure",
+    description:
+      "Personal website of Thatcher McClure — software engineer, sailor, and builder.",
+  },
+};
+
 export default function rootLayout({
   children,
 }: {

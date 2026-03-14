@@ -53,6 +53,7 @@ export default function PortfolioContent() {
       >
         {/* Navigation */}
         <nav
+          aria-label="Portfolio sections"
           className="fixed top-0 w-full backdrop-blur-md z-50"
           style={{
             background: 'rgba(7,11,19,0.88)',
@@ -62,27 +63,30 @@ export default function PortfolioContent() {
         >
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex justify-between items-center h-14">
-              <h1
+              <span
                 className="text-base font-syne font-semibold tracking-wide shrink-0"
                 style={{ color: '#eae6dc' }}
               >
                 Thatcher McClure
-              </h1>
+              </span>
               {/* Desktop nav */}
-              <div className="hidden md:flex space-x-8">
+              <div role="tablist" aria-label="Portfolio sections" className="hidden md:flex space-x-8">
                 {NAV_SECTIONS.map((section) => (
                   <button
                     key={section}
+                    role="tab"
+                    aria-selected={activeSection === section}
+                    aria-controls={section}
                     onClick={() => scrollToSection(section)}
-                    className={`capitalize text-sm font-syne tracking-wide transition-colors ${
+                    className={`capitalize text-sm font-syne tracking-wide transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#10d988] focus-visible:ring-offset-2 focus-visible:ring-offset-[#070b13] rounded-sm ${
                       activeSection === section ? 'font-semibold' : ''
                     }`}
-                    style={{ color: activeSection === section ? '#10d988' : '#6b7685' }}
+                    style={{ color: activeSection === section ? '#10d988' : '#7a8898' }}
                     onMouseEnter={(e) => {
                       if (activeSection !== section) e.currentTarget.style.color = '#eae6dc';
                     }}
                     onMouseLeave={(e) => {
-                      if (activeSection !== section) e.currentTarget.style.color = '#6b7685';
+                      if (activeSection !== section) e.currentTarget.style.color = '#7a8898';
                     }}
                   >
                     {section}
@@ -91,10 +95,11 @@ export default function PortfolioContent() {
               </div>
               <Link
                 href="/"
-                className="text-sm font-syne shrink-0 transition-colors"
-                style={{ color: '#6b7685' }}
+                aria-label="Back to home"
+                className="text-sm font-syne shrink-0 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#10d988] focus-visible:ring-offset-2 focus-visible:ring-offset-[#070b13] rounded-sm"
+                style={{ color: '#7a8898' }}
                 onMouseEnter={(e) => (e.currentTarget.style.color = '#eae6dc')}
-                onMouseLeave={(e) => (e.currentTarget.style.color = '#6b7685')}
+                onMouseLeave={(e) => (e.currentTarget.style.color = '#7a8898')}
               >
                 ← Home
               </Link>
@@ -105,16 +110,19 @@ export default function PortfolioContent() {
             className="md:hidden border-t overflow-x-auto"
             style={{ borderColor: 'rgba(255,255,255,0.06)' }}
           >
-            <div className="flex px-4 py-1 gap-6">
+            <div role="tablist" aria-label="Portfolio sections" className="flex px-4 py-1 gap-6">
               {NAV_SECTIONS.map((section) => (
                 <button
                   key={section}
+                  role="tab"
+                  aria-selected={activeSection === section}
+                  aria-controls={section}
                   onClick={() => scrollToSection(section)}
-                  className={`capitalize whitespace-nowrap text-sm py-1.5 border-b-2 font-syne transition-colors ${
+                  className={`capitalize whitespace-nowrap text-sm py-1.5 border-b-2 font-syne transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#10d988] focus-visible:ring-offset-1 focus-visible:ring-offset-[#070b13] rounded-sm ${
                     activeSection === section ? 'font-semibold' : ''
                   }`}
                   style={{
-                    color: activeSection === section ? '#10d988' : '#6b7685',
+                    color: activeSection === section ? '#10d988' : '#7a8898',
                     borderBottomColor: activeSection === section ? '#10d988' : 'transparent',
                   }}
                 >
@@ -125,11 +133,13 @@ export default function PortfolioContent() {
           </div>
         </nav>
 
-        <HeroSection />
-        <AboutSection />
-        <ProjectsSection />
-        <SkillsSection />
-        <ContactSection />
+        <main id="main-content">
+          <HeroSection />
+          <AboutSection />
+          <ProjectsSection />
+          <SkillsSection />
+          <ContactSection />
+        </main>
 
         {/* Footer */}
         <footer

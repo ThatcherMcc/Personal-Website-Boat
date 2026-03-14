@@ -21,7 +21,7 @@ export default function AboutSection() {
       <div className="max-w-4xl mx-auto">
         {/* Section heading */}
         <motion.div {...fadeUp(0)} className="mb-12 text-center">
-          <p className="font-syne text-[9px] tracking-[0.4em] uppercase mb-3" style={{ color: '#10d988' }}>
+          <p className="font-syne text-xs tracking-[0.4em] uppercase mb-3" style={{ color: '#10d988' }}>
             01
           </p>
           <h2
@@ -86,7 +86,7 @@ export default function AboutSection() {
                 <li
                   key={i}
                   className="flex items-start gap-2.5 font-syne text-sm"
-                  style={{ color: '#6b7685', lineHeight: 1.6 }}
+                  style={{ color: '#7a8898', lineHeight: 1.6 }}
                 >
                   <span style={{ color: '#10d988', marginTop: '6px', flexShrink: 0, fontSize: '5px' }}>
                     ●
@@ -122,7 +122,7 @@ export default function AboutSection() {
                 <li
                   key={i}
                   className="flex items-start gap-2.5 font-syne text-sm"
-                  style={{ color: '#6b7685', lineHeight: 1.6 }}
+                  style={{ color: '#7a8898', lineHeight: 1.6 }}
                 >
                   <span style={{ color: '#10d988', marginTop: '6px', flexShrink: 0, fontSize: '5px' }}>
                     ●

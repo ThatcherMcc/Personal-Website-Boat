@@ -39,11 +39,11 @@ const projects = [
 export default function ProjectsSection() {
   const prefersReducedMotion = useReducedMotion();
 
-  const linkStyle = { color: '#6b7685' };
+  const linkStyle = { color: '#7a8898' };
   const linkIn = (e: React.MouseEvent<HTMLAnchorElement>) =>
     (e.currentTarget.style.color = '#10d988');
   const linkOut = (e: React.MouseEvent<HTMLAnchorElement>) =>
-    (e.currentTarget.style.color = '#6b7685');
+    (e.currentTarget.style.color = '#7a8898');
 
   return (
     <section
@@ -59,7 +59,7 @@ export default function ProjectsSection() {
           viewport={{ once: true }}
           className="mb-12 text-center"
         >
-          <p className="font-syne text-[9px] tracking-[0.4em] uppercase mb-3" style={{ color: '#10d988' }}>
+          <p className="font-syne text-xs tracking-[0.4em] uppercase mb-3" style={{ color: '#10d988' }}>
             02
           </p>
           <h2
@@ -103,6 +103,7 @@ export default function ProjectsSection() {
                     alt={project.title}
                     width={400}
                     height={256}
+                    sizes="(max-width: 768px) 100vw, 40vw"
                     className="w-full h-52 md:h-full object-cover transition-transform duration-500 group-hover:scale-[1.04]"
                   />
                 </div>
@@ -137,7 +138,7 @@ export default function ProjectsSection() {
                     </h3>
                     <p
                       className="font-syne text-sm leading-relaxed mb-5"
-                      style={{ color: '#6b7685', lineHeight: 1.75 }}
+                      style={{ color: '#7a8898', lineHeight: 1.75 }}
                     >
                       {project.description}
                     </p>
@@ -149,7 +150,7 @@ export default function ProjectsSection() {
                           style={{
                             background: 'rgba(255,255,255,0.04)',
                             border: '1px solid rgba(255,255,255,0.08)',
-                            color: '#6b7685',
+                            color: '#7a8898',
                           }}
                         >
                           {tech}

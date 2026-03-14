@@ -108,7 +108,7 @@ export default function NavTabs() {
       </div>
 
       {/* Desktop Menu */}
-      <ul className="hidden md:flex justify-end space-x-6 text-cloud md:text-2xl xl:text-3xl font-DM font-bold tracking-normal">
+      <ul className="hidden md:flex justify-end space-x-6 text-cloud text-sm md:text-base font-DM font-bold tracking-normal">
         <li>
           <Link
             href="/"

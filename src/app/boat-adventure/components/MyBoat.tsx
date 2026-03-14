@@ -2,7 +2,7 @@
 
 import { motion, useAnimate } from "framer-motion";
 import Image from "next/image";
-import { useCallback, useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
 import {
   BOAT_ANIMATION_CONFIG,
   ROOM_ZOOM_CONFIG,
@@ -27,25 +27,26 @@ type MyBoatProps = {
  */
 export default function MyBoat({ searchParams }: MyBoatProps) {
   const [scope, animate] = useAnimate();
+  const [screenSize, setScreenSize] = useState<"mobile" | "tablet" | "desktop">("desktop");
+
+  useEffect(() => {
+    const getScreenSize = () => {
+      if (window.innerWidth <= 768) return "mobile" as const;
+      if (window.innerWidth <= 1024) return "tablet" as const;
+      return "desktop" as const;
+    };
+    setScreenSize(getScreenSize());
+
+    const handleResize = () => setScreenSize(getScreenSize());
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   const boatState = (searchParams.boatState as BoatState) || "exterior";
   const boatRoom = searchParams.room as BoatRoom;
 
-  const getScreenSize = () => {
-    if (typeof window === "undefined") {
-      return "desktop"; // Default to desktop on the server
-    }
-    if (window.innerWidth <= 768) {
-      return "mobile";
-    }
-    if (window.innerWidth <= 1024) {
-      return "tablet";
-    }
-    return "desktop";
-  };
-
   const currentRoomConfig = boatRoom
-    ? ROOM_ZOOM_CONFIG[getScreenSize()][boatRoom]
+    ? ROOM_ZOOM_CONFIG[screenSize][boatRoom]
     : null;
   // Retrieves the 'weather' parameter from the URl.
   const weatherParam = searchParams.weather as WeatherCondition;
@@ -240,8 +241,16 @@ export default function MyBoat({ searchParams }: MyBoatProps) {
                 transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
                 whileHover={{ backgroundColor: "rgba(180,83,9,0.3)", borderColor: "rgba(251,191,36,0.8)", scale: 1.04 }}
                 whileTap={{ scale: 0.96 }}
+                aria-label="Enter Captain's Quarters"
               >
-                <div className="absolute -top-8 left-1/2 -translate-x-1/2 whitespace-nowrap opacity-0 group-hover/room:opacity-100 transition-opacity duration-200 pointer-events-none">
+                {/* Permanent label for mobile discoverability */}
+                <span className="absolute bottom-full left-1/2 -translate-x-1/2 mb-1 whitespace-nowrap pointer-events-none md:hidden">
+                  <span className="bg-amber-800/90 text-amber-100 px-2 py-0.5 rounded text-xs font-semibold shadow-lg">
+                    Captain&apos;s Quarters
+                  </span>
+                </span>
+                {/* Hover tooltip for desktop */}
+                <div className="absolute -top-8 left-1/2 -translate-x-1/2 whitespace-nowrap opacity-0 group-hover/room:opacity-100 transition-opacity duration-200 pointer-events-none hidden md:block">
                   <span className="bg-amber-800/90 text-amber-100 px-2 py-0.5 rounded text-xs font-semibold shadow-lg">
                     Captain&apos;s Quarters
                   </span>
@@ -255,8 +264,16 @@ export default function MyBoat({ searchParams }: MyBoatProps) {
                 transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut", delay: 1.25 }}
                 whileHover={{ backgroundColor: "rgba(180,83,9,0.3)", borderColor: "rgba(251,191,36,0.8)", scale: 1.04 }}
                 whileTap={{ scale: 0.96 }}
+                aria-label="Enter Treasure Room"
               >
-                <div className="absolute -top-8 left-1/2 -translate-x-1/2 whitespace-nowrap opacity-0 group-hover/room2:opacity-100 transition-opacity duration-200 pointer-events-none">
+                {/* Permanent label for mobile discoverability */}
+                <span className="absolute bottom-full left-1/2 -translate-x-1/2 mb-1 whitespace-nowrap pointer-events-none md:hidden">
+                  <span className="bg-amber-800/90 text-amber-100 px-2 py-0.5 rounded text-xs font-semibold shadow-lg">
+                    Treasure Room
+                  </span>
+                </span>
+                {/* Hover tooltip for desktop */}
+                <div className="absolute -top-8 left-1/2 -translate-x-1/2 whitespace-nowrap opacity-0 group-hover/room2:opacity-100 transition-opacity duration-200 pointer-events-none hidden md:block">
                   <span className="bg-amber-800/90 text-amber-100 px-2 py-0.5 rounded text-xs font-semibold shadow-lg">
                     Treasure Room
                   </span>
