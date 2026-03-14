@@ -102,7 +102,7 @@ export default function NavTabs() {
           </li>
           <li>
             <Link
-              href="/boat-adventure/resume.pdf"
+              href="/boat/resume.pdf"
               rel="noopener noreferrer"
               target="_blank"
               className="hover:text-gray-400"
@@ -151,7 +151,7 @@ export default function NavTabs() {
         </li>
         <li>
           <Link
-            href="/boat-adventure/resume.pdf"
+            href="/boat/resume.pdf"
             rel="noopener noreferrer"
             target="_blank"
             className="hover:text-gray-400"
