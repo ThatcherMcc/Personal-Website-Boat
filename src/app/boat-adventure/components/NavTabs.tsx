@@ -10,7 +10,7 @@ export default function NavTabs() {
 
   const isActive = (href: string) => {
     if (href === "/boat-adventure") return pathname === "/boat-adventure";
-    return pathname.startsWith(href);
+    return pathname?.startsWith(href) ?? false;
   };
 
   const toggleMenu = () => {
