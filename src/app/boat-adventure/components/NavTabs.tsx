@@ -1,10 +1,17 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useState } from "react";
 
 export default function NavTabs() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const pathname = usePathname();
+
+  const isActive = (href: string) => {
+    if (href === "/boat-adventure") return pathname === "/boat-adventure";
+    return pathname.startsWith(href);
+  };
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -66,7 +73,7 @@ export default function NavTabs() {
           <li>
             <Link
               href="/boat-adventure"
-              className="hover:text-gray-400"
+              className={isActive("/boat-adventure") ? "text-sky-300" : "hover:text-gray-400"}
               onClick={() => {
                 toggleMenu();
                 handleExteriorClick();
@@ -78,7 +85,7 @@ export default function NavTabs() {
           <li>
             <Link
               href="/boat-adventure/captains-quarters"
-              className="hover:text-gray-400"
+              className={isActive("/boat-adventure/captains-quarters") ? "text-sky-300" : "hover:text-gray-400"}
               onClick={toggleMenu}
             >
               About Me
@@ -87,7 +94,7 @@ export default function NavTabs() {
           <li>
             <Link
               href="/boat-adventure/treasure-room"
-              className="hover:text-gray-400"
+              className={isActive("/boat-adventure/treasure-room") ? "text-sky-300" : "hover:text-gray-400"}
               onClick={toggleMenu}
             >
               Projects
@@ -120,21 +127,24 @@ export default function NavTabs() {
         <li>
           <Link
             href="/boat-adventure"
-            className="hover:text-gray-400"
+            className={isActive("/boat-adventure") ? "text-sky-300 underline underline-offset-4" : "hover:text-gray-400"}
             onClick={handleExteriorClick}
           >
             Ship
           </Link>
         </li>
         <li>
-          <Link href="/boat-adventure/captains-quarters" className="hover:text-gray-400">
+          <Link
+            href="/boat-adventure/captains-quarters"
+            className={isActive("/boat-adventure/captains-quarters") ? "text-sky-300 underline underline-offset-4" : "hover:text-gray-400"}
+          >
             About Me
           </Link>
         </li>
         <li>
           <Link
             href="/boat-adventure/treasure-room"
-            className="hover:text-gray-400 transition-transform duration-200"
+            className={isActive("/boat-adventure/treasure-room") ? "text-sky-300 underline underline-offset-4" : "hover:text-gray-400 transition-transform duration-200"}
           >
             Projects
           </Link>

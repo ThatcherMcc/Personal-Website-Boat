@@ -55,7 +55,7 @@ export default function ContactSection() {
       <div className="max-w-4xl mx-auto text-center">
         {/* Section heading */}
         <motion.div {...fadeUp(0)} className="mb-12">
-          <p className="font-syne text-[9px] tracking-[0.4em] uppercase mb-3" style={{ color: '#10d988' }}>
+          <p className="font-syne text-xs tracking-[0.4em] uppercase mb-3" style={{ color: '#10d988' }}>
             04
           </p>
           <h2
@@ -64,7 +64,7 @@ export default function ContactSection() {
           >
             Let&apos;s Connect
           </h2>
-          <p className="font-syne max-w-md mx-auto" style={{ color: '#6b7685' }}>
+          <p className="font-syne max-w-md mx-auto" style={{ color: '#7a8898' }}>
             I&apos;m always open to new opportunities and interesting projects
           </p>
         </motion.div>
@@ -84,7 +84,7 @@ export default function ContactSection() {
               style={{
                 background: 'rgba(255,255,255,0.025)',
                 border: '1px solid rgba(255,255,255,0.07)',
-                color: '#6b7685',
+                color: '#7a8898',
               }}
               onMouseEnter={(e) => {
                 const el = e.currentTarget;
@@ -95,7 +95,7 @@ export default function ContactSection() {
               onMouseLeave={(e) => {
                 const el = e.currentTarget;
                 el.style.borderColor = 'rgba(255,255,255,0.07)';
-                el.style.color = '#6b7685';
+                el.style.color = '#7a8898';
                 el.style.background = 'rgba(255,255,255,0.025)';
               }}
             >
@@ -114,7 +114,7 @@ export default function ContactSection() {
             border: '1px solid rgba(255,255,255,0.06)',
           }}
         >
-          <p className="font-syne mb-4" style={{ color: '#6b7685' }}>
+          <p className="font-syne mb-4" style={{ color: '#7a8898' }}>
             Want to explore my work in a more creative way?
           </p>
           <a
