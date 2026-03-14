@@ -49,11 +49,21 @@ body {
 
 .boat-container {
   position: fixed;
-  /* clamp: min 280px, prefer 72vw, max 850px — prevents overflow on small screens */
-  width: clamp(280px, 72vw, 850px);
+  /*
+   * Width: min of 60vw and a height-derived cap so the boat never clips
+   * the top of the viewport. Cap = available height × boat aspect ratio (1.18):
+   *   available ≈ 68vh + 70px  →  cap ≈ calc(80vh + 83px)
+   */
+  width: clamp(280px, min(60vw, calc(80vh + 83px)), 850px);
   height: auto;
-  /* clamp bottom: rises proportionally with viewport height */
-  bottom: clamp(90px, 14vh, 180px);
+  /*
+   * Bottom tracks the front-wave water-surface height so the hull sits ~20px
+   * above the waterline at every viewport size:
+   *   front-wave container = clamp(155px, 32vh, 320px)
+   *   react-wavify height:100 ⟹ water surface ≈ container − 100px
+   *   hull offset: (32vh − 100px) + 20px = calc(32vh − 80px)
+   */
+  bottom: clamp(80px, calc(32vh - 80px), 240px);
   left: 50%;
   transform: translateX(-50%);
   z-index: 3;
@@ -61,20 +71,13 @@ body {
 
 .boat-inside-container {
   position: fixed;
-  width: clamp(290px, 75vw, 900px);
+  /* Interior image is 1200×999 (ratio ≈ 1.20): cap ≈ calc(82vh + 84px) */
+  width: clamp(290px, min(65vw, calc(82vh + 84px)), 900px);
   height: auto;
-  bottom: clamp(90px, 14vh, 180px);
+  bottom: clamp(80px, calc(32vh - 80px), 240px);
   left: 50%;
   transform: translateX(-50%);
   z-index: 3;
-}
-
-/* Portrait mobile: waves are taller so boat sits higher */
-@media screen and (max-width: 600px) {
-  .boat-container,
-  .boat-inside-container {
-    bottom: clamp(170px, 26vh, 270px);
-  }
 }
 
 .boat-image {
