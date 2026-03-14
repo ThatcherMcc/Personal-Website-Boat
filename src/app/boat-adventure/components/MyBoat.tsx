@@ -197,7 +197,7 @@ export default function MyBoat({ searchParams }: MyBoatProps) {
           alt="Ship with all my treasure"
           width={1180}
           height={998}
-          quality={90}
+          quality={100}
           initial={{ y: -125, opacity: 0, rotate: 15 }}
           whileHover={{ scale: 1.05 }}
           onClick={handleBoatClick}
@@ -228,7 +228,7 @@ export default function MyBoat({ searchParams }: MyBoatProps) {
             alt="Interior of the boat"
             width={1200}
             height={999}
-            quality={90}
+            quality={100}
             className="w-full h-auto object-contain"
           />
           {!boatRoom && (
