@@ -45,24 +45,32 @@ export default function ProjectCard({ project }: { project: Project }) {
       onMouseEnter={(e) => {
         e.currentTarget.style.borderColor = "rgba(200, 160, 60, 0.5)";
         e.currentTarget.style.boxShadow =
-          "0 12px 40px rgba(140, 90, 10, 0.15), 0 4px 24px rgba(0,0,0,0.4)";
+          "0 12px 40px rgba(140, 90, 10, 0.15), 0 4px 24px rgba(0,0,0,0.4), inset 0 0 30px rgba(200,146,58,0.04)";
       }}
       onMouseLeave={(e) => {
         e.currentTarget.style.borderColor = "rgba(180, 140, 50, 0.2)";
         e.currentTarget.style.boxShadow = "0 4px 24px rgba(0,0,0,0.4)";
       }}
     >
-      {/* Decorative corner marks with brass rivets */}
-      <div className="absolute top-3 left-3 w-4 h-4 border-t border-l opacity-35 z-10" style={{ borderColor: "#d4a04a" }}>
+      {/* Left-edge page binding gradient */}
+      <div
+        className="absolute left-0 top-0 bottom-0 w-[3px] z-10 pointer-events-none"
+        style={{
+          background: "linear-gradient(to bottom, rgba(200,146,58,0.6), rgba(200,146,58,0.2) 50%, rgba(200,146,58,0.6))",
+        }}
+      />
+
+      {/* Decorative corner marks with brass rivets (opacity 0.35 → 0.55) */}
+      <div className="absolute top-3 left-3 w-4 h-4 border-t border-l opacity-55 z-10" style={{ borderColor: "#d4a04a" }}>
         <div className="absolute -top-[1px] -left-[1px] w-1 h-1 rounded-full" style={{ background: "#d4a04a" }} />
       </div>
-      <div className="absolute top-3 right-3 w-4 h-4 border-t border-r opacity-35 z-10" style={{ borderColor: "#d4a04a" }}>
+      <div className="absolute top-3 right-3 w-4 h-4 border-t border-r opacity-55 z-10" style={{ borderColor: "#d4a04a" }}>
         <div className="absolute -top-[1px] -right-[1px] w-1 h-1 rounded-full" style={{ background: "#d4a04a" }} />
       </div>
-      <div className="absolute bottom-3 left-3 w-4 h-4 border-b border-l opacity-35 z-10" style={{ borderColor: "#d4a04a" }}>
+      <div className="absolute bottom-3 left-3 w-4 h-4 border-b border-l opacity-55 z-10" style={{ borderColor: "#d4a04a" }}>
         <div className="absolute -bottom-[1px] -left-[1px] w-1 h-1 rounded-full" style={{ background: "#d4a04a" }} />
       </div>
-      <div className="absolute bottom-3 right-3 w-4 h-4 border-b border-r opacity-35 z-10" style={{ borderColor: "#d4a04a" }}>
+      <div className="absolute bottom-3 right-3 w-4 h-4 border-b border-r opacity-55 z-10" style={{ borderColor: "#d4a04a" }}>
         <div className="absolute -bottom-[1px] -right-[1px] w-1 h-1 rounded-full" style={{ background: "#d4a04a" }} />
       </div>
 
@@ -140,11 +148,38 @@ export default function ProjectCard({ project }: { project: Project }) {
 
           {/* Description — always visible */}
           <p
-            className="font-serif text-sm leading-[1.8] mb-5 transition-colors duration-300 group-hover:text-stone-200"
+            className="font-serif text-sm leading-[1.8] mb-4 transition-colors duration-300 group-hover:text-stone-200"
             style={{ color: "#9a8e7e" }}
           >
             {project.description}
           </p>
+
+          {/* Crew Manifest — tech chips */}
+          {project.tech && project.tech.length > 0 && (
+            <div className="mb-5">
+              <span
+                className="font-cormorant text-[10px] tracking-[0.2em] uppercase block mb-2"
+                style={{ color: "rgba(200,146,58,0.5)" }}
+              >
+                Crew Manifest
+              </span>
+              <div className="flex flex-wrap gap-1.5">
+                {project.tech.map((t) => (
+                  <span
+                    key={t}
+                    className="font-cormorant text-[11px] tracking-[0.1em] px-2 py-0.5"
+                    style={{
+                      color: "#c8923a",
+                      background: "rgba(200,146,58,0.08)",
+                      border: "1px solid rgba(200,146,58,0.2)",
+                    }}
+                  >
+                    {t}
+                  </span>
+                ))}
+              </div>
+            </div>
+          )}
 
           {/* Links */}
           <div className="flex flex-col gap-2">
@@ -238,11 +273,32 @@ export default function ProjectCard({ project }: { project: Project }) {
 
           {/* Description — always visible */}
           <p
-            className="font-serif text-sm leading-[1.8] mb-4"
+            className="font-serif text-sm leading-[1.8] mb-3"
             style={{ color: "#9a8e7e" }}
           >
             {project.description}
           </p>
+
+          {/* Crew Manifest — tech chips (mobile) */}
+          {project.tech && project.tech.length > 0 && (
+            <div className="mb-4">
+              <div className="flex flex-wrap gap-1.5">
+                {project.tech.map((t) => (
+                  <span
+                    key={t}
+                    className="font-cormorant text-[11px] tracking-[0.1em] px-2 py-0.5"
+                    style={{
+                      color: "#c8923a",
+                      background: "rgba(200,146,58,0.08)",
+                      border: "1px solid rgba(200,146,58,0.2)",
+                    }}
+                  >
+                    {t}
+                  </span>
+                ))}
+              </div>
+            </div>
+          )}
 
           {/* Links — touch-friendly (min 44px) */}
           <div className="flex flex-col gap-2">

@@ -5,7 +5,8 @@ import { motion, useReducedMotion } from 'framer-motion';
 const contacts = [
   {
     label: 'Email',
-    // TODO: Replace with your actual email
+    // TODO (REQUIRED): Replace with your actual email address before deploying
+    // e.g. 'mailto:thatcher@example.com'
     href: 'mailto:your.email@example.com',
     icon: (
       <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
@@ -15,7 +16,8 @@ const contacts = [
   },
   {
     label: 'LinkedIn',
-    // TODO: Replace with your actual LinkedIn URL
+    // TODO (REQUIRED): Replace with your actual LinkedIn profile URL before deploying
+    // e.g. 'https://linkedin.com/in/thatcher-mcclure'
     href: 'https://linkedin.com/in/yourprofile',
     icon: (
       <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
@@ -53,7 +55,7 @@ export default function ContactSection() {
       <div className="max-w-4xl mx-auto text-center">
         {/* Section heading */}
         <motion.div {...fadeUp(0)} className="mb-12">
-          <p className="font-syne text-[9px] tracking-[0.4em] uppercase mb-3" style={{ color: '#10d988' }}>
+          <p className="font-syne text-xs tracking-[0.4em] uppercase mb-3" style={{ color: '#10d988' }}>
             04
           </p>
           <h2
@@ -62,7 +64,7 @@ export default function ContactSection() {
           >
             Let&apos;s Connect
           </h2>
-          <p className="font-syne max-w-md mx-auto" style={{ color: '#6b7685' }}>
+          <p className="font-syne max-w-md mx-auto" style={{ color: '#7a8898' }}>
             I&apos;m always open to new opportunities and interesting projects
           </p>
         </motion.div>
@@ -82,7 +84,7 @@ export default function ContactSection() {
               style={{
                 background: 'rgba(255,255,255,0.025)',
                 border: '1px solid rgba(255,255,255,0.07)',
-                color: '#6b7685',
+                color: '#7a8898',
               }}
               onMouseEnter={(e) => {
                 const el = e.currentTarget;
@@ -93,7 +95,7 @@ export default function ContactSection() {
               onMouseLeave={(e) => {
                 const el = e.currentTarget;
                 el.style.borderColor = 'rgba(255,255,255,0.07)';
-                el.style.color = '#6b7685';
+                el.style.color = '#7a8898';
                 el.style.background = 'rgba(255,255,255,0.025)';
               }}
             >
@@ -112,7 +114,7 @@ export default function ContactSection() {
             border: '1px solid rgba(255,255,255,0.06)',
           }}
         >
-          <p className="font-syne mb-4" style={{ color: '#6b7685' }}>
+          <p className="font-syne mb-4" style={{ color: '#7a8898' }}>
             Want to explore my work in a more creative way?
           </p>
           <a

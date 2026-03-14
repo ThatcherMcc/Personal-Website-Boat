@@ -26,7 +26,7 @@ export default function SkillsSection() {
           viewport={{ once: true }}
           className="mb-12 text-center"
         >
-          <p className="font-syne text-[9px] tracking-[0.4em] uppercase mb-3" style={{ color: '#10d988' }}>
+          <p className="font-syne text-xs tracking-[0.4em] uppercase mb-3" style={{ color: '#10d988' }}>
             03
           </p>
           <h2
