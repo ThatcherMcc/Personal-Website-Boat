@@ -252,7 +252,7 @@ export default function CaptainsQuartersPage() {
                   style={{ color: COLORS.body }}
                 >
                   Hi, I&apos;m{" "}
-                  <strong style={{ color: COLORS.highlight, fontStyle: "normal" }}>Thatcher</strong>, a
+                  <strong style={{ color: "#c4a46a", fontStyle: "normal" }}>Thatcher</strong>, a
                   creator at heart who finds his fulfillment and escape from
                   overconsumption in the act of building for myself and others. I
                   think creation has many forms, whether it&apos;s a solution to a
