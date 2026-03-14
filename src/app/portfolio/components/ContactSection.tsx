@@ -5,7 +5,8 @@ import { motion, useReducedMotion } from 'framer-motion';
 const contacts = [
   {
     label: 'Email',
-    // TODO: Replace with your actual email
+    // TODO (REQUIRED): Replace with your actual email address before deploying
+    // e.g. 'mailto:thatcher@example.com'
     href: 'mailto:your.email@example.com',
     icon: (
       <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
@@ -15,7 +16,8 @@ const contacts = [
   },
   {
     label: 'LinkedIn',
-    // TODO: Replace with your actual LinkedIn URL
+    // TODO (REQUIRED): Replace with your actual LinkedIn profile URL before deploying
+    // e.g. 'https://linkedin.com/in/thatcher-mcclure'
     href: 'https://linkedin.com/in/yourprofile',
     icon: (
       <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
