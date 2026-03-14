@@ -49,9 +49,11 @@ body {
 
 .boat-container {
   position: fixed;
-  width: 850px;
+  /* clamp: min 280px, prefer 72vw, max 850px — prevents overflow on small screens */
+  width: clamp(280px, 72vw, 850px);
   height: auto;
-  bottom: 130px;
+  /* clamp bottom: rises proportionally with viewport height */
+  bottom: clamp(90px, 14vh, 180px);
   left: 50%;
   transform: translateX(-50%);
   z-index: 3;
@@ -59,39 +61,19 @@ body {
 
 .boat-inside-container {
   position: fixed;
-  width: 900px;
+  width: clamp(290px, 75vw, 900px);
   height: auto;
-  bottom: 130px;
+  bottom: clamp(90px, 14vh, 180px);
   left: 50%;
   transform: translateX(-50%);
   z-index: 3;
 }
 
-@media screen and (max-width: 1024px) {
-  .boat-container {
-    width: 650px;
-    bottom: 130px;
-    z-index: 3;
-  }
-
+/* Portrait mobile: waves are taller so boat sits higher */
+@media screen and (max-width: 600px) {
+  .boat-container,
   .boat-inside-container {
-    width: 700px;
-    bottom: 130px;
-    z-index: 3;
-  }
-}
-
-@media screen and (max-width: 768px) {
-  .boat-container {
-    width: 500px;
-    bottom: 220px;
-    z-index: 3;
-  }
-
-  .boat-inside-container {
-    width: 500px;
-    bottom: 220px;
-    z-index: 3;
+    bottom: clamp(170px, 26vh, 270px);
   }
 }
 
@@ -148,67 +130,32 @@ body.weather-stormy {
 }
 
 #back-wave-container {
-  height: 345px;
+  /* clamp: 200px min, scales with vh, 400px max */
+  height: clamp(200px, 40vh, 400px);
   z-index: 1;
   --_scroll-direction: wave-scroll-right;
   --_wave-duration: 40s;
 }
 
 #middle-wave-container-back {
-  height: 310px;
+  height: clamp(180px, 37vh, 360px);
   z-index: 2;
   --_scroll-direction: wave-scroll-left;
   --_wave-duration: 35s;
 }
 
 #middle-wave-container-front {
-  height: 300px;
+  height: clamp(170px, 35vh, 345px);
   z-index: 2;
   --_scroll-direction: wave-scroll-left;
   --_wave-duration: 35s;
 }
 
 #front-wave-container {
-  height: 280px;
+  height: clamp(155px, 32vh, 320px);
   z-index: 3;
   --_scroll-direction: wave-scroll-right;
   --_wave-duration: 30s;
-}
-
-@media screen and (max-width: 1024px) {
-  #back-wave-container {
-    height: 300px;
-  }
-
-  #middle-wave-container-back {
-    height: 280px;
-  }
-
-  #middle-wave-container-front {
-    height: 275px;
-  }
-
-  #front-wave-container {
-    height: 250px;
-  }
-}
-
-@media screen and (max-width: 768px) {
-  #back-wave-container {
-    height: 380px;
-  }
-
-  #middle-wave-container-back {
-    height: 365px;
-  }
-
-  #middle-wave-container-front {
-    height: 355px;
-  }
-
-  #front-wave-container {
-    height: 330px;
-  }
 }
 
 .weather-info-container {
