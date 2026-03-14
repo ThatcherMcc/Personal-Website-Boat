@@ -6,22 +6,22 @@ import Image from 'next/image';
 const projects = [
   {
     id: 1,
+    year: "2024",
+    title: "NBA Prop Line",
+    description: "A website with an AI engineering model to predict over/unders in the NBA. Holds all NBA player data and webscrapes gamelogs to build a comprehensive database of player statistics for prop line analysis.",
+    technologies: ["Python", "Flask", "SQL", "scikit-learn", "BeautifulSoup"],
+    github: "https://github.com/ThatcherMcc/NBA-Player-Prop-Analysis",
+    website: "https://nba-prop-website.vercel.app/",
+    image: "/treasure-room/nba-prop-site.webp"
+  },
+  {
+    id: 2,
     year: "2025",
     title: "Customer Segmentation Analysis",
     description: "Developed a K-Means clustering solution to analyze real-world transactional data from a service-based business, identifying distinct customer segments using RFM (Recency, Frequency, Monetary) modeling.",
     technologies: ["Python", "K-Means Clustering", "Data Analysis", "RFM Model"],
     github: "https://github.com/ThatcherMcc/Customer-Segmentation-Analysis",
     image: "/treasure-room/data-clustering-plot.webp"
-  },
-  {
-    id: 2,
-    year: "2024",
-    title: "NBA Prop Line",
-    description: "A website with an AI engineering model to predict over/unders in the NBA. Holds all NBA player data and webscrapes gamelogs to build a comprehensive database of player statistics for prop line analysis.",
-    technologies: ["Web Scraping", "Database Design", "Data Visualization", "Statistical Analysis"],
-    github: "https://github.com/ThatcherMcc/NBA-Player-Prop-Analysis",
-    website: "https://nba-prop-website.vercel.app/",
-    image: "/treasure-room/nba-prop-site.webp"
   },
   {
     id: 3,
