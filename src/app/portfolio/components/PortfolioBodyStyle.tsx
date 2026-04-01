@@ -11,9 +11,16 @@ const PORTFOLIO_BG = "#070b13";
 export default function PortfolioBodyStyle() {
   useEffect(() => {
     const prev = document.body.style.backgroundColor;
+    const prevTransition = document.body.style.transition;
+    document.body.style.transition = "none";
     document.body.style.backgroundColor = PORTFOLIO_BG;
     return () => {
+      document.body.style.transition = "none";
       document.body.style.backgroundColor = prev;
+      // Restore transition after a frame so the color change doesn't animate
+      requestAnimationFrame(() => {
+        document.body.style.transition = prevTransition;
+      });
     };
   }, []);
 

@@ -45,7 +45,7 @@ function PortfolioCard({ onNavigate }: { onNavigate: (href: string) => void }) {
       animate={{ opacity: 1, x: 0, y: 0 }}
       transition={{ delay: 0.55, duration: 0.7, ease: [0.23, 1, 0.32, 1] }}
     >
-      <Link href="/portfolio" onClick={(e) => { e.preventDefault(); onNavigate('/portfolio'); }}>
+      <Link href="/portfolio" aria-label="Go to Portfolio — professional presentation of work and skills" onClick={(e) => { e.preventDefault(); onNavigate('/portfolio'); }}>
         <motion.div
           whileHover={{ y: -8 }}
           transition={{ duration: 0.25, ease: 'easeOut' }}
@@ -118,7 +118,7 @@ function PortfolioCard({ onNavigate }: { onNavigate: (href: string) => void }) {
             </div>
 
             <div className="flex-1">
-              <p className="text-[9px] tracking-[0.3em] text-slate-600 uppercase font-semibold mb-2">
+              <p className="text-xs tracking-[0.3em] text-slate-600 uppercase font-semibold mb-2">
                 Professional
               </p>
               <h2 className="text-2xl md:text-3xl font-bold text-white mb-3 tracking-tight leading-tight">
@@ -160,7 +160,7 @@ function BoatCard({ onNavigate }: { onNavigate: (href: string) => void }) {
       animate={{ opacity: 1, x: 0, y: 0 }}
       transition={{ delay: 0.7, duration: 0.7, ease: [0.23, 1, 0.32, 1] }}
     >
-      <Link href="/boat-adventure" onClick={(e) => { e.preventDefault(); onNavigate('/boat-adventure'); }}>
+      <Link href="/boat-adventure" aria-label="Go to Boat Adventure — interactive creative experience" onClick={(e) => { e.preventDefault(); onNavigate('/boat-adventure'); }}>
         <motion.div
           whileHover={{ y: -8 }}
           transition={{ duration: 0.25, ease: 'easeOut' }}
@@ -227,7 +227,7 @@ function BoatCard({ onNavigate }: { onNavigate: (href: string) => void }) {
             </motion.div>
 
             <div className="flex-1">
-              <p className="text-[9px] tracking-[0.3em] text-sky-600/80 uppercase font-semibold mb-2">
+              <p className="text-xs tracking-[0.3em] text-sky-600/80 uppercase font-semibold mb-2">
                 Adventure
               </p>
               <h2 className="text-2xl md:text-3xl font-bold text-white mb-3 tracking-tight leading-tight">
@@ -285,7 +285,7 @@ export default function LandingChoice() {
       <ParticleBackground />
 
       {/* Main layout */}
-      <div className="relative z-10 flex flex-col items-center justify-center min-h-screen px-4 py-6 md:py-8 md:h-full">
+      <main className="relative z-10 flex flex-col items-center justify-center min-h-screen px-4 py-6 md:py-8 md:h-full">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: -20 }}
@@ -293,7 +293,7 @@ export default function LandingChoice() {
           transition={{ duration: 0.8, ease: [0.23, 1, 0.32, 1] }}
           className="text-center mb-2"
         >
-          <p className="text-[10px] tracking-[0.4em] text-slate-600 uppercase font-medium mb-3">
+          <p className="text-xs tracking-[0.4em] text-slate-600 uppercase font-medium mb-3">
             Thatcher McClure
           </p>
           <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold text-white tracking-tight leading-none">
@@ -321,11 +321,11 @@ export default function LandingChoice() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1.2, duration: 0.8 }}
-          className="text-[11px] text-slate-700 text-center mt-5 md:mt-8"
+          className="text-xs text-slate-700 text-center mt-5 md:mt-8"
         >
           Both paths lead to the same treasure — just different ways to discover it
         </motion.p>
-      </div>
+      </main>
     </motion.div>
   );
 }

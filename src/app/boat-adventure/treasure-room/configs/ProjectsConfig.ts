@@ -9,6 +9,7 @@ export type Project = {
   link: string;
   github: string;
   demoUrl?: string;
+  tech?: string[];
 };
 
 export const projects: Project[] = [
@@ -25,6 +26,7 @@ export const projects: Project[] = [
     alt: "NBA Prop Line website with AI model for predicting over/under prop lines.",
     link: "/projects/nba-player-prop-analaysis",
     github: "https://github.com/ThatcherMcc/NBA-Player-Prop-Analysis",
+    tech: ["Python", "Flask", "SQL", "scikit-learn", "BeautifulSoup"],
   },
   {
     id: 2,
@@ -38,6 +40,7 @@ export const projects: Project[] = [
     alt: "Data Clustering analysis final graph with an RFM Model analysis.",
     link: "/projects/data-clustering",
     github: "https://github.com/ThatcherMcc/Customer-Segmentation-Analysis",
+    tech: ["Python", "pandas", "scikit-learn", "Matplotlib", "Jupyter"],
   },
   {
     id: 3,
@@ -52,5 +55,6 @@ export const projects: Project[] = [
     link: "/projects/off-world",
     github: "https://github.com/ThatcherMcc/Off-World",
     demoUrl: "https://youtube.com/watch?v=I9-k-yx-beE",
+    tech: ["Godot", "GDScript", "Blender"],
   },
 ];

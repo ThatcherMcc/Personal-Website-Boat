@@ -4,6 +4,10 @@ const nextConfig: NextConfig = {
   compress: true,
   reactStrictMode: true,
   poweredByHeader: false,
+  eslint: {
+    // Lint is run separately via `pnpm lint` (ESLint CLI). Skip during build.
+    ignoreDuringBuilds: true,
+  },
 
   images: {
     formats: ["image/webp"],

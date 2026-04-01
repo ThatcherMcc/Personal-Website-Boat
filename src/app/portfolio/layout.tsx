@@ -7,6 +7,8 @@ export default function PortfolioLayout({
 }) {
   return (
     <>
+      {/* Inline style ensures dark background from first paint, before JS hydration */}
+      <style>{`body { background-color: #070b13 !important; transition: none !important; }`}</style>
       <PortfolioBodyStyle />
       {children}
     </>

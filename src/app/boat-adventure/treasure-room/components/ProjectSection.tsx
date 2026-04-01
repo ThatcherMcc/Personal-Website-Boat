@@ -5,29 +5,48 @@ import ProjectCard from "./TimelineCard";
 import React from "react";
 import { motion } from "framer-motion";
 
-function WaypointMarker() {
+const JOURNEY_TEXTS = [
+  "The expedition continued deeper into uncharted waters…",
+  "Each discovery led to new horizons yet to be mapped…",
+];
+
+function WaypointMarker({ idx }: { idx: number }) {
   return (
-    <div className="hidden md:flex items-center justify-center py-4">
-      {/* Horizontal line left */}
-      <div
-        className="flex-1 h-px max-w-24"
-        style={{ background: "linear-gradient(to right, transparent, rgba(212, 160, 74, 0.25))" }}
-      />
-      {/* 4-pointed star */}
-      <div className="mx-4 relative w-3 h-3" style={{ opacity: 0.25 }}>
+    <div className="hidden md:flex flex-col items-center gap-3 py-4">
+      <div className="flex items-center w-full">
+        {/* Horizontal line left */}
         <div
-          className="absolute inset-0"
-          style={{
-            background: "#d4a04a",
-            clipPath: "polygon(50% 0%, 60% 40%, 100% 50%, 60% 60%, 50% 100%, 40% 60%, 0% 50%, 40% 40%)",
-          }}
+          className="flex-1 h-px max-w-32"
+          style={{ background: "linear-gradient(to right, transparent, rgba(212, 160, 74, 0.3))" }}
+        />
+        {/* Compass rose SVG */}
+        <div className="mx-4 relative" style={{ opacity: 0.45 }}>
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+            {/* 8-pointed compass rose */}
+            <polygon points="10,1 11.2,8.8 10,10 8.8,8.8" fill="#d4a04a" />
+            <polygon points="10,19 11.2,11.2 10,10 8.8,11.2" fill="#d4a04a" opacity="0.6" />
+            <polygon points="1,10 8.8,11.2 10,10 8.8,8.8" fill="#d4a04a" opacity="0.6" />
+            <polygon points="19,10 11.2,8.8 10,10 11.2,11.2" fill="#d4a04a" />
+            <polygon points="3.2,3.2 9.2,9.2 10,10 9.2,10.8" fill="#d4a04a" opacity="0.4" />
+            <polygon points="16.8,16.8 10.8,10.8 10,10 10.8,9.2" fill="#d4a04a" opacity="0.4" />
+            <polygon points="3.2,16.8 9.2,10.8 10,10 10.8,10.8" fill="#d4a04a" opacity="0.4" />
+            <polygon points="16.8,3.2 10.8,9.2 10,10 9.2,9.2" fill="#d4a04a" opacity="0.4" />
+            <circle cx="10" cy="10" r="1.5" fill="#d4a04a" />
+          </svg>
+        </div>
+        {/* Horizontal line right */}
+        <div
+          className="flex-1 h-px max-w-32"
+          style={{ background: "linear-gradient(to left, transparent, rgba(212, 160, 74, 0.3))" }}
         />
       </div>
-      {/* Horizontal line right */}
-      <div
-        className="flex-1 h-px max-w-24"
-        style={{ background: "linear-gradient(to left, transparent, rgba(212, 160, 74, 0.25))" }}
-      />
+      {/* Journey text */}
+      <span
+        className="font-cormorant italic text-xs tracking-[0.12em] text-center"
+        style={{ color: "rgba(212,160,74,0.35)" }}
+      >
+        {JOURNEY_TEXTS[idx % JOURNEY_TEXTS.length]}
+      </span>
     </div>
   );
 }
@@ -49,7 +68,7 @@ export default function ProjectsSection() {
           {/* Waypoint marker between cards (not after last) */}
           {index < projects.length - 1 && (
             <div className="my-16 md:my-24">
-              <WaypointMarker />
+              <WaypointMarker idx={index} />
             </div>
           )}
         </React.Fragment>

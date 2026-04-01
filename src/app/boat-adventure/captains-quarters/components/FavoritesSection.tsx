@@ -76,7 +76,7 @@ export default function FavoritesSection() {
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
               className="font-cormorant text-xs tracking-wider uppercase ml-2"
-              style={{ color: "#7acc6a" }}
+              style={{ color: "#c4a46a" }}
             >
               — All revealed
             </motion.span>
@@ -92,7 +92,7 @@ export default function FavoritesSection() {
               exit={{ opacity: 0, scale: 0.9 }}
               transition={{ duration: 0.3 }}
               onClick={revealAll}
-              className="font-cormorant text-[11px] md:text-xs font-semibold tracking-[0.15em] uppercase px-4 py-2 rounded-lg transition-colors duration-300 cursor-pointer"
+              className="font-cormorant text-[11px] md:text-xs font-semibold tracking-[0.15em] uppercase px-4 py-2 transition-colors duration-300 cursor-pointer"
               style={{
                 color: "#c4973a",
                 background: "rgba(175,115,28,0.1)",

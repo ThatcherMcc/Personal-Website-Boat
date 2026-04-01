@@ -49,9 +49,21 @@ body {
 
 .boat-container {
   position: fixed;
-  width: 850px;
+  /*
+   * Width: min of 60vw and a height-derived cap so the boat never clips
+   * the top of the viewport. Cap = available height × boat aspect ratio (1.18):
+   *   available ≈ 68vh + 70px  →  cap ≈ calc(80vh + 83px)
+   */
+  width: clamp(280px, min(60vw, calc(80vh + 83px)), 850px);
   height: auto;
-  bottom: 130px;
+  /*
+   * Bottom tracks the front-wave water-surface height so the hull sits ~20px
+   * above the waterline at every viewport size:
+   *   front-wave container = clamp(155px, 32vh, 320px)
+   *   react-wavify height:100 ⟹ water surface ≈ container − 100px
+   *   hull offset: (32vh − 100px) + 20px = calc(32vh − 80px)
+   */
+  bottom: clamp(80px, calc(32vh - 80px), 240px);
   left: 50%;
   transform: translateX(-50%);
   z-index: 3;
@@ -59,40 +71,13 @@ body {
 
 .boat-inside-container {
   position: fixed;
-  width: 900px;
+  /* Interior image is 1200×999 (ratio ≈ 1.20): cap ≈ calc(82vh + 84px) */
+  width: clamp(290px, min(65vw, calc(82vh + 84px)), 900px);
   height: auto;
-  bottom: 130px;
+  bottom: clamp(80px, calc(32vh - 80px), 240px);
   left: 50%;
   transform: translateX(-50%);
   z-index: 3;
-}
-
-@media screen and (max-width: 1024px) {
-  .boat-container {
-    width: 650px;
-    bottom: 130px;
-    z-index: 3;
-  }
-
-  .boat-inside-container {
-    width: 700px;
-    bottom: 130px;
-    z-index: 3;
-  }
-}
-
-@media screen and (max-width: 768px) {
-  .boat-container {
-    width: 500px;
-    bottom: 220px;
-    z-index: 3;
-  }
-
-  .boat-inside-container {
-    width: 500px;
-    bottom: 220px;
-    z-index: 3;
-  }
 }
 
 .boat-image {
@@ -148,67 +133,32 @@ body.weather-stormy {
 }
 
 #back-wave-container {
-  height: 345px;
+  /* clamp: 200px min, scales with vh, 400px max */
+  height: clamp(200px, 40vh, 400px);
   z-index: 1;
   --_scroll-direction: wave-scroll-right;
   --_wave-duration: 40s;
 }
 
 #middle-wave-container-back {
-  height: 310px;
+  height: clamp(180px, 37vh, 360px);
   z-index: 2;
   --_scroll-direction: wave-scroll-left;
   --_wave-duration: 35s;
 }
 
 #middle-wave-container-front {
-  height: 300px;
+  height: clamp(170px, 35vh, 345px);
   z-index: 2;
   --_scroll-direction: wave-scroll-left;
   --_wave-duration: 35s;
 }
 
 #front-wave-container {
-  height: 280px;
+  height: clamp(155px, 32vh, 320px);
   z-index: 3;
   --_scroll-direction: wave-scroll-right;
   --_wave-duration: 30s;
-}
-
-@media screen and (max-width: 1024px) {
-  #back-wave-container {
-    height: 300px;
-  }
-
-  #middle-wave-container-back {
-    height: 280px;
-  }
-
-  #middle-wave-container-front {
-    height: 275px;
-  }
-
-  #front-wave-container {
-    height: 250px;
-  }
-}
-
-@media screen and (max-width: 768px) {
-  #back-wave-container {
-    height: 380px;
-  }
-
-  #middle-wave-container-back {
-    height: 365px;
-  }
-
-  #middle-wave-container-front {
-    height: 355px;
-  }
-
-  #front-wave-container {
-    height: 330px;
-  }
 }
 
 .weather-info-container {
@@ -277,8 +227,15 @@ body.weather-stormy {
 
 @keyframes ember-rise {
   0% { opacity: 0.9; transform: translateY(0) translateX(0); }
-  50% { opacity: 0.6; transform: translateY(-30px) translateX(4px); }
-  100% { opacity: 0; transform: translateY(-60px) translateX(-3px); }
+  50% { opacity: 0.6; transform: translateY(-55px) translateX(4px); }
+  100% { opacity: 0; transform: translateY(-110px) translateX(-3px); }
+}
+
+@keyframes dust-float {
+  0% { opacity: 0; transform: translateY(0) translateX(0); }
+  20% { opacity: var(--dust-opacity, 0.12); }
+  80% { opacity: var(--dust-opacity, 0.12); }
+  100% { opacity: 0; transform: translateY(-80px) translateX(var(--dust-drift, 6px)); }
 }
 
 .animate-bonfire-glow {
@@ -287,6 +244,56 @@ body.weather-stormy {
 
 .animate-ember {
   animation: ember-rise 2.5s ease-out infinite;
+}
+
+.animate-dust {
+  animation: dust-float var(--dust-duration, 8s) ease-in-out infinite;
+}
+
+/* ─── Treasure Room: Star, Comet & Title Animations ─── */
+@keyframes star-twinkle {
+  0%, 100% { opacity: var(--star-min, 0.15); }
+  50% { opacity: var(--star-max, 0.45); }
+}
+
+@keyframes star-shimmer {
+  0%, 100% { opacity: var(--star-min, 0.4); transform: scale(1); }
+  50% { opacity: var(--star-max, 0.85); transform: scale(1.4); }
+}
+
+@keyframes comet-sweep {
+  0% { opacity: 0; transform: translateX(-80px) translateY(-40px) scaleX(0.1); }
+  15% { opacity: 0.8; }
+  70% { opacity: 0.3; }
+  100% { opacity: 0; transform: translateX(300px) translateY(150px) scaleX(1); }
+}
+
+@keyframes title-bloom {
+  0%, 100% { text-shadow: 0 0 30px rgba(200,146,58,0.15), 0 0 60px rgba(200,146,58,0.05); }
+  50% { text-shadow: 0 0 50px rgba(200,146,58,0.35), 0 0 100px rgba(200,146,58,0.15), 0 0 8px rgba(232,226,204,0.2); }
+}
+
+@keyframes compass-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.animate-star-twinkle {
+  animation: star-twinkle var(--star-duration, 4s) ease-in-out infinite;
+}
+
+.animate-star-shimmer {
+  animation: star-shimmer var(--star-duration, 3s) ease-in-out infinite;
+}
+
+.animate-comet {
+  animation: comet-sweep 1.2s ease-out forwards;
+  animation-delay: 0.3s;
+  opacity: 0;
+}
+
+.animate-title-bloom {
+  animation: title-bloom 4s ease-in-out infinite;
 }
 
 /* ─── Treasure Room: Planet Glow & Orbit Animations ─── */
@@ -306,4 +313,8 @@ body.weather-stormy {
 
 .animate-orbit {
   animation: orbit 6s linear infinite;
+}
+
+.animate-compass-spin {
+  animation: compass-spin 8s linear infinite;
 }

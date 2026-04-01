@@ -60,7 +60,7 @@ export default function FlippableCard({
       >
         {/* ── Back face (visible when NOT flipped) ── */}
         <div
-          className="relative w-full rounded-xl overflow-hidden"
+          className="relative w-full rounded-none overflow-hidden"
           style={{
             backfaceVisibility: "hidden",
             minHeight: "200px",
@@ -81,7 +81,7 @@ export default function FlippableCard({
 
         {/* ── Front face (visible when flipped to 180°) ── */}
         <div
-          className="absolute inset-0 w-full rounded-xl overflow-hidden"
+          className="absolute inset-0 w-full rounded-none overflow-hidden"
           style={{
             backfaceVisibility: "hidden",
             transform: "rotateY(180deg)",
@@ -92,7 +92,7 @@ export default function FlippableCard({
             style={{
               background: "rgba(22, 12, 4, 0.75)",
               border: "1px solid rgba(140, 100, 30, 0.18)",
-              borderRadius: "0.75rem",
+              borderRadius: "0",
             }}
             onMouseEnter={(e) => {
               e.currentTarget.style.borderColor = "rgba(200, 150, 50, 0.40)";
@@ -133,7 +133,7 @@ export default function FlippableCard({
             {/* Text Content */}
             <div className="flex flex-col justify-center p-4 md:p-5 gap-1.5 text-center md:text-left">
               <span
-                className="inline-block self-center md:self-start font-cormorant text-[10px] md:text-[11px] font-semibold tracking-[0.2em] uppercase px-2 py-0.5 rounded"
+                className="inline-block self-center md:self-start font-cormorant text-[10px] md:text-[11px] font-semibold tracking-[0.2em] uppercase px-2 py-0.5"
                 style={{
                   color: "#d4a04a",
                   background: "rgba(175,115,28,0.14)",

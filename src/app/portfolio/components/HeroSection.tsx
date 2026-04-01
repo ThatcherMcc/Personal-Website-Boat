@@ -76,7 +76,7 @@ export default function HeroSection() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.2, duration: 0.7 }}
-            className="font-syne text-[10px] tracking-[0.45em] uppercase mb-4"
+            className="font-syne text-xs tracking-[0.45em] uppercase mb-4"
             style={{ color: '#10d988' }}
           >
             Software Developer & Data Analyst
@@ -120,7 +120,7 @@ export default function HeroSection() {
             animate={{ opacity: 1 }}
             transition={{ delay: 0.6, duration: 0.8 }}
             className="font-syne text-base md:text-lg max-w-xl mx-auto mb-10 leading-relaxed"
-            style={{ color: '#6b7685' }}
+            style={{ color: '#7a8898' }}
           >
             Creator at heart who finds fulfillment in building solutions and experiences
             that make an impact
